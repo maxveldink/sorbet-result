@@ -10,6 +10,15 @@ module T
     include Result
 
     Payload = type_member
+    Error = type_member
+
+    sig { override.returns(T.nilable(Error)) }
+    attr_reader :error
+
+    sig { params(error: T.nilable(Error)).void }
+    def initialize(error: nil)
+      @error = error
+    end
 
     sig { override.returns(Boolean) }
     def success?

@@ -10,6 +10,7 @@ module T
     include Result
 
     Payload = type_member
+    Error = type_member
 
     sig { override.returns(T.nilable(Payload)) }
     attr_reader :payload
@@ -27,6 +28,11 @@ module T
     sig { override.returns(Boolean) }
     def failure?
       false
+    end
+
+    sig { override.returns(NilClass) }
+    def error
+      nil
     end
 
     sig { override.returns(Payload) }

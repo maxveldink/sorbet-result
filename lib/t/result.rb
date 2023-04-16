@@ -11,6 +11,7 @@ module T
     interface!
 
     Payload = type_member
+    Error = type_member
 
     sig { abstract.returns(Boolean) }
     def success?; end
@@ -20,6 +21,9 @@ module T
 
     sig { abstract.returns(T.nilable(Payload)) }
     def payload; end
+
+    sig { abstract.returns(T.nilable(Error)) }
+    def error; end
 
     sig { abstract.returns(Payload) }
     def unwrap!; end

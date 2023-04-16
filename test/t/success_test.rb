@@ -5,7 +5,7 @@ require "test_helper"
 
 class SuccessTest < Minitest::Test
   def setup
-    @success = T::Success[String].new(payload: "Testing")
+    @success = T::Success[String, String].new(payload: "Testing")
     @success_without_payload = T::Success.new
   end
 
@@ -22,6 +22,11 @@ class SuccessTest < Minitest::Test
   def test_payload_returns_payload
     assert_equal "Testing", @success.payload
     assert_nil @success_without_payload.payload
+  end
+
+  def test_error_returns_nil
+    assert_nil @success.error
+    assert_nil @success_without_payload.error
   end
 
   def test_unwrap_returns_payload_if_present
