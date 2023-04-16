@@ -3,16 +3,13 @@
 
 module T
   # Represents a failed result. Contains error information but no payload.
-  class Failure < Result
+  class Failure
     extend Sig
     extend Generic
 
-    Payload = type_member
+    include Result
 
-    sig { void }
-    def initialize
-      super(payload: nil)
-    end
+    Payload = type_member
 
     sig { override.returns(Boolean) }
     def success?

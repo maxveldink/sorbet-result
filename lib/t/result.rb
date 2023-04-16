@@ -3,18 +3,14 @@
 
 module T
   # A monad representing either a success or a failure. Contains payload and error information as well.
-  class Result
+  module Result
     extend Sig
     extend Helpers
     extend Generic
 
-    abstract!
-    Payload = type_member
+    interface!
 
-    sig { params(payload: T.nilable(Payload)).void }
-    def initialize(payload: nil)
-      @payload = payload
-    end
+    Payload = type_member
 
     sig { abstract.returns(Boolean) }
     def success?; end
