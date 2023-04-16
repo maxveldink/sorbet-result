@@ -15,4 +15,12 @@ class FailureTest < Minitest::Test
   def test_it_is_not_success
     refute_predicate @failure, :success?
   end
+
+  def test_payload_returns_nil
+    assert_nil @failure.payload
+  end
+
+  def test_unwrap_raises_error
+    assert_raises(T::UnwrappingFailureError) { @failure.unwrap! }
+  end
 end

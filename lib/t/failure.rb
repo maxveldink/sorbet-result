@@ -4,16 +4,34 @@
 module T
   # Represents a failed result. Contains error information but no payload.
   class Failure < Result
-    extend T::Sig
+    extend Sig
+    extend Generic
 
-    sig { override.returns(T::Boolean) }
+    Payload = type_member
+
+    sig { void }
+    def initialize
+      super(payload: nil)
+    end
+
+    sig { override.returns(Boolean) }
     def success?
       false
     end
 
-    sig { override.returns(T::Boolean) }
+    sig { override.returns(Boolean) }
     def failure?
       true
+    end
+
+    sig { override.returns(T.nilable(Payload)) }
+    def payload
+      nil
+    end
+
+    sig { override.returns(Payload) }
+    def unwrap!
+      raise UnwrappingFailureError
     end
   end
 end
