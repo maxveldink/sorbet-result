@@ -29,8 +29,8 @@ class FailureTest < Minitest::Test
     assert_nil @failure_without_error.error
   end
 
-  def test_unwrap_raises_error
-    assert_raises(T::UnwrappingFailureError) { @failure.unwrap! }
-    assert_raises(T::UnwrappingFailureError) { @failure_without_error.unwrap! }
+  def test_payload_bang_raises_error
+    assert_raises(T::NoPayloadOnFailureError) { @failure.payload! }
+    assert_raises(T::NoPayloadOnFailureError) { @failure_without_error.payload! }
   end
 end
