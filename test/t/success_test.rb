@@ -29,11 +29,11 @@ class SuccessTest < Minitest::Test
     assert_nil @success_without_payload.error
   end
 
-  def test_unwrap_returns_payload_if_present
-    assert_equal "Testing", @success.unwrap!
+  def test_payload_bang_returns_payload_if_present
+    assert_equal "Testing", @success.payload!
   end
 
-  def test_unwrap_raises_error_if_payload_is_nil
-    assert_raises(T::NilPayloadError) { @success_without_payload.unwrap! }
+  def test_payload_bang_raises_error_if_payload_is_nil
+    assert_raises(T::NilPayloadError) { @success_without_payload.payload! }
   end
 end

@@ -26,6 +26,6 @@ module T
     def error; end
 
     sig { abstract.returns(Payload) }
-    def unwrap!; end
+    def payload!; end
   end
 end

@@ -36,7 +36,7 @@ module T
     end
 
     sig { override.returns(Payload) }
-    def unwrap!
+    def payload!
       case @payload
       when nil
         raise NilPayloadError

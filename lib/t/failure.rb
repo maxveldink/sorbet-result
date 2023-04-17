@@ -36,8 +36,8 @@ module T
     end
 
     sig { override.returns(Payload) }
-    def unwrap!
-      raise UnwrappingFailureError
+    def payload!
+      raise NoPayloadOnFailureError
     end
   end
 end
