@@ -3,11 +3,9 @@
 
 module T
   # Represents a failed result. Contains error information but no payload.
-  class Failure
+  class Failure < Result
     extend Sig
     extend Generic
-
-    include Result
 
     Payload = type_member
     Error = type_member
@@ -18,6 +16,7 @@ module T
     sig { params(error: T.nilable(Error)).void }
     def initialize(error: nil)
       @error = error
+      super()
     end
 
     sig { override.returns(Boolean) }

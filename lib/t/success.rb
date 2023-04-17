@@ -3,11 +3,9 @@
 
 module T
   # Represents a successful result. Contains a payload and no error information.
-  class Success
+  class Success < Result
     extend Sig
     extend Generic
-
-    include Result
 
     Payload = type_member
     Error = type_member
@@ -18,6 +16,7 @@ module T
     sig { params(payload: T.nilable(Payload)).void }
     def initialize(payload: nil)
       @payload = payload
+      super()
     end
 
     sig { override.returns(Boolean) }
