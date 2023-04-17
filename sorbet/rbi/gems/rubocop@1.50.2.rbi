@@ -5523,7 +5523,7 @@ RuboCop::Cop::Gemspec::DependencyVersion::RESTRICT_ON_SEND = T.let(T.unsafe(nil)
 # source://rubocop//lib/rubocop/cop/gemspec/dependency_version.rb#59
 RuboCop::Cop::Gemspec::DependencyVersion::VERSION_SPECIFICATION_REGEX = T.let(T.unsafe(nil), Regexp)
 
-# Checks that deprecated attribute attributes are not set in a gemspec file.
+# Checks that deprecated attributes are not set in a gemspec file.
 # Removing deprecated attributes allows the user to receive smaller packed gems.
 #
 # @example
@@ -10463,24 +10463,25 @@ RuboCop::Cop::Layout::FirstArrayElementIndentation::MSG = T.let(T.unsafe(nil), S
 # Checks for a line break before the first element in a
 # multi-line array.
 #
-# @example AllowMultilineFinalElement: false (default)
+# @example
 #
 #   # bad
 #   [ :a,
 #   :b]
 #
-#   # bad
-#   [ :a, {
-#   :b => :c
-#   }]
-#
-#   # good
-#   [:a, :b]
-#
 #   # good
 #   [
 #   :a,
 #   :b]
+#
+#   # good
+#   [:a, :b]
+# @example AllowMultilineFinalElement: false (default)
+#
+#   # bad
+#   [ :a, {
+#   :b => :c
+#   }]
 #
 #   # good
 #   [
@@ -10489,45 +10490,33 @@ RuboCop::Cop::Layout::FirstArrayElementIndentation::MSG = T.let(T.unsafe(nil), S
 #   }]
 # @example AllowMultilineFinalElement: true
 #
-#   # bad
-#   [ :a,
-#   :b]
-#
 #   # good
-#   [ :a, {
+#   [:a, {
 #   :b => :c
 #   }]
 #
-#   # good
-#   [
-#   :a,
-#   :b]
-#
-#   # good
-#   [:a, :b]
-#
-# source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#52
+# source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#43
 class RuboCop::Cop::Layout::FirstArrayElementLineBreak < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::FirstElementLineBreak
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#58
+  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#49
   def on_array(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#66
+  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#57
   def assignment_on_same_line?(node); end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#71
+  # source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#62
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#56
+# source://rubocop//lib/rubocop/cop/layout/first_array_element_line_break.rb#47
 RuboCop::Cop::Layout::FirstArrayElementLineBreak::MSG = T.let(T.unsafe(nil), String)
 
 # Checks the indentation of the first key in a hash literal
@@ -10699,16 +10688,11 @@ RuboCop::Cop::Layout::FirstHashElementIndentation::MSG = T.let(T.unsafe(nil), St
 # Checks for a line break before the first element in a
 # multi-line hash.
 #
-# @example AllowMultilineFinalElement: false (default)
+# @example
 #
 #   # bad
 #   { a: 1,
 #   b: 2}
-#
-#   # bad
-#   { a: 1, b: {
-#   c: 3
-#   }}
 #
 #   # good
 #   {
@@ -10720,11 +10704,13 @@ RuboCop::Cop::Layout::FirstHashElementIndentation::MSG = T.let(T.unsafe(nil), St
 #   a: 1, b: {
 #   c: 3
 #   }}
-# @example AllowMultilineFinalElement: true
+# @example AllowMultilineFinalElement: false (default)
 #
 #   # bad
-#   { a: 1,
-#   b: 2}
+#   { a: 1, b: {
+#   c: 3
+#   }}
+# @example AllowMultilineFinalElement: true
 #
 #   # bad
 #   { a: 1,
@@ -10737,44 +10723,43 @@ RuboCop::Cop::Layout::FirstHashElementIndentation::MSG = T.let(T.unsafe(nil), St
 #   c: 3
 #   }}
 #
-#   # good
-#   {
-#   a: 1,
-#   b: 2 }
-#
-#   # good
-#   {
-#   a: 1, b: {
-#   c: 3
-#   }}
-#
-# source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#58
+# source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#46
 class RuboCop::Cop::Layout::FirstHashElementLineBreak < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::FirstElementLineBreak
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#64
+  # source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#52
   def on_hash(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#74
+  # source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#62
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#62
+# source://rubocop//lib/rubocop/cop/layout/first_hash_element_line_break.rb#50
 RuboCop::Cop::Layout::FirstHashElementLineBreak::MSG = T.let(T.unsafe(nil), String)
 
 # Checks for a line break before the first argument in a
 # multi-line method call.
 #
-# @example AllowMultilineFinalElement: false (default)
+# @example
 #
 #   # bad
 #   method(foo, bar,
 #   baz)
+#
+#   # good
+#   method(
+#   foo, bar,
+#   baz)
+#
+#   # ignored
+#   method foo, bar,
+#   baz
+# @example AllowMultilineFinalElement: false (default)
 #
 #   # bad
 #   method(foo, bar, {
@@ -10784,24 +10769,11 @@ RuboCop::Cop::Layout::FirstHashElementLineBreak::MSG = T.let(T.unsafe(nil), Stri
 #
 #   # good
 #   method(
-#   foo, bar,
-#   baz)
-#
-#   # good
-#   method(
 #   foo, bar, {
 #   baz: "a",
 #   qux: "b",
 #   })
-#
-#   # ignored
-#   method foo, bar,
-#   baz
 # @example AllowMultilineFinalElement: true
-#
-#   # bad
-#   method(foo, bar,
-#   baz)
 #
 #   # bad
 #   method(foo,
@@ -10820,11 +10792,6 @@ RuboCop::Cop::Layout::FirstHashElementLineBreak::MSG = T.let(T.unsafe(nil), Stri
 #
 #   # good
 #   method(
-#   foo, bar,
-#   baz)
-#
-#   # good
-#   method(
 #   foo,
 #   bar,
 #   {
@@ -10833,39 +10800,35 @@ RuboCop::Cop::Layout::FirstHashElementLineBreak::MSG = T.let(T.unsafe(nil), Stri
 #   }
 #   )
 #
-#   # ignored
-#   method foo, bar,
-#   baz
-#
-# source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#76
+# source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#66
 class RuboCop::Cop::Layout::FirstMethodArgumentLineBreak < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::FirstElementLineBreak
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#82
+  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#72
   def on_csend(node); end
 
-  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#82
+  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#72
   def on_send(node); end
 
-  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#82
+  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#72
   def on_super(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#101
+  # source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#91
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#80
+# source://rubocop//lib/rubocop/cop/layout/first_method_argument_line_break.rb#70
 RuboCop::Cop::Layout::FirstMethodArgumentLineBreak::MSG = T.let(T.unsafe(nil), String)
 
 # Checks for a line break before the first parameter in a
 # multi-line method parameter definition.
 #
-# @example AllowMultilineFinalElement: false (default)
+# @example
 #
 #   # bad
 #   def method(foo, bar,
@@ -10873,17 +10836,24 @@ RuboCop::Cop::Layout::FirstMethodArgumentLineBreak::MSG = T.let(T.unsafe(nil), S
 #   do_something
 #   end
 #
-#   # bad
-#   def method(foo, bar, baz = {
-#   :a => "b",
-#   })
-#   do_something
-#   end
-#
 #   # good
 #   def method(
 #   foo, bar,
 #   baz)
+#   do_something
+#   end
+#
+#   # ignored
+#   def method foo,
+#   bar
+#   do_something
+#   end
+# @example AllowMultilineFinalElement: false (default)
+#
+#   # bad
+#   def method(foo, bar, baz = {
+#   :a => "b",
+#   })
 #   do_something
 #   end
 #
@@ -10894,19 +10864,7 @@ RuboCop::Cop::Layout::FirstMethodArgumentLineBreak::MSG = T.let(T.unsafe(nil), S
 #   })
 #   do_something
 #   end
-#
-#   # ignored
-#   def method foo,
-#   bar
-#   do_something
-#   end
 # @example AllowMultilineFinalElement: true
-#
-#   # bad
-#   def method(foo, bar,
-#   baz)
-#   do_something
-#   end
 #
 #   # good
 #   def method(foo, bar, baz = {
@@ -10915,39 +10873,26 @@ RuboCop::Cop::Layout::FirstMethodArgumentLineBreak::MSG = T.let(T.unsafe(nil), S
 #   do_something
 #   end
 #
-#   # good
-#   def method(
-#   foo, bar,
-#   baz)
-#   do_something
-#   end
-#
-#   # ignored
-#   def method foo,
-#   bar
-#   do_something
-#   end
-#
-# source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#73
+# source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#56
 class RuboCop::Cop::Layout::FirstMethodParameterLineBreak < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::FirstElementLineBreak
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#79
+  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#62
   def on_def(node); end
 
-  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#79
+  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#62
   def on_defs(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#86
+  # source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#69
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#77
+# source://rubocop//lib/rubocop/cop/layout/first_method_parameter_line_break.rb#60
 RuboCop::Cop::Layout::FirstMethodParameterLineBreak::MSG = T.let(T.unsafe(nil), String)
 
 # Checks the indentation of the first parameter in a method
@@ -12780,80 +12725,59 @@ RuboCop::Cop::Layout::MultilineArrayBraceLayout::SAME_LINE_MESSAGE = T.let(T.uns
 # Ensures that each item in a multi-line array
 # starts on a separate line.
 #
+# @example
+#
+#   # bad
+#   [
+#   a, b,
+#   c
+#   ]
+#
+#   # good
+#   [
+#   a,
+#   b,
+#   c
+#   ]
+#
+#   # good
+#   [
+#   a,
+#   b,
+#   foo(
+#   bar
+#   )
+#   ]
 # @example AllowMultilineFinalElement: false (default)
 #
 #   # bad
-#   [
-#   a, b,
-#   c
-#   ]
-#
-#   # bad
-#   [ a, b, foo(
+#   [a, b, foo(
 #   bar
 #   )]
-#
-#   # good
-#   [
-#   a,
-#   b,
-#   c
-#   ]
-#
-#   # good
-#   [
-#   a,
-#   b,
-#   foo(
-#   bar
-#   )
-#   ]
 # @example AllowMultilineFinalElement: true
 #
-#   # bad
-#   [
-#   a, b,
-#   c
-#   ]
-#
 #   # good
-#   [ a, b, foo(
+#   [a, b, foo(
 #   bar
 #   )]
 #
-#   # good
-#   [
-#   a,
-#   b,
-#   c
-#   ]
-#
-#   # good
-#   [
-#   a,
-#   b,
-#   foo(
-#   bar
-#   )
-#   ]
-#
-# source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#66
+# source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#47
 class RuboCop::Cop::Layout::MultilineArrayLineBreaks < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::MultilineElementLineBreaks
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#72
+  # source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#53
   def on_array(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#78
+  # source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#59
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#70
+# source://rubocop//lib/rubocop/cop/layout/multiline_array_line_breaks.rb#51
 RuboCop::Cop::Layout::MultilineArrayLineBreaks::MSG = T.let(T.unsafe(nil), String)
 
 # Checks whether the multiline assignments have a newline
@@ -13152,83 +13076,63 @@ RuboCop::Cop::Layout::MultilineHashBraceLayout::SAME_LINE_MESSAGE = T.let(T.unsa
 # Ensures that each key in a multi-line hash
 # starts on a separate line.
 #
+# @example
+#
+#   # bad
+#   {
+#   a: 1, b: 2,
+#   c: 3
+#   }
+#
+#   # good
+#   {
+#   a: 1,
+#   b: 2,
+#   c: 3
+#   }
+#
+#   # good
+#   {
+#   a: 1,
+#   b: {
+#   c: 3,
+#   }
+#   }
 # @example AllowMultilineFinalElement: false (default)
 #
 #   # bad
-#   {
-#   a: 1, b: 2,
-#   c: 3
-#   }
-#
-#   # bad
 #   { a: 1, b: {
 #   c: 3,
 #   }}
-#
-#   # good
-#   {
-#   a: 1,
-#   b: 2,
-#   c: 3
-#   }
-#
-#   # good
-#   {
-#   a: 1,
-#   b: {
-#   c: 3,
-#   }
-#   }
 # @example AllowMultilineFinalElement: true
 #
-#   # bad
-#   {
-#   a: 1, b: 2,
-#   c: 3
-#   }
-#
 #   # good
 #   { a: 1, b: {
 #   c: 3,
 #   }}
 #
-#   # good
-#   {
-#   a: 1,
-#   b: 2,
-#   c: 3
-#   }
-#
-#   # good
-#   {
-#   a: 1,
-#   b: {
-#   c: 3,
-#   }
-#   }
-#
-# source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#65
+# source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#46
 class RuboCop::Cop::Layout::MultilineHashKeyLineBreaks < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::MultilineElementLineBreaks
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#71
+  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#52
   def on_hash(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#87
+  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#68
   def ignore_last_element?; end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#83
+  # source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#64
   def starts_with_curly_brace?(node); end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#69
+# source://rubocop//lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb#50
 RuboCop::Cop::Layout::MultilineHashKeyLineBreaks::MSG = T.let(T.unsafe(nil), String)
 
 # Ensures that each argument in a multi-line method call
@@ -13237,7 +13141,7 @@ RuboCop::Cop::Layout::MultilineHashKeyLineBreaks::MSG = T.let(T.unsafe(nil), Str
 # NOTE: This cop does not move the first argument, if you want that to
 # be on a separate line, see `Layout/FirstMethodArgumentLineBreak`.
 #
-# @example AllowMultilineFinalElement: false (default)
+# @example
 #
 #   # bad
 #   foo(a, b,
@@ -13258,6 +13162,7 @@ RuboCop::Cop::Layout::MultilineHashKeyLineBreaks::MSG = T.let(T.unsafe(nil), Str
 #
 #   # good
 #   foo(a, b, c)
+# @example AllowMultilineFinalElement: false (default)
 #
 #   # good
 #   foo(
@@ -13269,26 +13174,6 @@ RuboCop::Cop::Layout::MultilineHashKeyLineBreaks::MSG = T.let(T.unsafe(nil), Str
 #   )
 # @example AllowMultilineFinalElement: true
 #
-#   # bad
-#   foo(a, b,
-#   c
-#   )
-#
-#   # good
-#   foo(a, b, {
-#   foo: "bar",
-#   })
-#
-#   # good
-#   foo(
-#   a,
-#   b,
-#   c
-#   )
-#
-#   # good
-#   foo(a, b, c)
-#
 #   # good
 #   foo(
 #   a,
@@ -13298,23 +13183,23 @@ RuboCop::Cop::Layout::MultilineHashKeyLineBreaks::MSG = T.let(T.unsafe(nil), Str
 #   }
 #   )
 #
-# source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#73
+# source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#56
 class RuboCop::Cop::Layout::MultilineMethodArgumentLineBreaks < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::MultilineElementLineBreaks
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#79
+  # source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#62
   def on_send(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#98
+  # source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#81
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#77
+# source://rubocop//lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb#60
 RuboCop::Cop::Layout::MultilineMethodArgumentLineBreaks::MSG = T.let(T.unsafe(nil), String)
 
 # Checks that the closing brace in a method call is either
@@ -13702,92 +13587,66 @@ RuboCop::Cop::Layout::MultilineMethodDefinitionBraceLayout::SAME_LINE_MESSAGE = 
 # NOTE: This cop does not move the first argument, if you want that to
 # be on a separate line, see `Layout/FirstMethodParameterLineBreak`.
 #
+# @example
+#
+#   # bad
+#   def foo(a, b,
+#   c
+#   )
+#   end
+#
+#   # good
+#   def foo(
+#   a,
+#   b,
+#   c
+#   )
+#   end
+#
+#   # good
+#   def foo(
+#   a,
+#   b = {
+#   foo: "bar",
+#   }
+#   )
+#   end
+#
+#   # good
+#   def foo(a, b, c)
+#   end
 # @example AllowMultilineFinalElement: false (default)
 #
 #   # bad
-#   def foo(a, b,
-#   c
-#   )
-#   end
-#
-#   # bad
 #   def foo(a, b = {
 #   foo: "bar",
 #   })
-#   end
-#
-#   # good
-#   def foo(
-#   a,
-#   b,
-#   c
-#   )
-#   end
-#
-#   # good
-#   def foo(
-#   a,
-#   b = {
-#   foo: "bar",
-#   }
-#   )
-#   end
-#
-#   # good
-#   def foo(a, b, c)
 #   end
 # @example AllowMultilineFinalElement: true
 #
-#   # bad
-#   def foo(a, b,
-#   c
-#   )
-#   end
-#
 #   # good
 #   def foo(a, b = {
 #   foo: "bar",
 #   })
 #   end
 #
-#   # good
-#   def foo(
-#   a,
-#   b,
-#   c
-#   )
-#   end
-#
-#   # good
-#   def foo(
-#   a,
-#   b = {
-#   foo: "bar",
-#   }
-#   )
-#   end
-#
-#   # good
-#   def foo(a, b, c)
-#   end
-#
-# source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#81
+# source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#57
 class RuboCop::Cop::Layout::MultilineMethodParameterLineBreaks < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::MultilineElementLineBreaks
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#87
+  # source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#63
   def on_def(node); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#95
+  # source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#71
   def ignore_last_element?; end
 end
 
-# source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#85
+# source://rubocop//lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb#61
 RuboCop::Cop::Layout::MultilineMethodParameterLineBreaks::MSG = T.let(T.unsafe(nil), String)
 
 # Checks the indentation of the right hand side operand in binary operations that
@@ -31959,43 +31818,44 @@ RuboCop::Cop::Style::ClassVars::RESTRICT_ON_SEND = T.let(T.unsafe(nil), Array)
 class RuboCop::Cop::Style::CollectionCompact < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::RangeHelp
   extend ::RuboCop::Cop::AutoCorrector
+  extend ::RuboCop::Cop::TargetRubyVersion
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#72
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#75
   def on_send(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#52
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#55
   def reject_method?(param0 = T.unsafe(nil)); end
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#45
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#48
   def reject_method_with_block_pass?(param0 = T.unsafe(nil)); end
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#62
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#65
   def select_method?(param0 = T.unsafe(nil)); end
 
   private
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#106
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#109
   def good_method_name(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#84
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#87
   def offense_range(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#114
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#117
   def range(begin_pos_node, end_pos_node); end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#100
+  # source://rubocop//lib/rubocop/cop/style/collection_compact.rb#103
   def to_enum_method?(node); end
 end
 
-# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#40
+# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#41
 RuboCop::Cop::Style::CollectionCompact::MSG = T.let(T.unsafe(nil), String)
 
-# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#41
+# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#42
 RuboCop::Cop::Style::CollectionCompact::RESTRICT_ON_SEND = T.let(T.unsafe(nil), Array)
 
-# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#42
+# source://rubocop//lib/rubocop/cop/style/collection_compact.rb#43
 RuboCop::Cop::Style::CollectionCompact::TO_ENUM_METHODS = T.let(T.unsafe(nil), Array)
 
 # Enforces the use of consistent method names
@@ -43793,11 +43653,12 @@ RuboCop::Cop::Style::RedundantException::MSG_2 = T.let(T.unsafe(nil), String)
 # source://rubocop//lib/rubocop/cop/style/redundant_exception.rb#25
 RuboCop::Cop::Style::RedundantException::RESTRICT_ON_SEND = T.let(T.unsafe(nil), Array)
 
-# Identifies places where `fetch(key) { value }`
-# can be replaced by `fetch(key, value)`.
+# Identifies places where `fetch(key) { value }` can be replaced by `fetch(key, value)`.
 #
-# In such cases `fetch(key, value)` method is faster
-# than `fetch(key) { value }`.
+# In such cases `fetch(key, value)` method is faster than `fetch(key) { value }`.
+#
+# NOTE: The block string `'value'` in `hash.fetch(:key) { 'value' }` is detected
+# but not when disabled.
 #
 # @example SafeForConstants: false (default)
 #   # bad
@@ -43820,59 +43681,59 @@ RuboCop::Cop::Style::RedundantException::RESTRICT_ON_SEND = T.let(T.unsafe(nil),
 #   # good
 #   ENV.fetch(:key, VALUE)
 #
-# source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#38
+# source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#40
 class RuboCop::Cop::Style::RedundantFetchBlock < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::FrozenStringLiteral
   include ::RuboCop::Cop::RangeHelp
   extend ::RuboCop::Cop::AutoCorrector
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#53
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#55
   def on_block(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#87
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#89
   def rails_cache?(param0 = T.unsafe(nil)); end
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#46
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#48
   def redundant_fetch_block_candidate?(param0 = T.unsafe(nil)); end
 
   private
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#72
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#74
   def basic_literal?(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#102
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#104
   def build_bad_method(send, body); end
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#95
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#97
   def build_good_method(send, body); end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#109
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#111
   def check_for_constant?; end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#113
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#115
   def check_for_string?; end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#76
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#78
   def const_type?(node); end
 
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#91
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#93
   def fetch_range(send, node); end
 
   # @return [Boolean]
   #
-  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#80
+  # source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#82
   def should_not_check?(send, body); end
 end
 
-# source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#43
+# source://rubocop//lib/rubocop/cop/style/redundant_fetch_block.rb#45
 RuboCop::Cop::Style::RedundantFetchBlock::MSG = T.let(T.unsafe(nil), String)
 
 # Checks for the presence of superfluous `.rb` extension in
