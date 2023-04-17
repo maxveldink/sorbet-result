@@ -3,12 +3,12 @@
 
 module T
   # A monad representing either a success or a failure. Contains payload and error information as well.
-  module Result
+  class Result
     extend Sig
     extend Helpers
     extend Generic
 
-    interface!
+    abstract!
 
     Payload = type_member
     Error = type_member

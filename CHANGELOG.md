@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `T::Result` to be an abstract class, instead of an interface module.
+
 ### Fixed
 
 - `bin/console` now requires the correct file.
