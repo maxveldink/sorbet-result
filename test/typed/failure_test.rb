@@ -5,8 +5,8 @@ require "test_helper"
 
 class FailureTest < Minitest::Test
   def setup
-    @failure = T::Failure[String, String].new(error: "Something bad")
-    @failure_without_error = T::Failure.new
+    @failure = Typed::Failure[String, String].new(error: "Something bad")
+    @failure_without_error = Typed::Failure.new
   end
 
   def test_it_is_failure
@@ -30,7 +30,7 @@ class FailureTest < Minitest::Test
   end
 
   def test_payload_bang_raises_error
-    assert_raises(T::NoPayloadOnFailureError) { @failure.payload! }
-    assert_raises(T::NoPayloadOnFailureError) { @failure_without_error.payload! }
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure.payload! }
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure_without_error.payload! }
   end
 end

@@ -1,11 +1,11 @@
 # typed: strict
 # frozen_string_literal: true
 
-module T
+module Typed
   # Represents a successful result. Contains a payload and no error information.
   class Success < Result
-    extend Sig
-    extend Generic
+    extend T::Sig
+    extend T::Generic
 
     Payload = type_member
     Error = type_member
@@ -19,12 +19,12 @@ module T
       super()
     end
 
-    sig { override.returns(Boolean) }
+    sig { override.returns(T::Boolean) }
     def success?
       true
     end
 
-    sig { override.returns(Boolean) }
+    sig { override.returns(T::Boolean) }
     def failure?
       false
     end

@@ -5,8 +5,8 @@ require "test_helper"
 
 class SuccessTest < Minitest::Test
   def setup
-    @success = T::Success[String, String].new(payload: "Testing")
-    @success_without_payload = T::Success.new
+    @success = Typed::Success[String, String].new(payload: "Testing")
+    @success_without_payload = Typed::Success.new
   end
 
   def test_it_is_success
@@ -34,6 +34,6 @@ class SuccessTest < Minitest::Test
   end
 
   def test_payload_bang_raises_error_if_payload_is_nil
-    assert_raises(T::NilPayloadError) { @success_without_payload.payload! }
+    assert_raises(Typed::NilPayloadError) { @success_without_payload.payload! }
   end
 end

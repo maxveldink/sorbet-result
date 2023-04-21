@@ -4,8 +4,8 @@
 # frozen_string_literal: true
 
 require "sorbet-runtime"
-require "t/result"
-require "t/nil_payload_error"
-require "t/success"
-require "t/no_payload_on_failure_error"
-require "t/failure"
+require "typed/result"
+require "typed/nil_payload_error"
+require "typed/success"
+require "typed/no_payload_on_failure_error"
+require "typed/failure"
