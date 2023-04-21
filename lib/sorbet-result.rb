@@ -4,8 +4,11 @@
 # frozen_string_literal: true
 
 require "sorbet-runtime"
-require "typed/result"
-require "typed/nil_payload_error"
-require "typed/success"
-require "typed/no_payload_on_failure_error"
-require "typed/failure"
+require "zeitwerk"
+
+# Sorbet-aware namespace to super-charge your projects
+module Typed; end
+
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/typed", namespace: Typed)
+loader.setup
