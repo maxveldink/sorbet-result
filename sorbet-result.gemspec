@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "sorbet-result"
-  spec.version = "0.1.1"
+  spec.version = "0.2.0"
   spec.authors = ["Max VelDink"]
   spec.email = ["maxveldink@gmail.com"]
 
@@ -29,5 +29,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "sorbet-runtime"
+  spec.add_runtime_dependency "sorbet-runtime", "~> 0.5"
+  spec.add_runtime_dependency "zeitwerk", "~> 2.6"
 end

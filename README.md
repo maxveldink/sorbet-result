@@ -1,4 +1,4 @@
-# T::Result, T::Success and T::Failure
+# Typed::Result, Typed::Success and Typed::Failure
 
 A simple, strongly-typed monad for modeling results, helping you implement [Railway Oriented Programming concepts](https://blog.logrocket.com/what-is-railway-oriented-programming/) in Ruby. Helps alleviate error-driven development, all the while boosting your confidence with Sorbet static checks.
 
@@ -14,50 +14,50 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-Using a basic Result in your methods is as simple as indicating something could return a `T::Result`.
+Using a basic Result in your methods is as simple as indicating something could return a `Typed::Result`.
 
 ```ruby
-sig { params(resource_id: Integer).returns(T::Result) }
+sig { params(resource_id: Integer).returns(Typed::Result) }
 def call_api(resource_id)
   # something bad happened
-  return T::Failure.new
+  return Typed::Failure.new
 
   # something other bad thing happened
-  return T::Failure.new
+  return Typed::Failure.new
 
   # Success!
-  T::Success.new
+  Typed::Success.new
 end
 ```
 
 Generally, it's nice to have a payload with results, and it's nice to have more information on failures. We can indicate what types these are in our signatures for better static checks. Note that payloads and errors can be _any_ type.
 
 ```ruby
-sig { params(resource_id: Integer).returns(T::Result[Float, String]) }
+sig { params(resource_id: Integer).returns(Typed::Result[Float, String]) }
 def call_api(resource_id)
   # something bad happened
-  return T::Failure.new(error: "I couldn't do it!")
+  return Typed::Failure.new(error: "I couldn't do it!")
 
   # something other bad thing happened
-  return T::Failure.new(error: "I couldn't do it for another reason!")
+  return Typed::Failure.new(error: "I couldn't do it for another reason!")
 
   # Success!
-  T::Success.new(payload: 1.12)
+  Typed::Success.new(payload: 1.12)
 end
 ```
 
 *Note:* We use Sorbet's generics for payload and error typing. The generic payload and error types are erased at runtime, so you won't get a type error at runtime if you violate the generic types. These types will help you statically so be sure to run `srb tc` on your project.
 
-Further, if another part of your program needs the Result, it can depend on _only_ `T::Success`es (or `T::Failure`s if you're doing something with those results).
+Further, if another part of your program needs the Result, it can depend on _only_ `Typed::Success`es (or `Typed::Failure`s if you're doing something with those results).
 
 ```ruby
-sig { params(success_result: T::Success).void }
+sig { params(success_result: Typed::Success).void }
 def do_something_with_resource(success_result)
   ...
 end
 ```
 
-Finally, there are a few methods you can use on both `T::Result` types.
+Finally, there are a few methods you can use on both `Typed::Result` types.
 
 ```ruby
 result = call_api(1)
@@ -99,16 +99,16 @@ This has several downsides; primarily, this required your caller to _know_ what 
 Railway Oriented Programming, which comes from the functional programming community, alleviates this by _expecting_ the failure states and making them a part of the normal flow of a method. Most errors are recoverable; at the very least we can message them back to the user in some way. We should inform the caller with a Result that could be either a Success or Failure, and allow them continue or take an "off-ramp" with a failure message. If we embrace this style of programming, our `call_api` method turns into this:
 
 ```ruby
-sig { params(resource_id: Integer).returns(T::Result[Float, String]) }
+sig { params(resource_id: Integer).returns(Typed::Result[Float, String]) }
 def call_api(resource_id)
   # something bad happened
-  return T::Failure.new(error: "I couldn't do it!")
+  return Typed::Failure.new(error: "I couldn't do it!")
 
   # something other bad thing happened
-  return T::Failure.new(error: "I couldn't do it for another reason!")
+  return Typed::Failure.new(error: "I couldn't do it for another reason!")
 
   # Success!
-  T::Success.new(payload: 1.12)
+  Typed::Success.new(payload: 1.12)
 end
 ```
 

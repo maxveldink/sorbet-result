@@ -1,10 +1,10 @@
 # typed: strict
 # frozen_string_literal: true
 
-module T
+module Typed
   # Error when user attempts to unwrap payload for Success Result without payload.
   class NilPayloadError < StandardError
-    extend Sig
+    extend T::Sig
 
     sig { void }
     def initialize

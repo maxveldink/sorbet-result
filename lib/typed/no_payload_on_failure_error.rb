@@ -1,10 +1,10 @@
 # typed: strict
 # frozen_string_literal: true
 
-module T
+module Typed
   # Error when user attempts to access payload from a Failure Result.
   class NoPayloadOnFailureError < StandardError
-    extend Sig
+    extend T::Sig
 
     sig { void }
     def initialize
