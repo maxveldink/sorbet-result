@@ -2,7 +2,8 @@ PATH
   remote: .
   specs:
     sorbet-result (0.1.1)
-      sorbet-runtime
+      sorbet-runtime (~> 0.5)
+      zeitwerk (~> 2.6)
 
 GEM
   remote: https://rubygems.org/
@@ -18,7 +19,7 @@ GEM
     json (2.6.3)
     minitest (5.18.0)
     netrc (0.11.0)
-    parallel (1.22.1)
+    parallel (1.23.0)
     parser (3.2.2.0)
       ast (~> 2.4.1)
     rainbow (3.1.1)
@@ -51,14 +52,14 @@ GEM
     rubocop-sorbet (0.7.0)
       rubocop (>= 0.90.0)
     ruby-progressbar (1.13.0)
-    sorbet (0.5.10782)
-      sorbet-static (= 0.5.10782)
-    sorbet-runtime (0.5.10782)
-    sorbet-static (0.5.10782-universal-darwin-22)
-    sorbet-static (0.5.10782-x86_64-linux)
-    sorbet-static-and-runtime (0.5.10782)
-      sorbet (= 0.5.10782)
-      sorbet-runtime (= 0.5.10782)
+    sorbet (0.5.10792)
+      sorbet-static (= 0.5.10792)
+    sorbet-runtime (0.5.10792)
+    sorbet-static (0.5.10792-universal-darwin-22)
+    sorbet-static (0.5.10792-x86_64-linux)
+    sorbet-static-and-runtime (0.5.10792)
+      sorbet (= 0.5.10792)
+      sorbet-runtime (= 0.5.10792)
     spoom (1.2.1)
       sorbet (>= 0.5.10187)
       sorbet-runtime (>= 0.5.9204)
@@ -81,6 +82,7 @@ GEM
     yard-sorbet (0.8.1)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   arm64-darwin-22
