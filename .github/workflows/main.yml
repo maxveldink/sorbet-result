@@ -1,6 +1,7 @@
 name: Code Quality
 
 on:
+  workflow_call:
   push:
     branches:
       - main
