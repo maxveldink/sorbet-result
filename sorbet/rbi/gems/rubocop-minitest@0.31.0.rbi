@@ -1222,7 +1222,8 @@ RuboCop::Cop::Minitest::LiteralAsActualArgument::MSG = T.let(T.unsafe(nil), Stri
 # source://rubocop-minitest//lib/rubocop/cop/minitest/literal_as_actual_argument.rb#25
 RuboCop::Cop::Minitest::LiteralAsActualArgument::RESTRICT_ON_SEND = T.let(T.unsafe(nil), Array)
 
-# Checks if test cases contain too many assertion calls.
+# Checks if test cases contain too many assertion calls. If conditional code with assertions
+# is used, the branch with maximum assertions is counted.
 # The maximum allowed assertion calls is configurable.
 #
 # @example Max: 1
@@ -1245,23 +1246,29 @@ RuboCop::Cop::Minitest::LiteralAsActualArgument::RESTRICT_ON_SEND = T.let(T.unsa
 #   end
 #   end
 #
-# source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#29
+# source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#30
 class RuboCop::Cop::Minitest::MultipleAssertions < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::ConfigurableMax
   include ::RuboCop::Cop::VisibilityHelp
   include ::RuboCop::Cop::DefNode
   include ::RuboCop::Cop::MinitestExplorationHelpers
 
-  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#35
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#36
   def on_class(class_node); end
 
   private
 
-  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#52
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#53
+  def assertions_count(node); end
+
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#72
+  def assertions_count_in_branches(branches); end
+
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#76
   def max_assertions; end
 end
 
-# source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#33
+# source://rubocop-minitest//lib/rubocop/cop/minitest/multiple_assertions.rb#34
 RuboCop::Cop::Minitest::MultipleAssertions::MSG = T.let(T.unsafe(nil), String)
 
 # Common functionality for `AssertNil` and `RefuteNil` cops.
@@ -1999,6 +2006,42 @@ RuboCop::Cop::Minitest::RefuteSame::MSG = T.let(T.unsafe(nil), String)
 
 # source://rubocop-minitest//lib/rubocop/cop/mixin/minitest_cop_rule.rb#44
 RuboCop::Cop::Minitest::RefuteSame::RESTRICT_ON_SEND = T.let(T.unsafe(nil), Array)
+
+# Enforces the use of `skip` instead of `return` in test methods.
+#
+# @example
+#   # bad
+#   def test_something
+#   return if condition?
+#   assert_equal(42, something)
+#   end
+#
+#   # good
+#   def test_something
+#   skip if condition?
+#   assert_equal(42, something)
+#   end
+#
+# source://rubocop-minitest//lib/rubocop/cop/minitest/return_in_test_method.rb#21
+class RuboCop::Cop::Minitest::ReturnInTestMethod < ::RuboCop::Cop::Base
+  include ::RuboCop::Cop::VisibilityHelp
+  include ::RuboCop::Cop::DefNode
+  include ::RuboCop::Cop::MinitestExplorationHelpers
+  extend ::RuboCop::Cop::AutoCorrector
+
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/return_in_test_method.rb#27
+  def on_return(node); end
+
+  private
+
+  # @return [Boolean]
+  #
+  # source://rubocop-minitest//lib/rubocop/cop/minitest/return_in_test_method.rb#38
+  def inside_block?(node); end
+end
+
+# source://rubocop-minitest//lib/rubocop/cop/minitest/return_in_test_method.rb#25
+RuboCop::Cop::Minitest::ReturnInTestMethod::MSG = T.let(T.unsafe(nil), String)
 
 # Checks that `ensure` call even if `skip`. It is unexpected that `ensure` will be called when skipping test.
 # If conditional `skip` is used, it checks that `ensure` is also called conditionally.
