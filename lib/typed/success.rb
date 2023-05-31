@@ -8,10 +8,19 @@ module Typed
     extend T::Generic
 
     Payload = type_member
-    Error = type_member
+    Error = type_member { { fixed: T.untyped } }
 
     sig { override.returns(T.nilable(Payload)) }
     attr_reader :payload
+
+    sig do
+      type_parameters(:T)
+        .params(payload: T.nilable(T.type_parameter(:T)))
+        .returns(Typed::Success[T.type_parameter(:T)])
+    end
+    def self.new(payload: nil)
+      super(payload: payload)
+    end
 
     sig { params(payload: T.nilable(Payload)).void }
     def initialize(payload: nil)
