@@ -10,20 +10,25 @@ module Typed
     Payload = type_member { { fixed: T.untyped } }
     Error = type_member
 
-    sig { override.returns(T.nilable(Error)) }
+    sig { override.returns(Error) }
     attr_reader :error
 
     sig do
       type_parameters(:T)
-        .params(error: T.nilable(T.type_parameter(:T)))
+        .params(error: T.type_parameter(:T))
         .returns(Typed::Failure[T.type_parameter(:T)])
     end
-    def self.new(error: nil)
+    def self.new(error:)
       super(error: error)
     end
 
-    sig { params(error: T.nilable(Error)).void }
-    def initialize(error: nil)
+    sig { returns(Typed::Failure[NilClass]) }
+    def self.blank
+      new(error: nil)
+    end
+
+    sig { params(error: Error).void }
+    def initialize(error:)
       @error = error
       super()
     end
@@ -38,14 +43,9 @@ module Typed
       true
     end
 
-    sig { override.returns(T.nilable(Payload)) }
+    sig { override.returns(NilClass) }
     def payload
       nil
-    end
-
-    sig { override.returns(Payload) }
-    def payload!
-      raise NoPayloadOnFailureError
     end
   end
 end

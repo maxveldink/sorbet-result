@@ -19,13 +19,10 @@ module Typed
     sig { abstract.returns(T::Boolean) }
     def failure?; end
 
-    sig { abstract.returns(T.nilable(Payload)) }
+    sig { abstract.returns(Payload) }
     def payload; end
 
-    sig { abstract.returns(T.nilable(Error)) }
+    sig { abstract.returns(Error) }
     def error; end
-
-    sig { abstract.returns(Payload) }
-    def payload!; end
   end
 end
