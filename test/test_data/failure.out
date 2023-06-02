@@ -1,0 +1,26 @@
+test/test_data/failure.rb:14: Expected `Typed::Result[Integer, String]` but found `T.any(Typed::Success[Integer], Typed::Failure[Integer])` for method result type https://srb.help/7005
+    14 |  end
+          ^^^
+  Expected `Typed::Result[Integer, String]` for result type of method `test_generic_initializer`:
+    test/test_data/failure.rb:8:
+     8 |  def test_generic_initializer(should_succeed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Got `T.any(Typed::Success[Integer], Typed::Failure[Integer])` originating from:
+    test/test_data/failure.rb:10:
+    10 |      Typed::Success.new(payload: 1)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    test/test_data/failure.rb:12:
+    12 |      Typed::Failure.new(error: 1)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/test_data/failure.rb:26: Expected `Integer` but found `String("error")` for argument `error` https://srb.help/7002
+    26 |    Typed::Failure[Integer].new(error: "error")
+                                               ^^^^^^^
+  Expected `Integer` for argument `error` of method `Typed::Failure#initialize`:
+    ./lib/typed/failure.rb:30:
+    30 |    sig { params(error: Error).void }
+                         ^^^^^
+  Got `String("error")` originating from:
+    test/test_data/failure.rb:26:
+    26 |    Typed::Failure[Integer].new(error: "error")
+                                               ^^^^^^^
