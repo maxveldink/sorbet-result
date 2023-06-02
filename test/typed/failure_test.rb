@@ -5,7 +5,7 @@ require "test_helper"
 
 class FailureTest < Minitest::Test
   def setup
-    @failure = Typed::Failure[String, String].new(error: "Something bad")
+    @failure = Typed::Failure.new(error: "Something bad")
     @failure_without_error = Typed::Failure.new
   end
 

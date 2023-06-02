@@ -1,0 +1,14 @@
+test/test_data/success.rb:14: Expected `Typed::Result[Integer, String]` but found `T.any(Typed::Success[String], Typed::Failure[String])` for method result type https://srb.help/7005
+    14 |  end
+          ^^^
+  Expected `Typed::Result[Integer, String]` for result type of method `test`:
+    test/test_data/success.rb:8:
+     8 |  def test(should_succeed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  Got `T.any(Typed::Success[String], Typed::Failure[String])` originating from:
+    test/test_data/success.rb:10:
+    10 |      Typed::Success.new(payload: "1")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    test/test_data/success.rb:12:
+    12 |      Typed::Failure.new(error: "")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
