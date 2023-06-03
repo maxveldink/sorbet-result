@@ -7,20 +7,20 @@ test/test_data/failure.rb:14: Expected `Typed::Result[Integer, String]` but foun
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   Got `T.any(Typed::Success[Integer], Typed::Failure[Integer])` originating from:
     test/test_data/failure.rb:10:
-    10 |      Typed::Success.new(payload: 1)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 |      Typed::Success.new(1)
+              ^^^^^^^^^^^^^^^^^^^^^
     test/test_data/failure.rb:12:
-    12 |      Typed::Failure.new(error: 1)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 |      Typed::Failure.new(1)
+              ^^^^^^^^^^^^^^^^^^^^^
 
 test/test_data/failure.rb:26: Expected `Integer` but found `String("error")` for argument `error` https://srb.help/7002
-    26 |    Typed::Failure[Integer].new(error: "error")
-                                               ^^^^^^^
+    26 |    Typed::Failure[Integer].new("error")
+                                        ^^^^^^^
   Expected `Integer` for argument `error` of method `Typed::Failure#initialize`:
     ./lib/typed/failure.rb:30:
     30 |    sig { params(error: Error).void }
                          ^^^^^
   Got `String("error")` originating from:
     test/test_data/failure.rb:26:
-    26 |    Typed::Failure[Integer].new(error: "error")
-                                               ^^^^^^^
+    26 |    Typed::Failure[Integer].new("error")
+                                        ^^^^^^^

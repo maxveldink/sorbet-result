@@ -26,3 +26,8 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Lint/UselessMethodDefinition:
+  Exclude:
+    - lib/typed/failure.rb
+    - lib/typed/success.rb

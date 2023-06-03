@@ -18,17 +18,17 @@ module Typed
         .params(payload: T.type_parameter(:T))
         .returns(Typed::Success[T.type_parameter(:T)])
     end
-    def self.new(payload:)
-      super(payload: payload)
+    def self.new(payload)
+      super(payload)
     end
 
     sig { returns(Typed::Success[NilClass]) }
     def self.blank
-      new(payload: nil)
+      new(nil)
     end
 
     sig { params(payload: Payload).void }
-    def initialize(payload:)
+    def initialize(payload)
       @payload = payload
       super()
     end

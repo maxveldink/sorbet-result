@@ -7,9 +7,9 @@ class TestGenerics
   sig { params(should_succeed: T::Boolean).returns(Typed::Result[Integer, String]) }
   def do_something(should_succeed)
     if should_succeed
-      Typed::Success.new(payload: 123)
+      Typed::Success.new(123)
     else
-      Typed::Failure.new(error: "")
+      Typed::Failure.new("")
     end
   end
 
