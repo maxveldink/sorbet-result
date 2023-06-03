@@ -41,13 +41,13 @@ Generally, it's nice to have a payload with results, and it's nice to have more 
 sig { params(resource_id: Integer).returns(Typed::Result[Float, String]) }
 def call_api(resource_id)
   # Something bad happened
-  return Typed::Failure.new(error: "I couldn't do it!") # => Typed::Failure[String]
+  return Typed::Failure.new("I couldn't do it!") # => Typed::Failure[String]
 
   # Some other bad thing happened
-  return Typed::Failure.new(error: "I couldn't do it for another reason!") # => Typed::Failure[String]
+  return Typed::Failure.new("I couldn't do it for another reason!") # => Typed::Failure[String]
 
   # Success!
-  Typed::Success.new(payload: 1.12) # => Typed::Success[Float]
+  Typed::Success.new(1.12) # => Typed::Success[Float]
 end
 ```
 
@@ -108,13 +108,13 @@ Railway Oriented Programming, which comes from the functional programming commun
 sig { params(resource_id: Integer).returns(Typed::Result[Float, String]) }
 def call_api(resource_id)
   # something bad happened
-  return Typed::Failure.new(error: "I couldn't do it!")
+  return Typed::Failure.new("I couldn't do it!")
 
   # something other bad thing happened
-  return Typed::Failure.new(error: "I couldn't do it for another reason!")
+  return Typed::Failure.new("I couldn't do it for another reason!")
 
   # Success!
-  Typed::Success.new(payload: 1.12)
+  Typed::Success.new(1.12)
 end
 ```
 

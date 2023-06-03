@@ -18,17 +18,17 @@ module Typed
         .params(error: T.type_parameter(:T))
         .returns(Typed::Failure[T.type_parameter(:T)])
     end
-    def self.new(error:)
-      super(error: error)
+    def self.new(error)
+      super(error)
     end
 
     sig { returns(Typed::Failure[NilClass]) }
     def self.blank
-      new(error: nil)
+      new(nil)
     end
 
     sig { params(error: Error).void }
-    def initialize(error:)
+    def initialize(error)
       @error = error
       super()
     end

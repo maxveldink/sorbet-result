@@ -5,8 +5,14 @@ require "test_helper"
 
 class FailureTest < Minitest::Test
   def setup
-    @failure = Typed::Failure.new(error: "Something bad")
-    @failure_without_error = Typed::Failure.blank
+    @failure = Typed::Failure.new("Something bad")
+    @failure_without_error = Typed::Failure.new(nil)
+  end
+
+  def test_blank_is_convenience_for_nil_error
+    failure = Typed::Failure.blank
+
+    assert_nil failure.error
   end
 
   def test_it_is_failure
