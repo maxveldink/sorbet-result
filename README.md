@@ -15,34 +15,39 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 Using a basic Result in your methods is as simple as indicating something could return a `Typed::Result`.
+In practice though, you won't return instances of `Typed::Result`, but rather `Typed::Success` or `Typed::Failure`.
+`Typed::Success` can hold a payload, and `Typed::Failure` can hold an error, but if you don't have such information to provide you can simply use `Typed::Success.blank` or `Typed::Failure.blank`.
 
 ```ruby
 sig { params(resource_id: Integer).returns(Typed::Result) }
 def call_api(resource_id)
   # something bad happened
-  return Typed::Failure.new
+  return Typed::Failure.blank
 
   # something other bad thing happened
-  return Typed::Failure.new
+  return Typed::Failure.blank
 
   # Success!
-  Typed::Success.new
+  Typed::Success.blank
 end
 ```
 
 Generally, it's nice to have a payload with results, and it's nice to have more information on failures. We can indicate what types these are in our signatures for better static checks. Note that payloads and errors can be _any_ type.
+`Typed::Result`, `Typed::Success` and `Typed::Failure` are all generic types, so you can specify the payload and error types when you use them.
+`Typed::Result` will need both the success and the error types to be specified, while `Typed::Success` and `Typed::Failure` will only need the success or error type respectively.
+`Typed::Success.new` and `Typed::Failure.new` are generic methods, so the payload or error type will be inferred by the parameter type.
 
 ```ruby
 sig { params(resource_id: Integer).returns(Typed::Result[Float, String]) }
 def call_api(resource_id)
-  # something bad happened
-  return Typed::Failure.new(error: "I couldn't do it!")
+  # Something bad happened
+  return Typed::Failure.new(error: "I couldn't do it!") # => Typed::Failure[String]
 
-  # something other bad thing happened
-  return Typed::Failure.new(error: "I couldn't do it for another reason!")
+  # Some other bad thing happened
+  return Typed::Failure.new(error: "I couldn't do it for another reason!") # => Typed::Failure[String]
 
   # Success!
-  Typed::Success.new(payload: 1.12)
+  Typed::Success.new(payload: 1.12) # => Typed::Success[Float]
 end
 ```
 
@@ -51,9 +56,9 @@ end
 Further, if another part of your program needs the Result, it can depend on _only_ `Typed::Success`es (or `Typed::Failure`s if you're doing something with those results).
 
 ```ruby
-sig { params(success_result: Typed::Success).void }
+sig { params(success_result: Typed::Success[String]).void }
 def do_something_with_resource(success_result)
-  ...
+  success_result.payload # => String
 end
 ```
 
@@ -64,15 +69,16 @@ result = call_api(1)
 
 result.success? # => true if success, false if failure
 result.failure? # => true if failure, false if success
+result.payload # => nil on failure, payload type on failure
+result.error # => nil on success, error type on failure
 
-result.error # => nil on success, nil or error type on failure
-
-result.payload # => nil on failure, nil or payload type on failure
-
-result.payload! # => payload type or raises NilPayloadError on success, raises NoPayloadOnFailureError on failure
+# You can combine all the above to write flow-sensitive type-checked code
+if result.success?
+  T.assert_type!(result.payload, Float)
+else
+  T.assert_type!(result.error, String)
+end
 ```
-
-The `payload!` method is useful if you don't want to do a `T.must` escape hatch, since the payload _could_ always be `nil`. If you're writing Railway inspired code, you should do the `success?` check before calling `payload!` and know that you've returned a payload on the Result.
 
 ### Why use Results?
 
