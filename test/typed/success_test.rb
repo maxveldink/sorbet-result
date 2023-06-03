@@ -6,7 +6,13 @@ require "test_helper"
 class SuccessTest < Minitest::Test
   def setup
     @success = Typed::Success.new("Testing")
-    @success_without_payload = Typed::Success.blank
+    @success_without_payload = Typed::Success.new(nil)
+  end
+
+  def test_blank_is_convenience_for_nil_payload
+    success = Typed::Success.blank
+
+    assert_nil success.payload
   end
 
   def test_it_is_success
