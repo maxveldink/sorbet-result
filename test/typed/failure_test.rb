@@ -34,4 +34,9 @@ class FailureTest < Minitest::Test
     assert_equal "Something bad", @failure.error
     assert_nil @failure_without_error.error
   end
+
+  def test_then_does_not_execute_block_and_returns_self
+    assert_equal(@failure, @failure.then { raise "Should not be called" })
+    assert_equal(@failure_without_error, @failure_without_error.then { raise "Should not be called" })
+  end
 end

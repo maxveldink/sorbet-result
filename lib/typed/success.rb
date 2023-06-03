@@ -47,5 +47,25 @@ module Typed
     def error
       nil
     end
+
+    sig do
+      override
+        .type_parameters(:U, :T)
+        .params(block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
+        .returns(Result[T.type_parameter(:U), T.type_parameter(:T)])
+    end
+    def then(&block)
+      block.call(payload)
+    end
+
+    sig do
+      override
+        .type_parameters(:U)
+        .params(block: T.proc.params(arg0: Payload).returns(T.type_parameter(:U)))
+        .returns(T.type_parameter(:U))
+    end
+    def flat_map(&block)
+      block.call(payload)
+    end
   end
 end

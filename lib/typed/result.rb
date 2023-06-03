@@ -24,5 +24,21 @@ module Typed
 
     sig { abstract.returns(Error) }
     def error; end
+
+    sig do
+      abstract
+        .type_parameters(:U, :T)
+        .params(_block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
+        .returns(T.any(Result[T.type_parameter(:U), T.type_parameter(:T)], Result[T.type_parameter(:U), Error]))
+    end
+    def then(&_block); end
+
+    sig do
+      abstract
+        .type_parameters(:U)
+        .params(_block: T.proc.params(arg0: Payload).returns(T.type_parameter(:U)))
+        .returns(T.any(T.type_parameter(:U), Typed::Failure[Error]))
+    end
+    def flat_map(&_block); end
   end
 end
