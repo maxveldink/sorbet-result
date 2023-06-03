@@ -5,7 +5,7 @@ require "test_helper"
 
 class SuccessTest < Minitest::Test
   def setup
-    @success = Typed::Success.new(payload: "Testing")
+    @success = Typed::Success.new("Testing")
     @success_without_payload = Typed::Success.blank
   end
 

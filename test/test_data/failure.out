@@ -7,8 +7,8 @@ test/test_data/failure.rb:14: Expected `Typed::Result[Integer, String]` but foun
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   Got `T.any(Typed::Success[Integer], Typed::Failure[Integer])` originating from:
     test/test_data/failure.rb:10:
-    10 |      Typed::Success.new(payload: 1)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 |      Typed::Success.new(1)
+              ^^^^^^^^^^^^^^^^^^^^^
     test/test_data/failure.rb:12:
     12 |      Typed::Failure.new(error: 1)
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
