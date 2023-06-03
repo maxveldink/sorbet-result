@@ -9,13 +9,13 @@ class TestGenerics
     if should_succeed
       Typed::Success.new(1)
     else
-      Typed::Failure.new(error: 1)
+      Typed::Failure.new(1)
     end
   end
 
   sig { returns(Typed::Failure[String]) }
   def test_inferred_error_type
-    failure = Typed::Failure.new(error: "error")
+    failure = Typed::Failure.new("error")
 
     T.assert_type!(failure.error, String)
     failure
@@ -23,6 +23,6 @@ class TestGenerics
 
   sig { returns(Typed::Failure[Integer]) }
   def test_explicit_error_type
-    Typed::Failure[Integer].new(error: "error")
+    Typed::Failure[Integer].new("error")
   end
 end

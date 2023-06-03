@@ -10,8 +10,8 @@ test/test_data/success.rb:14: Expected `Typed::Result[Integer, String]` but foun
     10 |      Typed::Success.new("1")
               ^^^^^^^^^^^^^^^^^^^^^^^
     test/test_data/success.rb:12:
-    12 |      Typed::Failure.new(error: "")
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 |      Typed::Failure.new("")
+              ^^^^^^^^^^^^^^^^^^^^^^
 
 test/test_data/success.rb:26: Expected `Integer` but found `String("success")` for argument `payload` https://srb.help/7002
     26 |    Typed::Success[Integer].new("success")

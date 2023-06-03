@@ -9,7 +9,7 @@ class TestGenerics
     if should_succeed
       Typed::Success.new(123)
     else
-      Typed::Failure.new(error: "")
+      Typed::Failure.new("")
     end
   end
 
