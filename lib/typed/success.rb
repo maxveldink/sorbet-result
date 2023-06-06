@@ -8,7 +8,7 @@ module Typed
     extend T::Generic
 
     Payload = type_member
-    Error = type_member { { fixed: T.untyped } }
+    Error = type_member { { fixed: T.noreturn } }
 
     sig { override.returns(Payload) }
     attr_reader :payload
@@ -43,9 +43,9 @@ module Typed
       false
     end
 
-    sig { override.returns(NilClass) }
+    sig { override.returns(T.noreturn) }
     def error
-      nil
+      raise "No error on a successful result."
     end
 
     sig do

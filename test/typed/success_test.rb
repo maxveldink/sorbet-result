@@ -30,9 +30,9 @@ class SuccessTest < Minitest::Test
     assert_nil @success_without_payload.payload
   end
 
-  def test_error_returns_nil
-    assert_nil @success.error
-    assert_nil @success_without_payload.error
+  def test_error_raise_error
+    assert_raises(StandardError) { @success.error }
+    assert_raises(StandardError) { @success_without_payload.error }
   end
 
   def test_map_executes_block_with_payload_and_returns_result

@@ -10,8 +10,8 @@ module Typed
 
     abstract!
 
-    Payload = type_member
-    Error = type_member
+    Payload = type_member(:out)
+    Error = type_member(:out)
 
     sig { abstract.returns(T::Boolean) }
     def success?; end

@@ -25,9 +25,9 @@ class FailureTest < Minitest::Test
     refute_predicate @failure_without_error, :success?
   end
 
-  def test_payload_returns_nil
-    assert_nil @failure.payload
-    assert_nil @failure_without_error.payload
+  def test_payload_raise_error
+    assert_raises(StandardError) { @failure.payload }
+    assert_raises(StandardError) { @failure_without_error.payload }
   end
 
   def test_error_returns_given_error
