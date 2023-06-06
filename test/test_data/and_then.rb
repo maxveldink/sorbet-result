@@ -32,25 +32,18 @@ class TestGenerics
   end
 
   sig { returns(Typed::Result[T::Boolean, T.any(String, Integer, Float)]) }
-  def test_map
+  def test_and_then
     do_something(true)
-      .map { |payload| do_something_else(T.assert_type!(payload, Integer) == 123) }
-      .map { |payload| do_one_more_thing(T.assert_type!(payload, String) == "success") }
-      .map { |payload| Typed::Success.new(T.assert_type!(payload, Time) == Time.now) }
-  end
-
-  sig { returns(T.any(String, Typed::Failure[T.any(String, Integer)])) }
-  def test_flat_map
-    do_something(true)
-      .map { |payload| do_something_else(T.assert_type!(payload, Integer) == 123) }
-      .flat_map { |payload| payload }
+      .and_then { |payload| do_something_else(T.assert_type!(payload, Integer) == 123) }
+      .and_then { |payload| do_one_more_thing(T.assert_type!(payload, String) == "success") }
+      .and_then { |payload| Typed::Success.new(T.assert_type!(payload, Time) == Time.now) }
   end
 
   sig { returns(T.any(Time, String, Integer, Float)) }
   def test_return_type_check
     res = do_something(true)
-          .map { |_payload| do_something_else(true) }
-          .map { |_payload| do_one_more_thing(true) }
+          .and_then { |_payload| do_something_else(true) }
+          .and_then { |_payload| do_one_more_thing(true) }
 
     if res.success?
       T.assert_type!(res.payload, Time)
@@ -59,10 +52,10 @@ class TestGenerics
     end
   end
 
-  sig { returns(T.any(Typed::Failure[T.any(String, Integer)], String)) }
+  sig { returns(Typed::Result[T.noreturn, T.any(String, Integer)]) }
   def test_unreachability
     do_something(true)
-      .map { |payload| Typed::Failure.new(payload) }
-      .flat_map { |_payload| "this code is unreachable" }
+      .and_then { |payload| Typed::Failure.new(payload) }
+      .and_then { |_payload| Typed::Success.new("this code is unreachable") }
   end
 end

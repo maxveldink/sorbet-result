@@ -54,17 +54,7 @@ module Typed
         .params(_block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
         .returns(Result[T.type_parameter(:U), Error])
     end
-    def map(&_block)
-      self
-    end
-
-    sig do
-      override
-        .type_parameters(:U)
-        .params(_block: T.proc.params(arg0: Payload).returns(T.type_parameter(:U)))
-        .returns(Typed::Failure[Error])
-    end
-    def flat_map(&_block)
+    def and_then(&_block)
       self
     end
   end

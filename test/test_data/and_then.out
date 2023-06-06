@@ -1,0 +1,6 @@
+test/test_data/and_then.rb:59: This code is unreachable https://srb.help/7006
+    59 |      .and_then { |_payload| Typed::Success.new("this code is unreachable") }
+                                     ^^^^^^^^^^^^^^
+    test/test_data/and_then.rb:59: This expression always raises or can never be computed
+    59 |      .and_then { |_payload| Typed::Success.new("this code is unreachable") }
+                           ^^^^^^^^
