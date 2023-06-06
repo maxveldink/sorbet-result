@@ -58,4 +58,11 @@ class TestGenerics
       T.assert_type!(res.error, T.any(String, Integer, Float))
     end
   end
+
+  sig { returns(T.any(Typed::Failure[T.any(String, Integer)], String)) }
+  def test_unreachability
+    do_something(true)
+      .map { |payload| Typed::Failure.new(payload) }
+      .flat_map { |_payload| "this code is unreachable" }
+  end
 end

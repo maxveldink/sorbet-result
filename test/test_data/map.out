@@ -1,0 +1,6 @@
+test/test_data/map.rb:66: This code is unreachable https://srb.help/7006
+    66 |      .flat_map { |_payload| "this code is unreachable" }
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    test/test_data/map.rb:66: This expression always raises or can never be computed
+    66 |      .flat_map { |_payload| "this code is unreachable" }
+                           ^^^^^^^^
