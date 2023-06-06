@@ -35,9 +35,9 @@ class SuccessTest < Minitest::Test
     assert_nil @success_without_payload.error
   end
 
-  def test_then_executes_block_with_payload_and_returns_result
-    assert_equal("Testing", @success.then { |payload| Typed::Success.new(payload) }.payload)
-    assert_equal(@success_without_payload, @success_without_payload.then { |_payload| @success_without_payload })
+  def test_map_executes_block_with_payload_and_returns_result
+    assert_equal("Testing", @success.map { |payload| Typed::Success.new(payload) }.payload)
+    assert_equal(@success_without_payload, @success_without_payload.map { |_payload| @success_without_payload })
   end
 
   def test_flat_map_executes_block_with_payload_and_returns_result

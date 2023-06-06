@@ -35,8 +35,13 @@ class FailureTest < Minitest::Test
     assert_nil @failure_without_error.error
   end
 
-  def test_then_does_not_execute_block_and_returns_self
-    assert_equal(@failure, @failure.then { raise "Should not be called" })
-    assert_equal(@failure_without_error, @failure_without_error.then { raise "Should not be called" })
+  def test_map_does_not_execute_block_and_returns_self
+    assert_equal(@failure, @failure.map { "Should not be called" })
+    assert_equal(@failure_without_error, @failure_without_error.map { "Should not be called" })
+  end
+
+  def test_flat_map_does_not_execute_block_and_returns_self
+    assert_equal(@failure, @failure.flat_map { |payload| payload })
+    assert_equal(@failure_without_error, @failure_without_error.flat_map { |payload| payload })
   end
 end

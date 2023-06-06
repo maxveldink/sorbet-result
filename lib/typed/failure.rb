@@ -54,7 +54,7 @@ module Typed
         .params(_block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
         .returns(Result[T.type_parameter(:U), Error])
     end
-    def then(&_block)
+    def map(&_block)
       self
     end
 

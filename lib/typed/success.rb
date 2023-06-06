@@ -54,7 +54,7 @@ module Typed
         .params(block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
         .returns(Result[T.type_parameter(:U), T.type_parameter(:T)])
     end
-    def then(&block)
+    def map(&block)
       block.call(payload)
     end
 
