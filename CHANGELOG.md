@@ -9,10 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `.blank` to create a `Typed::Success` with a `nil` payload or a `Typed::Failure` with a `nil` error.
+- Add `#and_then` to `Typed::Result` to allow chaining of results. See #14 for more details.
 
 ### Changed
 
-- *Breaking* Make `Typed::Success#Error` and `Typed::Failure#Payload` fixed to `T.untyped`. This allows to specify the other type_member only when using generics. See #8 for more details
+- *Breaking* Make `Typed::Success#Error` and `Typed::Failure#Payload` fixed to `T.noreturn`. This allows to specify the other type_member only when using generics. See #8 for more details
 - *Breaking* Remove `T.nilable` from `Payload` and `Error` parameters in `Typed::Success.new` and `Typed::Failure.new`. Nilability will now need to be specified in the generic type. This also means that you'll need to use the new `.blank` instead of `.new` when you want to create a `Typed::Success` or `Typed::Failure` with a `nil` payload or error.
 - *Breaking* Change `Typed::Success` and `Typed::Failure` initialize arguments from keyword to positional.
 - Improve `Typed::Success.new` and `Typed::Failure.new` to make them generic methods and automatically infer the type of the `payload` and `error` arguments. See #8 for more details
