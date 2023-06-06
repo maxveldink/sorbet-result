@@ -45,7 +45,7 @@ module Typed
 
     sig { override.returns(T.noreturn) }
     def payload
-      raise "No payload on a failed result."
+      raise NoPayloadOnFailureError
     end
 
     sig do

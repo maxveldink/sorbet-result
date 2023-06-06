@@ -45,7 +45,7 @@ module Typed
 
     sig { override.returns(T.noreturn) }
     def error
-      raise "No error on a successful result."
+      raise NoErrorOnSuccessError
     end
 
     sig do

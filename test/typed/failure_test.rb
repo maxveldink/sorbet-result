@@ -26,8 +26,8 @@ class FailureTest < Minitest::Test
   end
 
   def test_payload_raise_error
-    assert_raises(StandardError) { @failure.payload }
-    assert_raises(StandardError) { @failure_without_error.payload }
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure.payload }
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure_without_error.payload }
   end
 
   def test_error_returns_given_error

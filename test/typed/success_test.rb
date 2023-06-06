@@ -31,8 +31,8 @@ class SuccessTest < Minitest::Test
   end
 
   def test_error_raise_error
-    assert_raises(StandardError) { @success.error }
-    assert_raises(StandardError) { @success_without_payload.error }
+    assert_raises(Typed::NoErrorOnSuccessError) { @success.error }
+    assert_raises(Typed::NoErrorOnSuccessError) { @success_without_payload.error }
   end
 
   def test_and_then_executes_block_with_payload_and_returns_result
