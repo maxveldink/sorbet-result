@@ -14,12 +14,18 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
+### Getting Started
+
 Using a basic Result in your methods is as simple as indicating something could return a `Typed::Result`.
+
 In practice though, you won't return instances of `Typed::Result`, but rather `Typed::Success` or `Typed::Failure`.
+
 `Typed::Success` can hold a payload, and `Typed::Failure` can hold an error, but if you don't have such information to provide you can simply use `Typed::Success.blank` or `Typed::Failure.blank`.
 
+`Typed::Result` is powered by Sorbet's Generics, so you'll need to specify it as `Typed::Result[Success, Error]`, where `Success` represents the type of `payload` in case of a success, while `Error` represents the type of `error` in case of an error.
+
 ```ruby
-sig { params(resource_id: Integer).returns(Typed::Result) }
+sig { params(resource_id: Integer).returns(Typed::Result[NilClass, NilClass]) }
 def call_api(resource_id)
   # something bad happened
   return Typed::Failure.blank
@@ -33,8 +39,11 @@ end
 ```
 
 Generally, it's nice to have a payload with results, and it's nice to have more information on failures. We can indicate what types these are in our signatures for better static checks. Note that payloads and errors can be _any_ type.
+
 `Typed::Result`, `Typed::Success` and `Typed::Failure` are all generic types, so you can specify the payload and error types when you use them.
+
 `Typed::Result` will need both the success and the error types to be specified, while `Typed::Success` and `Typed::Failure` will only need the success or error type respectively.
+
 `Typed::Success.new` and `Typed::Failure.new` are generic methods, so the payload or error type will be inferred by the parameter type.
 
 ```ruby
@@ -80,7 +89,31 @@ else
 end
 ```
 
-### Why use Results?
+### Chaining
+
+`Typed::Result` supports chaining, so you can chain together methods that return `Typed::Result`s using.
+
+To do so, use the `#and_then` method to transform the payload of a `Typed::Success` into another `Typed::Result`, or return a `Typed::Failure` as is.
+
+```ruby
+# In this example, retrieve_user and send_notification both return a Typed::Result
+#  retrieve_user: Typed::Result[User, RetrieveUserError
+#  send_notification: Typed::Result[T::Boolean, SendNotificationError]
+res = retrieve_user(user_id)
+  .and_then { |user| send_notification(user.email) } # this block will only run if retrieve_user returns a Typed::Success
+
+# The actual type of `res` is Typed::Result[T::Boolean, T.any(RetrieveUserError, SendNotificationError)]
+# because only the last operation can return a success, but any operation can return a failure.
+if res.success?
+  # Notification sent successfully, we can do something with res.payload coming from send_notification.
+  res.payload # => T::Boolean
+else
+  # Something went wrong, res.error could be either from retrieve_user or send_notification
+  res.error # => T.any(RetrieveUserError, SendNotificationError)
+end
+```
+
+## Why use Results?
 
 Let's say you're working on a method that reaches out to an API and fetches a resource. We hope to get a successful response and continue on in our program, but you can imagine several scenarios where we don't get that response: our authentication could fail, the server could return a 5XX response code, or the resource we were querying could have moved or not exist any more.
 

@@ -25,13 +25,18 @@ class FailureTest < Minitest::Test
     refute_predicate @failure_without_error, :success?
   end
 
-  def test_payload_returns_nil
-    assert_nil @failure.payload
-    assert_nil @failure_without_error.payload
+  def test_payload_raise_error
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure.payload }
+    assert_raises(Typed::NoPayloadOnFailureError) { @failure_without_error.payload }
   end
 
   def test_error_returns_given_error
     assert_equal "Something bad", @failure.error
     assert_nil @failure_without_error.error
+  end
+
+  def test_and_then_does_not_execute_block_and_returns_self
+    assert_equal(@failure, @failure.and_then { "Should not be called" })
+    assert_equal(@failure_without_error, @failure_without_error.and_then { "Should not be called" })
   end
 end

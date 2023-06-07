@@ -30,8 +30,13 @@ class SuccessTest < Minitest::Test
     assert_nil @success_without_payload.payload
   end
 
-  def test_error_returns_nil
-    assert_nil @success.error
-    assert_nil @success_without_payload.error
+  def test_error_raise_error
+    assert_raises(Typed::NoErrorOnSuccessError) { @success.error }
+    assert_raises(Typed::NoErrorOnSuccessError) { @success_without_payload.error }
+  end
+
+  def test_and_then_executes_block_with_payload_and_returns_result
+    assert_equal("Testing", @success.and_then { |payload| Typed::Success.new(payload) }.payload)
+    assert_equal(@success_without_payload, @success_without_payload.and_then { |_payload| @success_without_payload })
   end
 end

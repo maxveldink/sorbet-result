@@ -8,7 +8,7 @@ module Typed
     extend T::Generic
 
     Payload = type_member
-    Error = type_member { { fixed: T.untyped } }
+    Error = type_member { { fixed: T.noreturn } }
 
     sig { override.returns(Payload) }
     attr_reader :payload
@@ -43,9 +43,19 @@ module Typed
       false
     end
 
-    sig { override.returns(NilClass) }
+    sig { override.returns(T.noreturn) }
     def error
-      nil
+      raise NoErrorOnSuccessError
+    end
+
+    sig do
+      override
+        .type_parameters(:U, :T)
+        .params(block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
+        .returns(Result[T.type_parameter(:U), T.type_parameter(:T)])
+    end
+    def and_then(&block)
+      block.call(payload)
     end
   end
 end

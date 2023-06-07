@@ -10,8 +10,8 @@ module Typed
 
     abstract!
 
-    Payload = type_member
-    Error = type_member
+    Payload = type_member(:out)
+    Error = type_member(:out)
 
     sig { abstract.returns(T::Boolean) }
     def success?; end
@@ -24,5 +24,13 @@ module Typed
 
     sig { abstract.returns(Error) }
     def error; end
+
+    sig do
+      abstract
+        .type_parameters(:U, :T)
+        .params(_block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
+        .returns(T.any(Result[T.type_parameter(:U), T.type_parameter(:T)], Result[T.type_parameter(:U), Error]))
+    end
+    def and_then(&_block); end
   end
 end
