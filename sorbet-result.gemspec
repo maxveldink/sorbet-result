@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "sorbet-result"
-  spec.version = "0.2.1"
+  spec.version = "0.3.0"
   spec.authors = ["Max VelDink"]
   spec.email = ["maxveldink@gmail.com"]
 

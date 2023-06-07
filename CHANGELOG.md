@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-06-06
+
 ### Added
 
 - Add `.blank` to create a `Typed::Success` with a `nil` payload or a `Typed::Failure` with a `nil` error.
