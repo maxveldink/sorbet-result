@@ -39,4 +39,8 @@ class FailureTest < Minitest::Test
     assert_equal(@failure, @failure.and_then { "Should not be called" })
     assert_equal(@failure_without_error, @failure_without_error.and_then { "Should not be called" })
   end
+
+  def test_payload_or_returns_value
+    assert_equal(2, @failure.payload_or(2))
+  end
 end

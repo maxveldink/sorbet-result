@@ -39,4 +39,8 @@ class SuccessTest < Minitest::Test
     assert_equal("Testing", @success.and_then { |payload| Typed::Success.new(payload) }.payload)
     assert_equal(@success_without_payload, @success_without_payload.and_then { |_payload| @success_without_payload })
   end
+
+  def test_payload_or_returns_payload
+    assert_equal("Testing", @success.payload_or(2))
+  end
 end
