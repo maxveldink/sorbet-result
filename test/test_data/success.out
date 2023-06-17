@@ -24,3 +24,18 @@ test/test_data/success.rb:26: Expected `Integer` but found `String("success")` f
     test/test_data/success.rb:26:
     26 |    Typed::Success[Integer].new("success")
                                         ^^^^^^^^^
+
+test/test_data/success.rb:33: Method `upcase` does not exist on `Integer` component of `T.any(String, Integer)` https://srb.help/7003
+    33 |    success.payload_or(1).upcase
+                                  ^^^^^^
+  Got `T.any(String, Integer)` originating from:
+    test/test_data/success.rb:33:
+    33 |    success.payload_or(1).upcase
+            ^^^^^^^^^^^^^^^^^^^^^
+  Did you mean `phase`? Use `-a` to autocorrect
+    test/test_data/success.rb:33: Replace with `phase`
+    33 |    success.payload_or(1).upcase
+                                  ^^^^^^
+    https://github.com/sorbet/sorbet/tree/6cfdcc56f3b81d8024b6423167d745f4bfd92258/rbi/core/integer.rbi#L921: Defined here
+     921 |  def phase(); end
+            ^^^^^^^^^^^

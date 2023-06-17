@@ -24,3 +24,18 @@ test/test_data/failure.rb:26: Expected `Integer` but found `String("error")` for
     test/test_data/failure.rb:26:
     26 |    Typed::Failure[Integer].new("error")
                                         ^^^^^^^
+
+test/test_data/failure.rb:33: Method `upcase` does not exist on `Integer` https://srb.help/7003
+    33 |    success.payload_or(1).upcase
+                                  ^^^^^^
+  Got `Integer` originating from:
+    test/test_data/failure.rb:33:
+    33 |    success.payload_or(1).upcase
+            ^^^^^^^^^^^^^^^^^^^^^
+  Did you mean `phase`? Use `-a` to autocorrect
+    test/test_data/failure.rb:33: Replace with `phase`
+    33 |    success.payload_or(1).upcase
+                                  ^^^^^^
+    https://github.com/sorbet/sorbet/tree/6cfdcc56f3b81d8024b6423167d745f4bfd92258/rbi/core/integer.rbi#L921: Defined here
+     921 |  def phase(); end
+            ^^^^^^^^^^^

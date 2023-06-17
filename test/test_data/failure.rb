@@ -25,4 +25,11 @@ class TestGenerics
   def test_explicit_error_type
     Typed::Failure[Integer].new("error")
   end
+
+  sig { void }
+  def test_payload_or
+    success = Typed::Failure.new("success")
+
+    success.payload_or(1).upcase
+  end
 end
