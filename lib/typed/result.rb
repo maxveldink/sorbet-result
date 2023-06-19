@@ -32,5 +32,13 @@ module Typed
         .returns(T.any(Result[T.type_parameter(:U), T.type_parameter(:T)], Result[T.type_parameter(:U), Error]))
     end
     def and_then(&_block); end
+
+    sig do
+      abstract
+        .type_parameters(:Fallback)
+        .params(value: T.type_parameter(:Fallback))
+        .returns(T.any(Payload, T.type_parameter(:Fallback)))
+    end
+    def payload_or(value); end
   end
 end

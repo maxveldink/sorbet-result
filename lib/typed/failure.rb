@@ -57,5 +57,15 @@ module Typed
     def and_then(&_block)
       self
     end
+
+    sig do
+      override
+        .type_parameters(:Fallback)
+        .params(value: T.type_parameter(:Fallback))
+        .returns(T.any(Payload, T.type_parameter(:Fallback)))
+    end
+    def payload_or(value)
+      value
+    end
   end
 end
