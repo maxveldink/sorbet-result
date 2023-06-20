@@ -32,4 +32,11 @@ class TestGenerics
 
     success.payload_or(1).upcase
   end
+
+  sig { void }
+  def test_passed_on_error_type
+    Typed::Failure.new("error").on_error do |error|
+      T.assert_type!(error, String)
+    end
+  end
 end
