@@ -76,10 +76,11 @@ Finally, there are a few methods you can use on both `Typed::Result` types.
 ```ruby
 result = call_api(1)
 
-result.success? # => true if success, false if failure
-result.failure? # => true if failure, false if success
+result.success? # => true on success, false on failure
+result.failure? # => true on failure, false on success
 result.payload # => nil on failure, payload type on failure
 result.error # => nil on success, error type on failure
+result.payload_or("fallback") # => returns payload on success, given value on failure
 
 # You can combine all the above to write flow-sensitive type-checked code
 if result.success?
@@ -112,6 +113,19 @@ else
   res.error # => T.any(RetrieveUserError, SendNotificationError)
 end
 ```
+
+You can also use the `#on_error` chain to take an action only on failure, such as logging or capturing error information in an error monitoring service.
+
+```ruby
+# In this example, retrieve_user and send_notification both return a Typed::Result
+#  retrieve_user: Typed::Result[User, RetrieveUserError
+#  send_notification: Typed::Result[T::Boolean, SendNotificationError]
+res = retrieve_user(user_id)
+  .and_then { |user| send_notification(user.email) } # this block will only run if retrieve_user returns a Typed::Success
+  .on_error { |error| puts "Encountered this error: #{error}"}
+```
+
+If the above chain does not fail, the `puts` statement is never run. If the chain does yield a `Failure`, the `puts` block is executed and the `Failure` is ultimately returned.
 
 ## Why use Results?
 
