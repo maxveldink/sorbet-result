@@ -2,14 +2,14 @@
 
 Gem::Specification.new do |spec|
   spec.name = "sorbet-result"
-  spec.version = "0.3.1"
+  spec.version = "1.0.0"
   spec.authors = ["Max VelDink"]
   spec.email = ["maxveldink@gmail.com"]
 
   spec.summary = "Adds T::Result to sorbet-runtime, which is a basic, strongly-typed monad"
   spec.homepage = "https://github.com/maxveldink/sorbet-result"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.7"
+  spec.required_ruby_version = ">= 3.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["rubygems_mfa_required"] = "true"
