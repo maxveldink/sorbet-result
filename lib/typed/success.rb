@@ -60,20 +60,20 @@ module Typed
 
     sig do
       override
-        .params(blk: T.proc.params(arg0: Error).void)
+        .params(_blk: T.proc.params(arg0: Error).void)
         .returns(T.self_type)
     end
-    def on_error(&blk) # rubocop:disable Lint/UnusedMethodArgument
+    def on_error(&_blk)
       self
     end
 
     sig do
       override
         .type_parameters(:Fallback)
-        .params(value: T.type_parameter(:Fallback))
+        .params(_value: T.type_parameter(:Fallback))
         .returns(T.any(Payload, T.type_parameter(:Fallback)))
     end
-    def payload_or(value) # rubocop:disable Lint/UnusedMethodArgument
+    def payload_or(_value)
       payload
     end
   end
