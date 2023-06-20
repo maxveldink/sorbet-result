@@ -40,6 +40,10 @@ class SuccessTest < Minitest::Test
     assert_equal(@success_without_payload, @success_without_payload.and_then { |_payload| @success_without_payload })
   end
 
+  def test_on_error_does_not_call_block_and_returns_self
+    assert_equal(@success, @success.on_error { raise "Ran on_error block on Success type" })
+  end
+
   def test_payload_or_returns_payload
     assert_equal("Testing", @success.payload_or(2))
   end

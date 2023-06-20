@@ -60,6 +60,16 @@ module Typed
 
     sig do
       override
+        .params(blk: T.proc.params(arg0: Error).void)
+        .returns(T.self_type)
+    end
+    def on_error(&blk)
+      blk.call(error)
+      self
+    end
+
+    sig do
+      override
         .type_parameters(:Fallback)
         .params(value: T.type_parameter(:Fallback))
         .returns(T.any(Payload, T.type_parameter(:Fallback)))
