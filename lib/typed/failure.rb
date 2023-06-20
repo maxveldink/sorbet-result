@@ -60,11 +60,11 @@ module Typed
 
     sig do
       override
-        .params(blk: T.proc.params(arg0: Error).void)
+        .params(block: T.proc.params(arg0: Error).void)
         .returns(T.self_type)
     end
-    def on_error(&blk)
-      blk.call(error)
+    def on_error(&block)
+      block.call(error)
       self
     end
 

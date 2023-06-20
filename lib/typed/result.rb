@@ -35,10 +35,10 @@ module Typed
 
     sig do
       abstract
-        .params(blk: T.proc.params(arg0: Error).void)
+        .params(block: T.proc.params(arg0: Error).void)
         .returns(T.self_type)
     end
-    def on_error(&blk); end
+    def on_error(&block); end
 
     sig do
       abstract
