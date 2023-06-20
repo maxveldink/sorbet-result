@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Remove support for Ruby < 2.7
+- Remove support for Ruby < 3.0
 
 ## [0.3.1] - 2023-06-20
 
