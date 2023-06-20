@@ -40,11 +40,11 @@ class FailureTest < Minitest::Test
     assert_equal(@failure_without_error, @failure_without_error.and_then { "Should not be called" })
   end
 
-  def test_on_error_calls_block_and_returns_self
-    ran_block = T.let(false, T::Boolean)
+  def test_on_error_calls_block_with_error_and_returns_self
+    captured_error = T.let(nil, T.nilable(String))
 
-    assert_equal(@failure, @failure.on_error { ran_block = true })
-    assert(ran_block)
+    assert_equal(@failure, @failure.on_error { |error| captured_error = error })
+    assert_equal("Something bad", captured_error)
   end
 
   def test_payload_or_returns_value
