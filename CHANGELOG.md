@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2023-06-20
+
+### Added
+
+- Add `#on_error` to `Typed::Result` to allow behavior when an error is encountered during chaining.
+- Add `#payload_or` to `Typed::Result` to allow callers to specify a default value if `Failure` is returned.
+
 ## [0.3.0] - 2023-06-06
 
 ### Added
