@@ -17,15 +17,15 @@ class Standard::Sorbet::Plugin < ::LintRoller::Plugin
   # source://standard-sorbet//lib/standard/sorbet/plugin.rb#3
   def initialize(config); end
 
-  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#7
+  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#8
   def about; end
 
-  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#20
+  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#21
   def rules(context); end
 
   # @return [Boolean]
   #
-  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#16
+  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#17
   def supported?(context); end
 
   private
@@ -44,7 +44,7 @@ class Standard::Sorbet::Plugin < ::LintRoller::Plugin
   # meant to be mutated externally, but it's better than the `Inject` monkey
   # patching that rubocop-sorbet does (and many other RuboCop plugins do)
   #
-  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#45
+  # source://standard-sorbet//lib/standard/sorbet/plugin.rb#51
   def trick_rubocop_into_thinking_we_required_rubocop_sorbet!; end
 end
 
