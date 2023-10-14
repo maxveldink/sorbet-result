@@ -7,7 +7,7 @@ module Typed
     extend T::Sig
     extend T::Generic
 
-    Payload = type_member { { fixed: T.noreturn } }
+    Payload = type_member { {fixed: T.noreturn} }
     Error = type_member
 
     sig { override.returns(Error) }

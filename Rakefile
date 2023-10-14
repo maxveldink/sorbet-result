@@ -7,14 +7,12 @@ Minitest::TestTask.create do |t|
   t.test_globs = ["test/**/*_test.rb"]
 end
 
+require "standard/rake"
+
 desc "Test Compiler output"
 task :compiler do
   sh "./test/test_type_checker.sh"
 end
-
-require "rubocop/rake_task"
-
-RuboCop::RakeTask.new
 
 desc "Run tapioca compilers"
 task :tapioca do
@@ -26,4 +24,4 @@ task :sorbet do
   sh "bundle exec srb tc"
 end
 
-task default: %i[rubocop:autocorrect_all sorbet test compiler]
+task default: %i[standard:fix_unsafely sorbet test compiler]

@@ -9,6 +9,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    base64 (0.1.1)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -19,6 +20,7 @@ GEM
       reline (>= 0.3.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
+    lint_roller (1.1.0)
     minitest (5.18.1)
     netrc (0.11.0)
     parallel (1.23.0)
@@ -38,7 +40,8 @@ GEM
     reline (0.3.5)
       io-console (~> 0.5)
     rexml (3.2.5)
-    rubocop (1.54.0)
+    rubocop (1.56.3)
+      base64 (~> 0.1.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -46,16 +49,15 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.28.0, < 2.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
       parser (>= 3.2.1.0)
-    rubocop-minitest (0.31.0)
-      rubocop (>= 1.39, < 2.0)
-    rubocop-rake (0.6.0)
-      rubocop (~> 1.0)
-    rubocop-sorbet (0.7.0)
+    rubocop-performance (1.19.0)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
+    rubocop-sorbet (0.7.2)
       rubocop (>= 0.90.0)
     ruby-progressbar (1.13.0)
     sorbet (0.5.10900)
@@ -72,6 +74,21 @@ GEM
       sorbet-runtime (>= 0.5.9204)
       syntax_tree (>= 6.1.1)
       thor (>= 0.19.2)
+    standard (1.31.1)
+      language_server-protocol (~> 3.17.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.56.2)
+      standard-custom (~> 1.0.0)
+      standard-performance (~> 1.2)
+    standard-custom (1.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.50)
+    standard-performance (1.2.0)
+      lint_roller (~> 1.1)
+      rubocop-performance (~> 1.19.0)
+    standard-sorbet (0.0.1)
+      lint_roller (~> 1.0)
+      rubocop-sorbet (~> 0.7.0)
     syntax_tree (6.1.1)
       prettier_print (>= 1.2.0)
     tapioca (0.11.7)
@@ -102,14 +119,12 @@ DEPENDENCIES
   debug
   minitest
   rake
-  rubocop
-  rubocop-minitest
-  rubocop-rake
-  rubocop-sorbet
   sorbet
   sorbet-result!
   sorbet-runtime
   spoom
+  standard
+  standard-sorbet
   tapioca
 
 BUNDLED WITH
