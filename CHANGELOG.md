@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Switched to Standard over using Rubocop directly
+
 ## [1.0.0] - 2023-06-20
 
 ### Removed
