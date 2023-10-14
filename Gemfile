@@ -7,10 +7,8 @@ gemspec
 
 group :development do
   gem "rake"
-  gem "rubocop"
-  gem "rubocop-minitest"
-  gem "rubocop-rake"
-  gem "rubocop-sorbet"
+  gem "standard"
+  gem "standard-sorbet"
   gem "sorbet"
   gem "spoom"
   gem "tapioca", require: false

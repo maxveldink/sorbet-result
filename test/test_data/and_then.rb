@@ -42,8 +42,8 @@ class TestGenerics
   sig { returns(T.any(Time, String, Integer, Float)) }
   def test_return_type_check
     res = do_something(true)
-          .and_then { |_payload| do_something_else(true) }
-          .and_then { |_payload| do_one_more_thing(true) }
+      .and_then { |_payload| do_something_else(true) }
+      .and_then { |_payload| do_one_more_thing(true) }
 
     if res.success?
       T.assert_type!(res.payload, Time)

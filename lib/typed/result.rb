@@ -14,16 +14,20 @@ module Typed
     Error = type_member(:out)
 
     sig { abstract.returns(T::Boolean) }
-    def success?; end
+    def success?
+    end
 
     sig { abstract.returns(T::Boolean) }
-    def failure?; end
+    def failure?
+    end
 
     sig { abstract.returns(Payload) }
-    def payload; end
+    def payload
+    end
 
     sig { abstract.returns(Error) }
-    def error; end
+    def error
+    end
 
     sig do
       abstract
@@ -31,14 +35,16 @@ module Typed
         .params(_block: T.proc.params(arg0: Payload).returns(Result[T.type_parameter(:U), T.type_parameter(:T)]))
         .returns(T.any(Result[T.type_parameter(:U), T.type_parameter(:T)], Result[T.type_parameter(:U), Error]))
     end
-    def and_then(&_block); end
+    def and_then(&_block)
+    end
 
     sig do
       abstract
         .params(block: T.proc.params(arg0: Error).void)
         .returns(T.self_type)
     end
-    def on_error(&block); end
+    def on_error(&block)
+    end
 
     sig do
       abstract
@@ -46,6 +52,7 @@ module Typed
         .params(value: T.type_parameter(:Fallback))
         .returns(T.any(Payload, T.type_parameter(:Fallback)))
     end
-    def payload_or(value); end
+    def payload_or(value)
+    end
   end
 end

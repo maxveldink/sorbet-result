@@ -8,7 +8,7 @@ module Typed
     extend T::Generic
 
     Payload = type_member
-    Error = type_member { { fixed: T.noreturn } }
+    Error = type_member { {fixed: T.noreturn} }
 
     sig { override.returns(Payload) }
     attr_reader :payload
