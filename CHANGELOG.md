@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switched to Standard over using Rubocop directly
 
+### Security
+
+- Bumped up dependencies
+
 ## [1.0.0] - 2023-06-20
 
 ### Removed
