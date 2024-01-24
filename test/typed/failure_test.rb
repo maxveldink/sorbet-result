@@ -47,6 +47,24 @@ class FailureTest < Minitest::Test
     assert_equal("Something bad", captured_error)
   end
 
+  def test_either_runs_on_failure
+    assert_equal(
+      "Error was Something bad",
+      @failure.either(
+        ->(payload) { raise "Ran on_success proc on Failure type" },
+        ->(error) { "Error was #{error}" }
+      )
+    )
+
+    assert_equal(
+      "No error",
+      @failure_without_error.either(
+        ->(_payload) { raise "Ran on_success proc on Failure type" },
+        ->(_error) { "No error" }
+      )
+    )
+  end
+
   def test_payload_or_returns_value
     assert_equal(2, @failure.payload_or(2))
   end

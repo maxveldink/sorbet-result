@@ -44,6 +44,24 @@ class SuccessTest < Minitest::Test
     assert_equal(@success, @success.on_error { raise "Ran on_error block on Success type" })
   end
 
+  def test_either_runs_on_success
+    assert_equal(
+      "Payload was Testing",
+      @success.either(
+        ->(payload) { "Payload was #{payload}" },
+        ->(error) { raise "Ran on_failure proc on Success type" }
+      )
+    )
+
+    assert_equal(
+      "No payload",
+      @success_without_payload.either(
+        ->(_payload) { "No payload" },
+        ->(_error) { raise "Ran on_failure proc on Success type" }
+      )
+    )
+  end
+
   def test_payload_or_returns_payload
     assert_equal("Testing", @success.payload_or(2))
   end

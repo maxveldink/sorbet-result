@@ -48,6 +48,18 @@ module Typed
 
     sig do
       abstract
+        .type_parameters(:S, :F)
+        .params(
+          on_success: T.proc.params(arg0: Payload).returns(T.type_parameter(:S)),
+          on_failure: T.proc.params(arg0: Error).returns(T.type_parameter(:F))
+        )
+        .returns(T.any(T.type_parameter(:S), T.type_parameter(:F)))
+    end
+    def either(on_success, on_failure)
+    end
+
+    sig do
+      abstract
         .type_parameters(:Fallback)
         .params(value: T.type_parameter(:Fallback))
         .returns(T.any(Payload, T.type_parameter(:Fallback)))
