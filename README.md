@@ -127,6 +127,14 @@ res = retrieve_user(user_id)
 
 If the above chain does not fail, the `puts` statement is never run. If the chain does yield a `Failure`, the `puts` block is executed and the `Failure` is ultimately returned.
 
+### Transforming Results
+
+Once you're done chaining operations that can yield results, you'll typically want to take different actions based on Success or Failure. There are a few methods to aid this.
+
+`#payload_or(fallback)` can be used to return either the `Payload` type when Success or the provided value.
+
+`#either(on_success, on_failure)` allows you to provide two procs to be run on success or on failure. These receive the payload and error if not nil, but will not receive any arguments if they are nil.
+
 ## Why use Results?
 
 Let's say you're working on a method that reaches out to an API and fetches a resource. We hope to get a successful response and continue on in our program, but you can imagine several scenarios where we don't get that response: our authentication could fail, the server could return a 5XX response code, or the resource we were querying could have moved or not exist any more.
