@@ -59,8 +59,8 @@ class FailureTest < Minitest::Test
     assert_equal(
       "No error",
       @failure_without_error.either(
-        ->(_payload) { raise "Ran on_success proc on Failure type" },
-        ->(_error) { "No error" }
+        -> { raise "Ran on_success proc on Failure type" },
+        -> { "No error" }
       )
     )
   end

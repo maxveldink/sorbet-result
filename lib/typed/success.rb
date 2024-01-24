@@ -71,13 +71,24 @@ module Typed
       override
         .type_parameters(:S, :F)
         .params(
-          on_success: T.proc.params(arg0: Payload).returns(T.type_parameter(:S)),
-          on_failure: T.proc.params(arg0: Error).returns(T.type_parameter(:F))
+          on_success: T.any(
+            T.proc.returns(T.type_parameter(:S)),
+            T.proc.params(arg0: Payload).returns(T.type_parameter(:S))
+          ),
+          on_failure: T.any(
+            T.proc.returns(T.type_parameter(:F)),
+            T.proc.params(arg0: Error).returns(T.type_parameter(:F))
+          )
         )
         .returns(T.any(T.type_parameter(:S), T.type_parameter(:F)))
     end
     def either(on_success, on_failure)
-      on_success.call(payload)
+      case payload
+      when nil
+        T.cast(on_success, T.proc.returns(T.type_parameter(:S))).call
+      else
+        T.cast(on_success, T.proc.params(arg0: Payload).returns(T.type_parameter(:S))).call(payload)
+      end
     end
 
     sig do
