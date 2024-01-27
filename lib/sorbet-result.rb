@@ -5,6 +5,7 @@
 
 require "sorbet-runtime"
 require "zeitwerk"
+require_relative "typed/result"
 
 # Sorbet-aware namespace to super-charge your projects
 module Typed; end

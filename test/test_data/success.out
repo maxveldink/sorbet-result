@@ -17,8 +17,8 @@ test/test_data/success.rb:26: Expected `Integer` but found `String("success")` f
     26 |    Typed::Success[Integer].new("success")
                                         ^^^^^^^^^
   Expected `Integer` for argument `payload` of method `Typed::Success#initialize`:
-    ./lib/typed/success.rb:30:
-    30 |    sig { params(payload: Payload).void }
+    ./lib/typed/result.rb:87:
+    87 |    sig { params(payload: Payload).void }
                          ^^^^^^^
   Got `String("success")` originating from:
     test/test_data/success.rb:26:
