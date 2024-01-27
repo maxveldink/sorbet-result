@@ -4,4 +4,3 @@
 require "debug"
 require "minitest/autorun"
 require "sorbet-runtime"
-require "zeitwerk"
