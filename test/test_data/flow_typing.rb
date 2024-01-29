@@ -22,4 +22,18 @@ class TestGenerics
       T.assert_type!(result.error, String)
     end
   end
+
+  sig { void }
+  def test_case
+    result = do_something(true)
+
+    case do_something(true)
+    when Typed::Success
+      T.assert_type!(result.payload, Integer)
+    when Typed::Failure
+      T.assert_type!(result.error, String)
+    else
+      T.absurd(result)
+    end
+  end
 end
