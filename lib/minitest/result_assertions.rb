@@ -1,11 +1,10 @@
 # typed: true
 
 require "minitest/assertions"
+require "sorbet-result"
 
 module Minitest
   module Assertions
-    extend T::Sig
-
     # Fails unless Result is a Success
     def assert_success(result)
       assert_kind_of(Typed::Success, result)
