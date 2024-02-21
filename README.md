@@ -127,6 +127,29 @@ res = retrieve_user(user_id)
 
 If the above chain does not fail, the `puts` statement is never run. If the chain does yield a `Failure`, the `puts` block is executed and the `Failure` is ultimately returned.
 
+### Testing
+
+We ship with a few Minitest assertions that can be used to easily verify Results.
+
+```ruby
+# test_helper.rb
+
+require "minitest/results_assertions"
+# You also need add this to `sorbet/tapioca/require.rb` and rebuild the Minitest gem RBIs
+
+# *_test.rb
+
+@success = Typed::Success.new("Test Payload")
+@failure = Typed::Failure.new("Test Error")
+
+assert_success(@success)
+assert_failure(@failure)
+assert_payload("Test Payload", @success)
+assert_error("Test Error", @failure)
+
+# We also have the `refute_*` counterparts
+```
+
 ## Why use Results?
 
 Let's say you're working on a method that reaches out to an API and fetches a resource. We hope to get a successful response and continue on in our program, but you can imagine several scenarios where we don't get that response: our authentication could fail, the server could return a 5XX response code, or the resource we were querying could have moved or not exist any more.

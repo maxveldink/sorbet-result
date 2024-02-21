@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "sorbet-result"
-  spec.version = "1.0.0"
+  spec.version = "1.1.0"
   spec.authors = ["Max VelDink"]
   spec.email = ["maxveldink@gmail.com"]
 
@@ -30,4 +30,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "sorbet-runtime", "~> 0.5"
+
+  spec.add_development_dependency "minitest", "~> 5.22"
 end
