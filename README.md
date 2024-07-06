@@ -134,7 +134,7 @@ We ship with a few Minitest assertions that can be used to easily verify Results
 ```ruby
 # test_helper.rb
 
-require "minitest/results_assertions"
+require "minitest/result_assertions"
 # You also need add this to `sorbet/tapioca/require.rb` and rebuild the Minitest gem RBIs
 
 # *_test.rb
