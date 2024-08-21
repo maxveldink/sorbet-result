@@ -78,8 +78,8 @@ result = call_api(1)
 
 result.success? # => true on success, false on failure
 result.failure? # => true on failure, false on success
-result.payload # => nil on failure, payload type on failure
-result.error # => nil on success, error type on failure
+result.payload # => raises error on failure, payload type on failure
+result.error # => raises error on success, error type on failure
 result.payload_or("fallback") # => returns payload on success, given value on failure
 
 # You can combine all the above to write flow-sensitive type-checked code
