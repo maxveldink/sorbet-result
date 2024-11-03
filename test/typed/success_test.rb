@@ -47,4 +47,10 @@ class SuccessTest < Minitest::Test
   def test_payload_or_returns_payload
     assert_equal("Testing", @success.payload_or(2))
   end
+
+  def test_equals_works
+    assert_equal(@success, Typed::Success.new("Testing"))
+    refute_equal(@success, Typed::Success.blank)
+    refute_equal(@success, Typed::Failure.blank)
+  end
 end

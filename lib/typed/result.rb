@@ -133,6 +133,11 @@ module Typed
     def payload_or(_value)
       payload
     end
+
+    sig { params(other: T.untyped).returns(T::Boolean) }
+    def ==(other)
+      other.is_a?(Success) && other.payload == payload
+    end
   end
 
   class Failure < Result
