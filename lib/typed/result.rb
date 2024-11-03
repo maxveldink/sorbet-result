@@ -5,6 +5,8 @@ require_relative "no_error_on_success_error"
 require_relative "no_payload_on_failure_error"
 
 module Typed
+  extend T::Sig
+
   # A monad representing either a success or a failure. Contains payload and error information as well.
   class Result
     extend T::Sig
@@ -138,6 +140,15 @@ module Typed
     def ==(other)
       other.is_a?(Success) && other.payload == payload
     end
+  end
+
+  sig do
+    type_parameters(:T)
+      .params(payload: T.type_parameter(:T))
+      .returns(Typed::Success[T.type_parameter(:T)])
+  end
+  def self.Success(payload)
+    Success.new(payload)
   end
 
   class Failure < Result
