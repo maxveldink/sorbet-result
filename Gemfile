@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in activerecord-ejection_seat.gemspec
+# Specify your gem's dependencies in sorbet-result.gemspec
 gemspec
 
 group :development do
