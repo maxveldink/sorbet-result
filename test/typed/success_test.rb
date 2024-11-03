@@ -15,6 +15,10 @@ class SuccessTest < Minitest::Test
     assert_nil success.payload
   end
 
+  def test_Success_convenience_method
+    assert_equal @success, Typed::Success("Testing")
+  end
+
   def test_it_is_success
     assert_predicate @success, :success?
     assert_predicate @success_without_payload, :success?
@@ -46,5 +50,11 @@ class SuccessTest < Minitest::Test
 
   def test_payload_or_returns_payload
     assert_equal("Testing", @success.payload_or(2))
+  end
+
+  def test_equals_works
+    assert_equal(@success, Typed::Success.new("Testing"))
+    refute_equal(@success, Typed::Success.blank)
+    refute_equal(@success, Typed::Failure.new("Testing"))
   end
 end

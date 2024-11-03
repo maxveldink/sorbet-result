@@ -19,8 +19,8 @@ test/test_data/failure.rb:26: Expected `Integer` but found `String("error")` for
     26 |    Typed::Failure[Integer].new("error")
                                         ^^^^^^^
   Expected `Integer` for argument `error` of method `Typed::Failure#initialize`:
-    ./lib/typed/result.rb:162:
-     162 |    sig { params(error: Error).void }
+    ./lib/typed/result.rb:187:
+     187 |    sig { params(error: Error).void }
                            ^^^^^
   Got `String("error")` originating from:
     test/test_data/failure.rb:26:
