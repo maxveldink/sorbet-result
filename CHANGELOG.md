@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `Typed::Success(payload)` and `Typed::Failure(error)` convenience method (no more `.new`-ing!)
+- Add `Typed::Success#==` and `Typed::Failure#==` implementations
+
 ### Removed
 
 - **POTENTIALLY BREAKING** Remove support for Ruby < 3.1.
