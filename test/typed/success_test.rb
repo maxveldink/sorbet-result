@@ -16,7 +16,7 @@ class SuccessTest < Minitest::Test
   end
 
   def test_Success_convenience_method
-    assert_equal Typed::Success.new("Testing"), Typed::Success("Testing")
+    assert_equal @success, Typed::Success("Testing")
   end
 
   def test_it_is_success
@@ -55,6 +55,6 @@ class SuccessTest < Minitest::Test
   def test_equals_works
     assert_equal(@success, Typed::Success.new("Testing"))
     refute_equal(@success, Typed::Success.blank)
-    refute_equal(@success, Typed::Failure.blank)
+    refute_equal(@success, Typed::Failure.new("Testing"))
   end
 end

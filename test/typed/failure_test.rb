@@ -15,6 +15,10 @@ class FailureTest < Minitest::Test
     assert_nil failure.error
   end
 
+  def test_Failure_convenience_method
+    assert_equal @failure, Typed::Failure("Something bad")
+  end
+
   def test_it_is_failure
     assert_predicate @failure, :failure?
     assert_predicate @failure_without_error, :failure?
@@ -49,5 +53,11 @@ class FailureTest < Minitest::Test
 
   def test_payload_or_returns_value
     assert_equal(2, @failure.payload_or(2))
+  end
+
+  def test_equals_works
+    assert_equal(@failure, Typed::Failure.new("Something bad"))
+    refute_equal(@failure, Typed::Failure.blank)
+    refute_equal(@failure, Typed::Success.new("Something bad"))
   end
 end

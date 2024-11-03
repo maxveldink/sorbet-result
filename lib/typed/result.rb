@@ -151,6 +151,15 @@ module Typed
     Success.new(payload)
   end
 
+  sig do
+    type_parameters(:T)
+      .params(error: T.type_parameter(:T))
+      .returns(Typed::Failure[T.type_parameter(:T)])
+  end
+  def self.Failure(error)
+    Failure.new(error)
+  end
+
   class Failure < Result
     extend T::Sig
     extend T::Generic
@@ -224,6 +233,11 @@ module Typed
     end
     def payload_or(value)
       value
+    end
+
+    sig { params(other: T.untyped).returns(T::Boolean) }
+    def ==(other)
+      other.is_a?(Failure) && other.error == error
     end
   end
 end
