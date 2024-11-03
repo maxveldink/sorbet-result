@@ -12,6 +12,8 @@ test/test_data/failure.rb:14: Expected `Typed::Result[Integer, String]` but foun
     test/test_data/failure.rb:12:
     12 |      Typed::Failure.new(1)
               ^^^^^^^^^^^^^^^^^^^^^
+  Detailed explanation:
+    `Integer` is not a subtype of `String` for covariant type member `Typed::Result::Error`
 
 test/test_data/failure.rb:26: Expected `Integer` but found `String("error")` for argument `error` https://srb.help/7002
     26 |    Typed::Failure[Integer].new("error")
@@ -36,6 +38,6 @@ test/test_data/failure.rb:33: Method `upcase` does not exist on `Integer` https:
     test/test_data/failure.rb:33: Replace with `phase`
     33 |    success.payload_or(1).upcase
                                   ^^^^^^
-    https://github.com/sorbet/sorbet/tree/fb09bed285d9bb073a4ab129e51d7fcbc8d8c548/rbi/core/integer.rbi#L957: Defined here
+    https://github.com/sorbet/sorbet/tree/0ab8f3c29260f8ecee31aa960de3692419e2d3c3/rbi/core/integer.rbi#L957: Defined here
      957 |  def phase(); end
             ^^^^^^^^^^^
