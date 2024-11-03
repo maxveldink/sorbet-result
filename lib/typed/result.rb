@@ -76,7 +76,7 @@ module Typed
         .returns(Typed::Success[T.type_parameter(:T)])
     end
     def self.new(payload)
-      super(payload)
+      super
     end
 
     sig { returns(Typed::Success[NilClass]) }
@@ -151,7 +151,7 @@ module Typed
         .returns(Typed::Failure[T.type_parameter(:T)])
     end
     def self.new(error)
-      super(error)
+      super
     end
 
     sig { returns(Typed::Failure[NilClass]) }

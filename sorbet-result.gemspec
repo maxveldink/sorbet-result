@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.summary = "Adds T::Result to sorbet-runtime, which is a basic, strongly-typed monad"
   spec.homepage = "https://github.com/maxveldink/sorbet-result"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.0"
+  spec.required_ruby_version = ">= 3.1"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["rubygems_mfa_required"] = "true"
@@ -30,6 +30,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "sorbet-runtime", "~> 0.5"
-
-  spec.add_development_dependency "minitest", "~> 5.22"
 end
