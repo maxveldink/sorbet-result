@@ -98,7 +98,7 @@ To do so, use the `#and_then` method to transform the payload of a `Typed::Succe
 
 ```ruby
 # In this example, retrieve_user and send_notification both return a Typed::Result
-#  retrieve_user: Typed::Result[User, RetrieveUserError
+#  retrieve_user: Typed::Result[User, RetrieveUserError]
 #  send_notification: Typed::Result[T::Boolean, SendNotificationError]
 res = retrieve_user(user_id)
   .and_then { |user| send_notification(user.email) } # this block will only run if retrieve_user returns a Typed::Success
