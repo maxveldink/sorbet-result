@@ -1,9 +1,11 @@
 name: Code Quality
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
   pull_request:
-
 jobs:
   tapioca:
     runs-on: ubuntu-latest
