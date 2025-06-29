@@ -12,7 +12,6 @@ jobs:
     needs: code_quality
     permissions:
       contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4

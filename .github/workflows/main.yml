@@ -1,13 +1,12 @@
 name: Code Quality
 
-permissions:
-  contents: read
-
 on:
   workflow_call:
   pull_request:
 jobs:
   tapioca:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -18,6 +17,8 @@ jobs:
         bundler-cache: true
     - run: bin/tapioca gem --verify
   build:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     needs: tapioca
