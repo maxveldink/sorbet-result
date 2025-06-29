@@ -202,7 +202,7 @@ module Typed
 
     sig { override.returns(T.noreturn) }
     def payload
-      raise NoPayloadOnFailureError
+      raise NoPayloadOnFailureError.new(self)
     end
 
     sig do
