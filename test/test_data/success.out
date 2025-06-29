@@ -38,6 +38,6 @@ test/test_data/success.rb:33: Method `upcase` does not exist on `Integer` compon
     test/test_data/success.rb:33: Replace with `phase`
     33 |    success.payload_or(1).upcase
                                   ^^^^^^
-    https://github.com/sorbet/sorbet/tree/0ab8f3c29260f8ecee31aa960de3692419e2d3c3/rbi/core/integer.rbi#L957: Defined here
+    https://github.com/sorbet/sorbet/tree/662a1a4e956ac74a1b2c22f33f590f38b92ecb74/rbi/core/integer.rbi#L957: Defined here
      957 |  def phase(); end
             ^^^^^^^^^^^
