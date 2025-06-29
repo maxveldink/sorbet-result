@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-06-29
+
+### Added
+
+- Added error details to `Typed::NoPayloadOnFailureError` error message
+
 ## [1.2.0] - 2024-11-03
 
 ### Added
