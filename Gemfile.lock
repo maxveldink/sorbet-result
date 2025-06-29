@@ -9,13 +9,11 @@ GEM
   specs:
     ast (2.4.3)
     benchmark (0.4.1)
-    cgi (0.5.0)
     date (3.4.1)
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    erb (4.0.4)
-      cgi (>= 0.3.3)
+    erb (5.0.1)
     erubi (1.13.1)
     io-console (0.8.0)
     irb (1.15.2)
@@ -53,6 +51,7 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.1)
       io-console (~> 0.5)
+    rexml (3.4.1)
     rubocop (1.75.8)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -83,10 +82,11 @@ GEM
     sorbet-static-and-runtime (0.5.12210)
       sorbet (= 0.5.12210)
       sorbet-runtime (= 0.5.12210)
-    spoom (1.6.1)
+    spoom (1.6.3)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
-      rbi (>= 0.2.3)
+      rbi (>= 0.3.3)
+      rexml (>= 3.2.6)
       sorbet-static-and-runtime (>= 0.5.10187)
       thor (>= 0.19.2)
     standard (1.50.0)
@@ -127,6 +127,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
+  arm64-darwin-24
   x86_64-linux
 
 DEPENDENCIES
@@ -142,4 +143,4 @@ DEPENDENCIES
   tapioca
 
 BUNDLED WITH
-   2.4.22
+   2.6.9
