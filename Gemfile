@@ -17,4 +17,6 @@ end
 group :development, :test do
   gem "minitest"
   gem "sorbet-runtime"
+
+  gem "debug"
 end
