@@ -4,6 +4,8 @@ on:
 
 jobs:
   code_quality:
+    permissions:
+      contents: read
     uses: ./.github/workflows/main.yml
   release-gem:
     runs-on: ubuntu-latest
