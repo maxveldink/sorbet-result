@@ -6,9 +6,14 @@ module Typed
   class NoPayloadOnFailureError < StandardError
     extend T::Sig
 
-    sig { void }
-    def initialize
-      super("Attempted to access `payload` from a Failure Result. You were probably expecting a Success Result. Check the result with `#success?` or `#failure?` before attempting to access `payload`.") # rubocop:disable Layout/LineLength
+    sig { params(failure: Failure[T.untyped]).void }
+    def initialize(failure)
+      super(
+        "Attempted to access `payload` from a Failure Result. " \
+        "You were probably expecting a Success Result. " \
+        "Check the result with `#success?` or `#failure?` before attempting to access `payload`. " \
+        "Error encountered: #{failure.error.inspect}"
+      )
     end
   end
 end
