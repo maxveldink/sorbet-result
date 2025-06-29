@@ -56,30 +56,33 @@ module Spoom::Cli::Helper
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#149
+  # source://spoom//lib/spoom/cli/helper.rb#147
   sig { params(string: ::String).returns(::String) }
   def blue(string); end
 
   # Collect files from `paths`, defaulting to `exec_path`
-  # : (Array[String] paths, ?include_rbi_files: bool) -> Array[String]
+  # : (Array[String] paths) -> Array[String]
   #
   # source://spoom//lib/spoom/cli/helper.rb#85
-  sig { params(paths: T::Array[::String], include_rbi_files: T::Boolean).returns(T::Array[::String]) }
-  def collect_files(paths, include_rbi_files: T.unsafe(nil)); end
+  # Collect files from `paths`, defaulting to `exec_path`
+  sig { params(paths: T::Array[::String]).returns(T::Array[::String]) }
+  def collect_files(paths); end
 
   # Is the `--color` option true?
   # : -> bool
   #
   # @return [Boolean]
   #
-  # source://spoom//lib/spoom/cli/helper.rb#113
+  # source://spoom//lib/spoom/cli/helper.rb#111
+  # Is the `--color` option true?
   sig { returns(T::Boolean) }
   def color?; end
 
   # Colorize a string if `color?`
   # : (String string, *Color color) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#142
+  # source://spoom//lib/spoom/cli/helper.rb#140
+  # Colorize a string if `color?`
   sig { params(string: ::String, color: ::Spoom::Color).returns(::String) }
   def colorize(string, *color); end
 
@@ -87,6 +90,7 @@ module Spoom::Cli::Helper
   # : -> Context
   #
   # source://spoom//lib/spoom/cli/helper.rb#58
+  # Returns the context at `--path` (by default the current working directory)
   sig { returns(::Spoom::Context) }
   def context; end
 
@@ -94,12 +98,13 @@ module Spoom::Cli::Helper
   # : -> Context
   #
   # source://spoom//lib/spoom/cli/helper.rb#64
+  # Raise if `spoom` is not ran inside a context with a `sorbet/config` file
   sig { returns(::Spoom::Context) }
   def context_requiring_sorbet!; end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#154
+  # source://spoom//lib/spoom/cli/helper.rb#152
   sig { params(string: ::String).returns(::String) }
   def cyan(string); end
 
@@ -107,30 +112,31 @@ module Spoom::Cli::Helper
   # : -> String
   #
   # source://spoom//lib/spoom/cli/helper.rb#79
+  # Return the path specified through `--path`
   sig { returns(::String) }
   def exec_path; end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#159
+  # source://spoom//lib/spoom/cli/helper.rb#157
   sig { params(string: ::String).returns(::String) }
   def gray(string); end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#164
+  # source://spoom//lib/spoom/cli/helper.rb#162
   sig { params(string: ::String).returns(::String) }
   def green(string); end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#118
+  # source://spoom//lib/spoom/cli/helper.rb#116
   sig { params(string: ::String).returns(::String) }
   def highlight(string); end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#169
+  # source://spoom//lib/spoom/cli/helper.rb#167
   sig { params(string: ::String).returns(::String) }
   def red(string); end
 
@@ -138,6 +144,7 @@ module Spoom::Cli::Helper
   # : (String message) -> void
   #
   # source://spoom//lib/spoom/cli/helper.rb#19
+  # Print `message` on `$stdout`
   sig { params(message: ::String).void }
   def say(message); end
 
@@ -147,6 +154,8 @@ module Spoom::Cli::Helper
   # : (String message, ?status: String?, ?nl: bool) -> void
   #
   # source://spoom//lib/spoom/cli/helper.rb#32
+  # Print `message` on `$stderr`
+  # The message is prefixed by a status (default: `Error`).
   sig { params(message: ::String, status: T.nilable(::String), nl: T::Boolean).void }
   def say_error(message, status: T.unsafe(nil), nl: T.unsafe(nil)); end
 
@@ -156,12 +165,14 @@ module Spoom::Cli::Helper
   # : (String message, ?status: String?, ?nl: bool) -> void
   #
   # source://spoom//lib/spoom/cli/helper.rb#46
+  # Print `message` on `$stderr`
+  # The message is prefixed by a status (default: `Warning`).
   sig { params(message: ::String, status: T.nilable(::String), nl: T::Boolean).void }
   def say_warning(message, status: T.unsafe(nil), nl: T.unsafe(nil)); end
 
   # : (String string) -> String
   #
-  # source://spoom//lib/spoom/cli/helper.rb#174
+  # source://spoom//lib/spoom/cli/helper.rb#172
   sig { params(string: ::String).returns(::String) }
   def yellow(string); end
 end
@@ -369,21 +380,21 @@ class Spoom::Cli::Srb::Sigs < ::Thor
   include ::Spoom::Colorize
   include ::Spoom::Cli::Helper
 
-  # source://spoom//lib/spoom/cli/srb/sigs.rb#198
+  # source://spoom//lib/spoom/cli/srb/sigs.rb#197
   def exec(context, command); end
 
-  # source://spoom//lib/spoom/cli/srb/sigs.rb#69
+  # source://spoom//lib/spoom/cli/srb/sigs.rb#68
   def export(output_path = T.unsafe(nil)); end
 
   def help(command = T.unsafe(nil), subcommand = T.unsafe(nil)); end
 
-  # source://spoom//lib/spoom/cli/srb/sigs.rb#50
+  # source://spoom//lib/spoom/cli/srb/sigs.rb#49
   def strip(*paths); end
 
-  # source://spoom//lib/spoom/cli/srb/sigs.rb#175
+  # source://spoom//lib/spoom/cli/srb/sigs.rb#174
   def transform_files(files, &block); end
 
-  # source://spoom//lib/spoom/cli/srb/sigs.rb#21
+  # source://spoom//lib/spoom/cli/srb/sigs.rb#20
   def translate(*paths); end
 end
 
@@ -392,15 +403,15 @@ class Spoom::Cli::Srb::Tc < ::Thor
   include ::Spoom::Colorize
   include ::Spoom::Cli::Helper
 
-  # source://spoom//lib/spoom/cli/srb/tc.rb#147
+  # source://spoom//lib/spoom/cli/srb/tc.rb#132
   def colorize_message(message); end
 
-  # source://spoom//lib/spoom/cli/srb/tc.rb#138
+  # source://spoom//lib/spoom/cli/srb/tc.rb#123
   def format_error(error, format); end
 
   def help(command = T.unsafe(nil), subcommand = T.unsafe(nil)); end
 
-  # source://spoom//lib/spoom/cli/srb/tc.rb#28
+  # source://spoom//lib/spoom/cli/srb/tc.rb#27
   def tc(*paths_to_select); end
 end
 
@@ -461,6 +472,8 @@ end
 # It is used to manipulate files and run commands in the context of this directory.
 #
 # source://spoom//lib/spoom/context/bundle.rb#5
+# An abstraction to a Ruby project context
+# A context maps to a directory in the file system.
 class Spoom::Context
   include ::Spoom::Context::Bundle
   include ::Spoom::Context::Exec
@@ -477,6 +490,9 @@ class Spoom::Context
   # @return [Context] a new instance of Context
   #
   # source://spoom//lib/spoom/context.rb#47
+  # Create a new context about `absolute_path`
+  # The directory will not be created if it doesn't exist.
+  # Call `#make!` to create it.
   sig { params(absolute_path: ::String).void }
   def initialize(absolute_path); end
 
@@ -484,6 +500,7 @@ class Spoom::Context
   # : String
   #
   # source://spoom//lib/spoom/context.rb#40
+  # The absolute path to the directory this context is about
   sig { returns(::String) }
   def absolute_path; end
 
@@ -495,6 +512,9 @@ class Spoom::Context
     # : (?String? name) -> instance
     #
     # source://spoom//lib/spoom/context.rb#33
+    # Create a new context in the system's temporary directory
+    # `name` is used as prefix to the temporary directory name.
+    # The directory will be created if it doesn't exist.
     sig { params(name: T.nilable(::String)).returns(T.attached_class) }
     def mktmp!(name = T.unsafe(nil)); end
   end
@@ -510,6 +530,7 @@ module Spoom::Context::Bundle
   # : (String command, ?version: String?, ?capture_err: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/bundle.rb#32
+  # Run a command with `bundle` in this context directory
   sig { params(command: ::String, version: T.nilable(::String), capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def bundle(command, version: T.unsafe(nil), capture_err: T.unsafe(nil)); end
 
@@ -517,6 +538,7 @@ module Spoom::Context::Bundle
   # : (String command, ?version: String?, ?capture_err: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/bundle.rb#45
+  # Run a command `bundle exec` in this context directory
   sig { params(command: ::String, version: T.nilable(::String), capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def bundle_exec(command, version: T.unsafe(nil), capture_err: T.unsafe(nil)); end
 
@@ -524,6 +546,7 @@ module Spoom::Context::Bundle
   # : (?version: String?, ?capture_err: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/bundle.rb#39
+  # Run `bundle install` in this context directory
   sig { params(version: T.nilable(::String), capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def bundle_install!(version: T.unsafe(nil), capture_err: T.unsafe(nil)); end
 
@@ -533,6 +556,8 @@ module Spoom::Context::Bundle
   # : (String gem) -> Gem::Version?
   #
   # source://spoom//lib/spoom/context/bundle.rb#61
+  # Get `gem` version from the `Gemfile.lock` content
+  # Returns `nil` if `gem` cannot be found in the Gemfile.
   sig { params(gem: ::String).returns(T.nilable(::Gem::Version)) }
   def gem_version_from_gemfile_lock(gem); end
 
@@ -546,6 +571,7 @@ module Spoom::Context::Bundle
   # : -> String?
   #
   # source://spoom//lib/spoom/context/bundle.rb#14
+  # Read the contents of the Gemfile in this context directory
   sig { returns(T.nilable(::String)) }
   def read_gemfile; end
 
@@ -553,6 +579,7 @@ module Spoom::Context::Bundle
   # : -> String?
   #
   # source://spoom//lib/spoom/context/bundle.rb#20
+  # Read the contents of the Gemfile.lock in this context directory
   sig { returns(T.nilable(::String)) }
   def read_gemfile_lock; end
 
@@ -560,6 +587,7 @@ module Spoom::Context::Bundle
   # : (String contents, ?append: bool) -> void
   #
   # source://spoom//lib/spoom/context/bundle.rb#26
+  # Set the `contents` of the Gemfile in this context directory
   sig { params(contents: ::String, append: T::Boolean).void }
   def write_gemfile!(contents, append: T.unsafe(nil)); end
 end
@@ -574,6 +602,7 @@ module Spoom::Context::Exec
   # : (String command, ?capture_err: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/exec.rb#32
+  # Run a command in this context directory
   sig { params(command: ::String, capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def exec(command, capture_err: T.unsafe(nil)); end
 end
@@ -588,6 +617,7 @@ module Spoom::Context::FileSystem
   # : (String relative_path) -> String
   #
   # source://spoom//lib/spoom/context/file_system.rb#14
+  # Returns the absolute path to `relative_path` in the context's directory
   sig { params(relative_path: ::String).returns(::String) }
   def absolute_path_to(relative_path); end
 
@@ -609,6 +639,8 @@ module Spoom::Context::FileSystem
   # : -> void
   #
   # source://spoom//lib/spoom/context/file_system.rb#98
+  # Delete this context and its content
+  # Warning: it will `rm -rf` the context directory on the file system.
   sig { void }
   def destroy!; end
 
@@ -618,6 +650,7 @@ module Spoom::Context::FileSystem
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/context/file_system.rb#20
+  # Does the context directory at `absolute_path` exist and is a directory?
   sig { returns(T::Boolean) }
   def exist?; end
 
@@ -627,6 +660,7 @@ module Spoom::Context::FileSystem
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/context/file_system.rb#58
+  # Does `relative_path` point to an existing file in this context directory?
   sig { params(relative_path: ::String).returns(T::Boolean) }
   def file?(relative_path); end
 
@@ -634,6 +668,7 @@ module Spoom::Context::FileSystem
   # : (?String pattern) -> Array[String]
   #
   # source://spoom//lib/spoom/context/file_system.rb#33
+  # List all files in this context matching `pattern`
   sig { params(pattern: ::String).returns(T::Array[::String]) }
   def glob(pattern = T.unsafe(nil)); end
 
@@ -641,6 +676,7 @@ module Spoom::Context::FileSystem
   # : -> Array[String]
   #
   # source://spoom//lib/spoom/context/file_system.rb#41
+  # List all files at the top level of this context directory
   sig { returns(T::Array[::String]) }
   def list; end
 
@@ -648,6 +684,7 @@ module Spoom::Context::FileSystem
   # : -> void
   #
   # source://spoom//lib/spoom/context/file_system.rb#26
+  # Create the context directory at `absolute_path`
   sig { void }
   def mkdir!; end
 
@@ -655,6 +692,7 @@ module Spoom::Context::FileSystem
   # : (String from_relative_path, String to_relative_path) -> void
   #
   # source://spoom//lib/spoom/context/file_system.rb#88
+  # Move the file or directory from `from_relative_path` to `to_relative_path`
   sig { params(from_relative_path: ::String, to_relative_path: ::String).void }
   def move!(from_relative_path, to_relative_path); end
 
@@ -664,6 +702,8 @@ module Spoom::Context::FileSystem
   # : (String relative_path) -> String
   #
   # source://spoom//lib/spoom/context/file_system.rb#66
+  # Return the contents of the file at `relative_path` in this context directory
+  # Will raise if the file doesn't exist.
   sig { params(relative_path: ::String).returns(::String) }
   def read(relative_path); end
 
@@ -671,6 +711,7 @@ module Spoom::Context::FileSystem
   # : (String relative_path) -> void
   #
   # source://spoom//lib/spoom/context/file_system.rb#82
+  # Remove the path at `relative_path` (recursive + force) in this context directory
   sig { params(relative_path: ::String).void }
   def remove!(relative_path); end
 
@@ -680,6 +721,8 @@ module Spoom::Context::FileSystem
   # : (String relative_path, ?String contents, ?append: bool) -> void
   #
   # source://spoom//lib/spoom/context/file_system.rb#74
+  # Write `contents` in the file at `relative_path` in this context directory
+  # Append to the file if `append` is true.
   sig { params(relative_path: ::String, contents: ::String, append: T::Boolean).void }
   def write!(relative_path, contents = T.unsafe(nil), append: T.unsafe(nil)); end
 end
@@ -694,6 +737,7 @@ module Spoom::Context::Git
   # : (String command) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#38
+  # Run a command prefixed by `git` in this context directory
   sig { params(command: ::String).returns(::Spoom::ExecResult) }
   def git(command); end
 
@@ -701,6 +745,7 @@ module Spoom::Context::Git
   # : (?ref: String) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#57
+  # Run `git checkout` in this context directory
   sig { params(ref: ::String).returns(::Spoom::ExecResult) }
   def git_checkout!(ref: T.unsafe(nil)); end
 
@@ -708,6 +753,7 @@ module Spoom::Context::Git
   # : (String branch_name, ?ref: String?) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#63
+  # Run `git checkout -b <branch-name> <ref>` in this context directory
   sig { params(branch_name: ::String, ref: T.nilable(::String)).returns(::Spoom::ExecResult) }
   def git_checkout_new_branch!(branch_name, ref: T.unsafe(nil)); end
 
@@ -715,6 +761,7 @@ module Spoom::Context::Git
   # : (?message: String, ?time: Time, ?allow_empty: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#73
+  # Run `git add . && git commit` in this context directory
   sig { params(message: ::String, time: ::Time, allow_empty: T::Boolean).returns(::Spoom::ExecResult) }
   def git_commit!(message: T.unsafe(nil), time: T.unsafe(nil), allow_empty: T.unsafe(nil)); end
 
@@ -722,6 +769,7 @@ module Spoom::Context::Git
   # : -> String?
   #
   # source://spoom//lib/spoom/context/git.rb#84
+  # Get the current git branch in this context directory
   sig { returns(T.nilable(::String)) }
   def git_current_branch; end
 
@@ -729,6 +777,7 @@ module Spoom::Context::Git
   # : (*String arg) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#93
+  # Run `git diff` in this context directory
   sig { params(arg: ::String).returns(::Spoom::ExecResult) }
   def git_diff(*arg); end
 
@@ -739,6 +788,9 @@ module Spoom::Context::Git
   # : (?branch: String?) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#47
+  # Run `git init` in this context directory
+  # Warning: passing a branch will run `git init -b <branch>` which is only available in git 2.28+.
+  # In older versions, use `git_init!` followed by `git("checkout -b <branch>")`.
   sig { params(branch: T.nilable(::String)).returns(::Spoom::ExecResult) }
   def git_init!(branch: T.unsafe(nil)); end
 
@@ -746,6 +798,7 @@ module Spoom::Context::Git
   # : (?short_sha: bool) -> Spoom::Git::Commit?
   #
   # source://spoom//lib/spoom/context/git.rb#99
+  # Get the last commit in the currently checked out branch
   sig { params(short_sha: T::Boolean).returns(T.nilable(::Spoom::Git::Commit)) }
   def git_last_commit(short_sha: T.unsafe(nil)); end
 
@@ -759,6 +812,7 @@ module Spoom::Context::Git
   # : (String remote, String ref, ?force: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/git.rb#116
+  # Run `git push <remote> <ref>` in this context directory
   sig { params(remote: ::String, ref: ::String, force: T::Boolean).returns(::Spoom::ExecResult) }
   def git_push!(remote, ref, force: T.unsafe(nil)); end
 
@@ -774,6 +828,7 @@ module Spoom::Context::Git
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/context/git.rb#127
+  # Is there uncommitted changes in this context directory?
   sig { params(path: ::String).returns(T::Boolean) }
   def git_workdir_clean?(path: T.unsafe(nil)); end
 end
@@ -790,6 +845,7 @@ module Spoom::Context::Sorbet
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/context/sorbet.rb#106
+  # Does this context has a `sorbet/config` file?
   sig { returns(T::Boolean) }
   def has_sorbet_config?; end
 
@@ -797,6 +853,7 @@ module Spoom::Context::Sorbet
   # : (String relative_path) -> String?
   #
   # source://spoom//lib/spoom/context/sorbet.rb#129
+  # Read the strictness sigil from the file at `relative_path` (returns `nil` if no sigil)
   sig { params(relative_path: ::String).returns(T.nilable(::String)) }
   def read_file_strictness(relative_path); end
 
@@ -804,6 +861,7 @@ module Spoom::Context::Sorbet
   # : -> String
   #
   # source://spoom//lib/spoom/context/sorbet.rb#117
+  # Read the contents of `sorbet/config` in this context directory
   sig { returns(::String) }
   def read_sorbet_config; end
 
@@ -817,6 +875,7 @@ module Spoom::Context::Sorbet
   # : -> Spoom::Git::Commit?
   #
   # source://spoom//lib/spoom/context/sorbet.rb#135
+  # Get the commit introducing the `sorbet/config` file
   sig { returns(T.nilable(::Spoom::Git::Commit)) }
   def sorbet_intro_commit; end
 
@@ -824,6 +883,7 @@ module Spoom::Context::Sorbet
   # : -> Spoom::Git::Commit?
   #
   # source://spoom//lib/spoom/context/sorbet.rb#147
+  # Get the commit removing the `sorbet/config` file
   sig { returns(T.nilable(::Spoom::Git::Commit)) }
   def sorbet_removal_commit; end
 
@@ -831,6 +891,7 @@ module Spoom::Context::Sorbet
   # : (*String arg, ?sorbet_bin: String?, ?capture_err: bool) -> ExecResult
   #
   # source://spoom//lib/spoom/context/sorbet.rb#14
+  # Run `bundle exec srb` in this context directory
   sig { params(arg: ::String, sorbet_bin: T.nilable(::String), capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def srb(*arg, sorbet_bin: T.unsafe(nil), capture_err: T.unsafe(nil)); end
 
@@ -838,6 +899,7 @@ module Spoom::Context::Sorbet
   # : (?with_config: Spoom::Sorbet::Config?, ?include_rbis: bool) -> Array[String]
   #
   # source://spoom//lib/spoom/context/sorbet.rb#58
+  # List all files typechecked by Sorbet from its `config`
   sig { params(with_config: T.nilable(::Spoom::Sorbet::Config), include_rbis: T::Boolean).returns(T::Array[::String]) }
   def srb_files(with_config: T.unsafe(nil), include_rbis: T.unsafe(nil)); end
 
@@ -845,6 +907,7 @@ module Spoom::Context::Sorbet
   # : (String strictness, ?with_config: Spoom::Sorbet::Config?, ?include_rbis: bool) -> Array[String]
   #
   # source://spoom//lib/spoom/context/sorbet.rb#91
+  # List all files typechecked by Sorbet from its `config` that matches `strictness`
   sig do
     params(
       strictness: ::String,
@@ -882,6 +945,7 @@ module Spoom::Context::Sorbet
   # : (String contents, ?append: bool) -> void
   #
   # source://spoom//lib/spoom/context/sorbet.rb#123
+  # Set the `contents` of `sorbet/config` in this context directory
   sig { params(contents: ::String, append: T::Boolean).void }
   def write_sorbet_config!(contents, append: T.unsafe(nil)); end
 end
@@ -937,6 +1001,7 @@ class Spoom::Coverage::Cards::Card < ::Spoom::Coverage::Template
   # : String?
   #
   # source://spoom//lib/spoom/coverage/report.rb#94
+  # @return [String, nil]
   def body; end
 
   # : String?
@@ -946,8 +1011,6 @@ class Spoom::Coverage::Cards::Card < ::Spoom::Coverage::Template
   def title; end
 end
 
-# : String
-#
 # source://spoom//lib/spoom/coverage/report.rb#91
 Spoom::Coverage::Cards::Card::TEMPLATE = T.let(T.unsafe(nil), String)
 
@@ -978,7 +1041,7 @@ class Spoom::Coverage::Cards::Erb < ::Spoom::Coverage::Cards::Card
   def html; end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#150
+# source://spoom//lib/spoom/coverage/report.rb#151
 class Spoom::Coverage::Cards::Map < ::Spoom::Coverage::Cards::Card
   # : (file_tree: FileTree, nodes_strictnesses: Hash[FileTree::Node, String?], nodes_strictness_scores: Hash[FileTree::Node, Float], ?title: String) -> void
   #
@@ -1031,12 +1094,10 @@ class Spoom::Coverage::Cards::Snapshot < ::Spoom::Coverage::Cards::Card
   def snapshot; end
 end
 
-# : String
-#
 # source://spoom//lib/spoom/coverage/report.rb#123
 Spoom::Coverage::Cards::Snapshot::TEMPLATE = T.let(T.unsafe(nil), String)
 
-# source://spoom//lib/spoom/coverage/report.rb#214
+# source://spoom//lib/spoom/coverage/report.rb#215
 class Spoom::Coverage::Cards::SorbetIntro < ::Spoom::Coverage::Cards::Erb
   # : (?sorbet_intro_commit: String?, ?sorbet_intro_date: Time?) -> void
   #
@@ -1053,7 +1114,7 @@ class Spoom::Coverage::Cards::SorbetIntro < ::Spoom::Coverage::Cards::Erb
   def erb; end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#165
+# source://spoom//lib/spoom/coverage/report.rb#166
 class Spoom::Coverage::Cards::Timeline < ::Spoom::Coverage::Cards::Card
   # : (title: String, timeline: D3::Timeline) -> void
   #
@@ -1064,7 +1125,7 @@ class Spoom::Coverage::Cards::Timeline < ::Spoom::Coverage::Cards::Card
   def initialize(title:, timeline:); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#178
+# source://spoom//lib/spoom/coverage/report.rb#179
 class Spoom::Coverage::Cards::Timeline::Calls < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1075,7 +1136,7 @@ class Spoom::Coverage::Cards::Timeline::Calls < ::Spoom::Coverage::Cards::Timeli
   def initialize(snapshots:, title: T.unsafe(nil)); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#192
+# source://spoom//lib/spoom/coverage/report.rb#193
 class Spoom::Coverage::Cards::Timeline::RBIs < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1086,7 +1147,7 @@ class Spoom::Coverage::Cards::Timeline::RBIs < ::Spoom::Coverage::Cards::Timelin
   def initialize(snapshots:, title: T.unsafe(nil)); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#206
+# source://spoom//lib/spoom/coverage/report.rb#207
 class Spoom::Coverage::Cards::Timeline::Runtimes < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1097,7 +1158,7 @@ class Spoom::Coverage::Cards::Timeline::Runtimes < ::Spoom::Coverage::Cards::Tim
   def initialize(snapshots:, title: T.unsafe(nil)); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#171
+# source://spoom//lib/spoom/coverage/report.rb#172
 class Spoom::Coverage::Cards::Timeline::Sigils < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1108,7 +1169,7 @@ class Spoom::Coverage::Cards::Timeline::Sigils < ::Spoom::Coverage::Cards::Timel
   def initialize(snapshots:, title: T.unsafe(nil)); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#185
+# source://spoom//lib/spoom/coverage/report.rb#186
 class Spoom::Coverage::Cards::Timeline::Sigs < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1119,7 +1180,7 @@ class Spoom::Coverage::Cards::Timeline::Sigs < ::Spoom::Coverage::Cards::Timelin
   def initialize(snapshots:, title: T.unsafe(nil)); end
 end
 
-# source://spoom//lib/spoom/coverage/report.rb#199
+# source://spoom//lib/spoom/coverage/report.rb#200
 class Spoom::Coverage::Cards::Timeline::Versions < ::Spoom::Coverage::Cards::Timeline
   # : (snapshots: Array[Coverage::Snapshot], ?title: String) -> void
   #
@@ -1238,7 +1299,7 @@ class Spoom::Coverage::D3::CircleMap < ::Spoom::Coverage::D3::Base
   end
 end
 
-# source://spoom//lib/spoom/coverage/d3/circle_map.rb#147
+# source://spoom//lib/spoom/coverage/d3/circle_map.rb#148
 class Spoom::Coverage::D3::CircleMap::Sigils < ::Spoom::Coverage::D3::CircleMap
   # : (String id, FileTree file_tree, Hash[FileTree::Node, String?] nodes_strictnesses, Hash[FileTree::Node, Float] nodes_scores) -> void
   #
@@ -1311,7 +1372,7 @@ class Spoom::Coverage::D3::Pie < ::Spoom::Coverage::D3::Base
   end
 end
 
-# source://spoom//lib/spoom/coverage/d3/pie.rb#138
+# source://spoom//lib/spoom/coverage/d3/pie.rb#139
 class Spoom::Coverage::D3::Pie::Calls < ::Spoom::Coverage::D3::Pie
   # : (String id, String title, Snapshot snapshot) -> void
   #
@@ -1328,7 +1389,7 @@ class Spoom::Coverage::D3::Pie::Calls < ::Spoom::Coverage::D3::Pie
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/pie.rb#121
+# source://spoom//lib/spoom/coverage/d3/pie.rb#122
 class Spoom::Coverage::D3::Pie::Sigils < ::Spoom::Coverage::D3::Pie
   # : (String id, String title, Snapshot snapshot) -> void
   #
@@ -1345,7 +1406,7 @@ class Spoom::Coverage::D3::Pie::Sigils < ::Spoom::Coverage::D3::Pie
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/pie.rb#155
+# source://spoom//lib/spoom/coverage/d3/pie.rb#156
 class Spoom::Coverage::D3::Pie::Sigs < ::Spoom::Coverage::D3::Pie
   # : (String id, String title, Snapshot snapshot) -> void
   #
@@ -1445,7 +1506,7 @@ class Spoom::Coverage::D3::Timeline < ::Spoom::Coverage::D3::Base
   end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#447
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#448
 class Spoom::Coverage::D3::Timeline::Calls < ::Spoom::Coverage::D3::Timeline::Stacked
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1462,7 +1523,7 @@ class Spoom::Coverage::D3::Timeline::Calls < ::Spoom::Coverage::D3::Timeline::St
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#502
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#503
 class Spoom::Coverage::D3::Timeline::RBIs < ::Spoom::Coverage::D3::Timeline::Stacked
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1497,7 +1558,7 @@ class Spoom::Coverage::D3::Timeline::RBIs < ::Spoom::Coverage::D3::Timeline::Sta
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#280
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#281
 class Spoom::Coverage::D3::Timeline::Runtimes < ::Spoom::Coverage::D3::Timeline
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1520,7 +1581,7 @@ class Spoom::Coverage::D3::Timeline::Runtimes < ::Spoom::Coverage::D3::Timeline
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#421
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#422
 class Spoom::Coverage::D3::Timeline::Sigils < ::Spoom::Coverage::D3::Timeline::Stacked
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1537,7 +1598,7 @@ class Spoom::Coverage::D3::Timeline::Sigils < ::Spoom::Coverage::D3::Timeline::S
   def tooltip; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#473
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#474
 class Spoom::Coverage::D3::Timeline::Sigs < ::Spoom::Coverage::D3::Timeline::Stacked
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1579,7 +1640,7 @@ class Spoom::Coverage::D3::Timeline::Stacked < ::Spoom::Coverage::D3::Timeline
   def script; end
 end
 
-# source://spoom//lib/spoom/coverage/d3/timeline.rb#230
+# source://spoom//lib/spoom/coverage/d3/timeline.rb#231
 class Spoom::Coverage::D3::Timeline::Versions < ::Spoom::Coverage::D3::Timeline
   # : (String id, Array[Snapshot] snapshots) -> void
   #
@@ -1665,12 +1726,10 @@ class Spoom::Coverage::Page < ::Spoom::Coverage::Template
   def title; end
 end
 
-# : String
-#
 # source://spoom//lib/spoom/coverage/report.rb#43
 Spoom::Coverage::Page::TEMPLATE = T.let(T.unsafe(nil), String)
 
-# source://spoom//lib/spoom/coverage/report.rb#234
+# source://spoom//lib/spoom/coverage/report.rb#235
 class Spoom::Coverage::Report < ::Spoom::Coverage::Page
   # : (project_name: String, palette: D3::ColorPalette, snapshots: Array[Snapshot], file_tree: FileTree, nodes_strictnesses: Hash[FileTree::Node, String?], nodes_strictness_scores: Hash[FileTree::Node, Float], ?sorbet_intro_commit: String?, ?sorbet_intro_date: Time?) -> void
   #
@@ -1761,7 +1820,7 @@ end
 # source://spoom//lib/spoom/coverage/snapshot.rb#28
 Spoom::Coverage::Snapshot::STRICTNESSES = T.let(T.unsafe(nil), Array)
 
-# source://spoom//lib/spoom/coverage/snapshot.rb#91
+# source://spoom//lib/spoom/coverage/snapshot.rb#92
 class Spoom::Coverage::SnapshotPrinter < ::Spoom::Printer
   # : (Snapshot snapshot) -> void
   #
@@ -1796,6 +1855,7 @@ class Spoom::Coverage::Template
   # @return [Template] a new instance of Template
   #
   # source://spoom//lib/spoom/coverage/report.rb#17
+  # Create a new template from an Erb file path
   sig { params(template: ::String).void }
   def initialize(template:); end
 
@@ -1823,13 +1883,13 @@ module Spoom::Deadcode
   class << self
     # : (Context context) -> Array[singleton(Plugins::Base)]
     #
-    # source://spoom//lib/spoom/deadcode/plugins.rb#67
+    # source://spoom//lib/spoom/deadcode/plugins.rb#73
     sig { params(context: ::Spoom::Context).returns(T::Array[T.class_of(Spoom::Deadcode::Plugins::Base)]) }
     def load_custom_plugins(context); end
 
     # : (Context context) -> Set[singleton(Plugins::Base)]
     #
-    # source://spoom//lib/spoom/deadcode/plugins.rb#53
+    # source://spoom//lib/spoom/deadcode/plugins.rb#59
     sig { params(context: ::Spoom::Context).returns(T::Set[T.class_of(Spoom::Deadcode::Plugins::Base)]) }
     def plugins_from_gemfile_lock(context); end
   end
@@ -1862,6 +1922,7 @@ class Spoom::Deadcode::Definition < ::T::Struct
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/deadcode/definition.rb#71
+  # Status
   sig { returns(T::Boolean) }
   def alive?; end
 
@@ -1870,6 +1931,7 @@ class Spoom::Deadcode::Definition < ::T::Struct
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/deadcode/definition.rb#39
+  # Kind
   sig { returns(T::Boolean) }
   def attr_reader?; end
 
@@ -1938,6 +2000,7 @@ class Spoom::Deadcode::Definition < ::T::Struct
   # : (*untyped args) -> String
   #
   # source://spoom//lib/spoom/deadcode/definition.rb#98
+  # Utils
   sig { params(args: T.untyped).returns(::String) }
   def to_json(*args); end
 
@@ -1970,7 +2033,7 @@ end
 
 # Custom engine to handle ERB templates as used by Rails
 #
-# source://spoom//lib/spoom/deadcode/erb.rb#29
+# source://spoom//lib/spoom/deadcode/erb.rb#30
 class Spoom::Deadcode::ERB < ::Erubi::Engine
   # : (untyped input, ?untyped properties) -> void
   #
@@ -2059,6 +2122,7 @@ class Spoom::Deadcode::Index
   # : (String name) -> Array[Definition]
   #
   # source://spoom//lib/spoom/deadcode/index.rb#210
+  # Utils
   sig { params(name: ::String).returns(T::Array[::Spoom::Deadcode::Definition]) }
   def definitions_for_name(name); end
 
@@ -2068,6 +2132,8 @@ class Spoom::Deadcode::Index
   # : -> void
   #
   # source://spoom//lib/spoom/deadcode/index.rb#118
+  # Mark all definitions having a reference of the same name as `alive`
+  # To be called once all the files have been indexed and all the definitions and references discovered.
   sig { void }
   def finalize!; end
 
@@ -2086,6 +2152,7 @@ class Spoom::Deadcode::Index
   # : (String file, ?plugins: Array[Plugins::Base]) -> void
   #
   # source://spoom//lib/spoom/deadcode/index.rb#35
+  # Indexing
   sig { params(file: ::String, plugins: T::Array[::Spoom::Deadcode::Plugins::Base]).void }
   def index_file(file, plugins: T.unsafe(nil)); end
 
@@ -2120,7 +2187,7 @@ class Spoom::Deadcode::Index
   def references; end
 end
 
-# source://spoom//lib/spoom/deadcode/index.rb#7
+# source://spoom//lib/spoom/deadcode/index.rb#8
 class Spoom::Deadcode::Index::Error < ::Spoom::Error
   # : (String message, parent: Exception) -> void
   #
@@ -2131,7 +2198,7 @@ class Spoom::Deadcode::Index::Error < ::Spoom::Error
   def initialize(message, parent:); end
 end
 
-# source://spoom//lib/spoom/deadcode/indexer.rb#6
+# source://spoom//lib/spoom/deadcode/indexer.rb#7
 class Spoom::Deadcode::Indexer < ::Spoom::Visitor
   # : (String path, Index index, ?plugins: Array[Plugins::Base]) -> void
   #
@@ -2166,15 +2233,13 @@ class Spoom::Deadcode::Indexer < ::Spoom::Visitor
   def visit_call_node(node); end
 end
 
-# : Set[singleton(Plugins::Base)]
-#
-# source://spoom//lib/spoom/deadcode/plugins.rb#33
+# source://spoom//lib/spoom/deadcode/plugins.rb#36
 Spoom::Deadcode::PLUGINS_FOR_GEM = T.let(T.unsafe(nil), Hash)
 
 # source://spoom//lib/spoom/deadcode/plugins/base.rb#8
 module Spoom::Deadcode::Plugins; end
 
-# source://spoom//lib/spoom/deadcode/plugins/action_mailer.rb#7
+# source://spoom//lib/spoom/deadcode/plugins/action_mailer.rb#9
 class Spoom::Deadcode::Plugins::ActionMailer < ::Spoom::Deadcode::Plugins::Base
   # : (Send send) -> void
   #
@@ -2196,13 +2261,13 @@ end
 class Spoom::Deadcode::Plugins::ActionPack < ::Spoom::Deadcode::Plugins::Base
   # : (Model::Method definition) -> void
   #
-  # source://spoom//lib/spoom/deadcode/plugins/actionpack.rb#27
+  # source://spoom//lib/spoom/deadcode/plugins/actionpack.rb#30
   sig { override.params(definition: ::Spoom::Model::Method).void }
   def on_define_method(definition); end
 
   # : (Send send) -> void
   #
-  # source://spoom//lib/spoom/deadcode/plugins/actionpack.rb#36
+  # source://spoom//lib/spoom/deadcode/plugins/actionpack.rb#39
   sig { override.params(send: ::Spoom::Deadcode::Send).void }
   def on_send(send); end
 end
@@ -2226,22 +2291,18 @@ end
 class Spoom::Deadcode::Plugins::ActiveRecord < ::Spoom::Deadcode::Plugins::Base
   # : (Send send) -> void
   #
-  # source://spoom//lib/spoom/deadcode/plugins/active_record.rb#64
+  # source://spoom//lib/spoom/deadcode/plugins/active_record.rb#73
   sig { override.params(send: ::Spoom::Deadcode::Send).void }
   def on_send(send); end
 end
 
-# : Array[String]
-#
-# source://spoom//lib/spoom/deadcode/plugins/active_record.rb#56
+# source://spoom//lib/spoom/deadcode/plugins/active_record.rb#62
 Spoom::Deadcode::Plugins::ActiveRecord::ARRAY_METHODS = T.let(T.unsafe(nil), Array)
 
 # source://spoom//lib/spoom/deadcode/plugins/active_record.rb#18
 Spoom::Deadcode::Plugins::ActiveRecord::CALLBACKS = T.let(T.unsafe(nil), Array)
 
-# : Array[String]
-#
-# source://spoom//lib/spoom/deadcode/plugins/active_record.rb#44
+# source://spoom//lib/spoom/deadcode/plugins/active_record.rb#47
 Spoom::Deadcode::Plugins::ActiveRecord::CRUD_METHODS = T.let(T.unsafe(nil), Array)
 
 # source://spoom//lib/spoom/deadcode/plugins/active_support.rb#7
@@ -2253,8 +2314,6 @@ class Spoom::Deadcode::Plugins::ActiveSupport < ::Spoom::Deadcode::Plugins::Base
   def on_send(send); end
 end
 
-# : Array[String]
-#
 # source://spoom//lib/spoom/deadcode/plugins/active_support.rb#19
 Spoom::Deadcode::Plugins::ActiveSupport::SETUP_AND_TEARDOWN_METHODS = T.let(T.unsafe(nil), Array)
 
@@ -2282,6 +2341,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Attr definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#155
+  # Do not override this method, use `on_define_accessor` instead.
   sig { params(definition: ::Spoom::Model::Attr).void }
   def internal_on_define_accessor(definition); end
 
@@ -2289,6 +2349,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Class definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#179
+  # Do not override this method, use `on_define_class` instead.
   sig { params(definition: ::Spoom::Model::Class).void }
   def internal_on_define_class(definition); end
 
@@ -2296,6 +2357,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Constant definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#209
+  # Do not override this method, use `on_define_constant` instead.
   sig { params(definition: ::Spoom::Model::Constant).void }
   def internal_on_define_constant(definition); end
 
@@ -2303,6 +2365,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Method definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#235
+  # Do not override this method, use `on_define_method` instead.
   sig { params(definition: ::Spoom::Model::Method).void }
   def internal_on_define_method(definition); end
 
@@ -2310,6 +2373,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Module definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#261
+  # Do not override this method, use `on_define_module` instead.
   sig { params(definition: ::Spoom::Model::Module).void }
   def internal_on_define_module(definition); end
 
@@ -2329,6 +2393,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Attr definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#149
+  # Called when an accessor is defined.
+  # Will be called when the indexer processes a `attr_reader`, `attr_writer` or `attr_accessor` node.
+  # Note that when this method is called, the definition for the node has already been added to the index.
+  # It is still possible to ignore it from the plugin:
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_define_accessor(definition)
+  #     @index.ignore(definition) if symbol_def.name == "foo"
+  #   end
+  # end
+  # ~~~
   sig { params(definition: ::Spoom::Model::Attr).void }
   def on_define_accessor(definition); end
 
@@ -2348,6 +2423,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Class definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#173
+  # Called when a class is defined.
+  # Will be called when the indexer processes a `class` node.
+  # Note that when this method is called, the definition for the node has already been added to the index.
+  # It is still possible to ignore it from the plugin:
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_define_class(definition)
+  #     @index.ignore(definition) if definition.name == "Foo"
+  #   end
+  # end
+  # ~~~
   sig { params(definition: ::Spoom::Model::Class).void }
   def on_define_class(definition); end
 
@@ -2367,6 +2453,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Constant definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#203
+  # Called when a constant is defined.
+  # Will be called when the indexer processes a `CONST =` node.
+  # Note that when this method is called, the definition for the node has already been added to the index.
+  # It is still possible to ignore it from the plugin:
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_define_constant(definition)
+  #     @index.ignore(definition) if definition.name == "FOO"
+  #   end
+  # end
+  # ~~~
   sig { params(definition: ::Spoom::Model::Constant).void }
   def on_define_constant(definition); end
 
@@ -2386,6 +2483,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Method definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#229
+  # Called when a method is defined.
+  # Will be called when the indexer processes a `def` or `defs` node.
+  # Note that when this method is called, the definition for the node has already been added to the index.
+  # It is still possible to ignore it from the plugin:
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_define_method(definition)
+  #     @index.ignore(definition) if definition.name == "foo"
+  #   end
+  # end
+  # ~~~
   sig { params(definition: ::Spoom::Model::Method).void }
   def on_define_method(definition); end
 
@@ -2405,6 +2513,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Model::Module definition) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#255
+  # Called when a module is defined.
+  # Will be called when the indexer processes a `module` node.
+  # Note that when this method is called, the definition for the node has already been added to the index.
+  # It is still possible to ignore it from the plugin:
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_define_module(definition)
+  #     @index.ignore(definition) if definition.name == "Foo"
+  #   end
+  # end
+  # ~~~
   sig { params(definition: ::Spoom::Model::Module).void }
   def on_define_module(definition); end
 
@@ -2424,6 +2543,17 @@ class Spoom::Deadcode::Plugins::Base
   # : (Send send) -> void
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#281
+  # Called when a send is being processed
+  # ~~~rb
+  # class MyPlugin < Spoom::Deadcode::Plugins::Base
+  #   def on_send(send)
+  #     return unless send.name == "dsl_method"
+  #     return if send.args.empty?
+  #     method_name = send.args.first.slice.delete_prefix(":")
+  #     @index.reference_method(method_name, send.node, send.loc)
+  #   end
+  # end
+  # ~~~
   sig { params(send: ::Spoom::Deadcode::Send).void }
   def on_send(send); end
 
@@ -2432,6 +2562,7 @@ class Spoom::Deadcode::Plugins::Base
   # : (String name) -> String
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#349
+  # Plugin utils
   sig { params(name: ::String).returns(::String) }
   def camelize(name); end
 
@@ -2500,6 +2631,7 @@ class Spoom::Deadcode::Plugins::Base
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/deadcode/plugins/base.rb#290
+  # DSL support
   sig { params(definition: ::Spoom::Model::Namespace, superclass_name: ::String).returns(T::Boolean) }
   def subclass_of?(definition, superclass_name); end
 
@@ -2520,6 +2652,17 @@ class Spoom::Deadcode::Plugins::Base
     # : (*(String | Regexp) names) -> void
     #
     # source://spoom//lib/spoom/deadcode/plugins/base.rb#49
+    # Mark classes directly subclassing a class matching `names` as ignored.
+    # Names can be either strings or regexps:
+    # ~~~rb
+    # class MyPlugin < Spoom::Deadcode::Plugins::Base
+    #   ignore_classes_inheriting_from(
+    #     "Foo",
+    #     "Bar",
+    #     /Baz.*/,
+    #   )
+    # end
+    # ~~~
     sig { params(names: T.any(::Regexp, ::String)).void }
     def ignore_classes_inheriting_from(*names); end
 
@@ -2539,6 +2682,17 @@ class Spoom::Deadcode::Plugins::Base
     # : (*(String | Regexp) names) -> void
     #
     # source://spoom//lib/spoom/deadcode/plugins/base.rb#31
+    # Mark classes matching `names` as ignored.
+    # Names can be either strings or regexps:
+    # ~~~rb
+    # class MyPlugin < Spoom::Deadcode::Plugins::Base
+    #   ignore_class_names(
+    #     "Foo",
+    #     "Bar",
+    #     /Baz.*/,
+    #   )
+    # end
+    # ~~~
     sig { params(names: T.any(::Regexp, ::String)).void }
     def ignore_classes_named(*names); end
 
@@ -2558,6 +2712,17 @@ class Spoom::Deadcode::Plugins::Base
     # : (*(String | Regexp) names) -> void
     #
     # source://spoom//lib/spoom/deadcode/plugins/base.rb#67
+    # Mark constants matching `names` as ignored.
+    # Names can be either strings or regexps:
+    # ~~~rb
+    # class MyPlugin < Spoom::Deadcode::Plugins::Base
+    #   ignore_class_names(
+    #     "FOO",
+    #     "BAR",
+    #     /BAZ.*/,
+    #   )
+    # end
+    # ~~~
     sig { params(names: T.any(::Regexp, ::String)).void }
     def ignore_constants_named(*names); end
 
@@ -2577,6 +2742,17 @@ class Spoom::Deadcode::Plugins::Base
     # : (*(String | Regexp) names) -> void
     #
     # source://spoom//lib/spoom/deadcode/plugins/base.rb#85
+    # Mark methods matching `names` as ignored.
+    # Names can be either strings or regexps:
+    # ~~~rb
+    # class MyPlugin < Spoom::Deadcode::Plugins::Base
+    #   ignore_method_names(
+    #     "foo",
+    #     "bar",
+    #     /baz.*/,
+    #   )
+    # end
+    # ~~~
     sig { params(names: T.any(::Regexp, ::String)).void }
     def ignore_methods_named(*names); end
 
@@ -2596,6 +2772,17 @@ class Spoom::Deadcode::Plugins::Base
     # : (*(String | Regexp) names) -> void
     #
     # source://spoom//lib/spoom/deadcode/plugins/base.rb#103
+    # Mark modules matching `names` as ignored.
+    # Names can be either strings or regexps:
+    # ~~~rb
+    # class MyPlugin < Spoom::Deadcode::Plugins::Base
+    #   ignore_class_names(
+    #     "Foo",
+    #     "Bar",
+    #     /Baz.*/,
+    #   )
+    # end
+    # ~~~
     sig { params(names: T.any(::Regexp, ::String)).void }
     def ignore_modules_named(*names); end
 
@@ -2639,7 +2826,7 @@ class Spoom::Deadcode::Plugins::Minitest < ::Spoom::Deadcode::Plugins::Base
   def on_send(send); end
 end
 
-# source://spoom//lib/spoom/deadcode/plugins/namespaces.rb#7
+# source://spoom//lib/spoom/deadcode/plugins/namespaces.rb#9
 class Spoom::Deadcode::Plugins::Namespaces < ::Spoom::Deadcode::Plugins::Base
   # : (Model::Class definition) -> void
   #
@@ -2710,8 +2897,6 @@ class Spoom::Deadcode::Plugins::Rubocop < ::Spoom::Deadcode::Plugins::Base
   def on_define_method(definition); end
 end
 
-# : Set[String]
-#
 # source://spoom//lib/spoom/deadcode/plugins/rubocop.rb#8
 Spoom::Deadcode::Plugins::Rubocop::RUBOCOP_CONSTANTS = T.let(T.unsafe(nil), Set)
 
@@ -2732,7 +2917,7 @@ class Spoom::Deadcode::Plugins::Ruby < ::Spoom::Deadcode::Plugins::Base
   def reference_symbol_as_constant(send, node); end
 end
 
-# source://spoom//lib/spoom/deadcode/plugins/sorbet.rb#7
+# source://spoom//lib/spoom/deadcode/plugins/sorbet.rb#9
 class Spoom::Deadcode::Plugins::Sorbet < ::Spoom::Deadcode::Plugins::Base
   # : (Model::Constant definition) -> void
   #
@@ -2794,13 +2979,13 @@ end
 # source://spoom//lib/spoom/deadcode/remover.rb#7
 class Spoom::Deadcode::Remover::Error < ::Spoom::Error; end
 
-# source://spoom//lib/spoom/deadcode/remover.rb#366
+# source://spoom//lib/spoom/deadcode/remover.rb#362
 class Spoom::Deadcode::Remover::NodeContext
   # : (String source, Hash[Integer, Prism::Comment] comments, Prism::Node node, Array[Prism::Node] nesting) -> void
   #
   # @return [NodeContext] a new instance of NodeContext
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#377
+  # source://spoom//lib/spoom/deadcode/remover.rb#373
   sig do
     params(
       source: ::String,
@@ -2813,48 +2998,49 @@ class Spoom::Deadcode::Remover::NodeContext
 
   # : (Prism::Node node) -> Array[Prism::Comment]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#491
+  # source://spoom//lib/spoom/deadcode/remover.rb#487
   sig { params(node: ::Prism::Node).returns(T::Array[::Prism::Comment]) }
   def attached_comments(node); end
 
   # : -> Prism::CallNode?
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#519
+  # source://spoom//lib/spoom/deadcode/remover.rb#515
   sig { returns(T.nilable(::Prism::CallNode)) }
   def attached_sig; end
 
   # : -> Array[Prism::Node]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#506
+  # source://spoom//lib/spoom/deadcode/remover.rb#502
   sig { returns(T::Array[::Prism::Node]) }
   def attached_sigs; end
 
   # : Hash[Integer, Prism::Comment]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#368
+  # source://spoom//lib/spoom/deadcode/remover.rb#364
   sig { returns(T::Hash[::Integer, ::Prism::Comment]) }
   def comments; end
 
   # : (Integer start_line, Integer end_line) -> Array[Prism::Comment]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#479
+  # source://spoom//lib/spoom/deadcode/remover.rb#475
   sig { params(start_line: ::Integer, end_line: ::Integer).returns(T::Array[::Prism::Comment]) }
   def comments_between_lines(start_line, end_line); end
 
   # : Array[Prism::Node]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#374
+  # source://spoom//lib/spoom/deadcode/remover.rb#370
   sig { returns(T::Array[::Prism::Node]) }
   def nesting; end
 
   # : Array[Prism::Node]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#374
+  # source://spoom//lib/spoom/deadcode/remover.rb#370
+  # @return [Array<Prism::Node>]
   def nesting=(_arg0); end
 
   # : -> Prism::Node?
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#429
+  # source://spoom//lib/spoom/deadcode/remover.rb#425
   sig { returns(T.nilable(::Prism::Node)) }
   def next_node; end
 
@@ -2862,13 +3048,13 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @raise [Error]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#418
+  # source://spoom//lib/spoom/deadcode/remover.rb#414
   sig { returns(T::Array[::Prism::Node]) }
   def next_nodes; end
 
   # : Prism::Node
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#371
+  # source://spoom//lib/spoom/deadcode/remover.rb#367
   sig { returns(::Prism::Node) }
   def node; end
 
@@ -2876,7 +3062,7 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @raise [Error]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#393
+  # source://spoom//lib/spoom/deadcode/remover.rb#389
   sig { returns(::Spoom::Deadcode::Remover::NodeContext) }
   def parent_context; end
 
@@ -2884,13 +3070,13 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @raise [Error]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#385
+  # source://spoom//lib/spoom/deadcode/remover.rb#381
   sig { returns(::Prism::Node) }
   def parent_node; end
 
   # : -> Prism::Node?
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#413
+  # source://spoom//lib/spoom/deadcode/remover.rb#409
   sig { returns(T.nilable(::Prism::Node)) }
   def previous_node; end
 
@@ -2898,13 +3084,13 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @raise [Error]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#402
+  # source://spoom//lib/spoom/deadcode/remover.rb#398
   sig { returns(T::Array[::Prism::Node]) }
   def previous_nodes; end
 
   # : -> NodeContext?
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#434
+  # source://spoom//lib/spoom/deadcode/remover.rb#430
   sig { returns(T.nilable(::Spoom::Deadcode::Remover::NodeContext)) }
   def sclass_context; end
 
@@ -2912,7 +3098,7 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @return [Boolean]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#467
+  # source://spoom//lib/spoom/deadcode/remover.rb#463
   sig { params(node: T.nilable(::Prism::Node)).returns(T::Boolean) }
   def sorbet_extend_sig?(node); end
 
@@ -2920,43 +3106,43 @@ class Spoom::Deadcode::Remover::NodeContext
   #
   # @return [Boolean]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#462
+  # source://spoom//lib/spoom/deadcode/remover.rb#458
   sig { params(node: T.nilable(::Prism::Node)).returns(T::Boolean) }
   def sorbet_signature?(node); end
 end
 
-# source://spoom//lib/spoom/deadcode/remover.rb#534
+# source://spoom//lib/spoom/deadcode/remover.rb#530
 class Spoom::Deadcode::Remover::NodeFinder < ::Spoom::Visitor
   # : (Location location, Definition::Kind? kind) -> void
   #
   # @return [NodeFinder] a new instance of NodeFinder
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#599
+  # source://spoom//lib/spoom/deadcode/remover.rb#598
   sig { params(location: ::Spoom::Location, kind: T.nilable(::Spoom::Deadcode::Definition::Kind)).void }
   def initialize(location, kind); end
 
   # : Prism::Node?
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#593
+  # source://spoom//lib/spoom/deadcode/remover.rb#592
   sig { returns(T.nilable(::Prism::Node)) }
   def node; end
 
   # : Array[Prism::Node]
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#596
+  # source://spoom//lib/spoom/deadcode/remover.rb#595
   sig { returns(T::Array[::Prism::Node]) }
   def nodes_nesting; end
 
   # : (Prism::Node? node) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#609
+  # source://spoom//lib/spoom/deadcode/remover.rb#608
   sig { override.params(node: T.nilable(::Prism::Node)).void }
   def visit(node); end
 
   class << self
     # : (String source, Location location, Definition::Kind? kind) -> NodeContext
     #
-    # source://spoom//lib/spoom/deadcode/remover.rb#537
+    # source://spoom//lib/spoom/deadcode/remover.rb#533
     sig do
       params(
         source: ::String,
@@ -2970,7 +3156,7 @@ class Spoom::Deadcode::Remover::NodeFinder < ::Spoom::Visitor
     #
     # @return [Boolean]
     #
-    # source://spoom//lib/spoom/deadcode/remover.rb#568
+    # source://spoom//lib/spoom/deadcode/remover.rb#567
     sig { params(node: ::Prism::Node, kind: ::Spoom::Deadcode::Definition::Kind).returns(T::Boolean) }
     def node_match_kind?(node, kind); end
   end
@@ -3008,13 +3194,13 @@ class Spoom::Deadcode::Remover::NodeRemover
 
   # : (NodeContext context) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#151
+  # source://spoom//lib/spoom/deadcode/remover.rb#149
   sig { params(context: ::Spoom::Deadcode::Remover::NodeContext).void }
   def delete_attr_accessor(context); end
 
   # : (Integer start_char, Integer end_char) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#325
+  # source://spoom//lib/spoom/deadcode/remover.rb#321
   sig { params(start_char: ::Integer, end_char: ::Integer).void }
   def delete_chars(start_char, end_char); end
 
@@ -3026,19 +3212,19 @@ class Spoom::Deadcode::Remover::NodeRemover
 
   # : (Integer start_line, Integer end_line) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#318
+  # source://spoom//lib/spoom/deadcode/remover.rb#314
   sig { params(start_line: ::Integer, end_line: ::Integer).void }
   def delete_lines(start_line, end_line); end
 
   # : (NodeContext context) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#255
+  # source://spoom//lib/spoom/deadcode/remover.rb#251
   sig { params(context: ::Spoom::Deadcode::Remover::NodeContext).void }
   def delete_node_and_comments_and_sigs(context); end
 
   # : (Prism::Node node, NodeContext send_context, was_removed: bool) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#212
+  # source://spoom//lib/spoom/deadcode/remover.rb#208
   sig do
     params(
       node: ::Prism::Node,
@@ -3050,13 +3236,13 @@ class Spoom::Deadcode::Remover::NodeRemover
 
   # : (Integer start_char, Integer end_char, String replacement) -> void
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#330
+  # source://spoom//lib/spoom/deadcode/remover.rb#326
   sig { params(start_char: ::Integer, end_char: ::Integer, replacement: ::String).void }
   def replace_chars(start_char, end_char, replacement); end
 
   # : (Prism::CallNode node, name: String, kind: Definition::Kind?) -> String
   #
-  # source://spoom//lib/spoom/deadcode/remover.rb#335
+  # source://spoom//lib/spoom/deadcode/remover.rb#331
   sig do
     params(
       node: ::Prism::CallNode,
@@ -3139,6 +3325,12 @@ class Spoom::FileCollector
   # @return [FileCollector] a new instance of FileCollector
   #
   # source://spoom//lib/spoom/file_collector.rb#18
+  # Initialize a new file collector
+  # If `allow_extensions` is empty, all files are collected.
+  # If `allow_extensions` is an array of extensions, only files with one of these extensions are collected.
+  # If `allow_mime_types` is empty, all files are collected.
+  # If `allow_mime_types` is an array of mimetypes, files without an extension are collected if their mimetype is in
+  # the list.
   sig do
     params(
       allow_extensions: T::Array[::String],
@@ -3227,6 +3419,8 @@ class Spoom::FileTree
   # : (String path) -> Node
   #
   # source://spoom//lib/spoom/file_tree.rb#23
+  # Add a `path` to the tree
+  # This will create all nodes until the root of `path`.
   sig { params(path: ::String).returns(::Spoom::FileTree::Node) }
   def add_path(path); end
 
@@ -3234,6 +3428,7 @@ class Spoom::FileTree
   # : (T::Enumerable[String] paths) -> void
   #
   # source://spoom//lib/spoom/file_tree.rb#15
+  # Add all `paths` to the tree
   sig { params(paths: T::Enumerable[::String]).void }
   def add_paths(paths); end
 
@@ -3241,6 +3436,7 @@ class Spoom::FileTree
   # : -> Array[Node]
   #
   # source://spoom//lib/spoom/file_tree.rb#43
+  # All the nodes in this tree
   sig { returns(T::Array[::Spoom::FileTree::Node]) }
   def nodes; end
 
@@ -3248,6 +3444,7 @@ class Spoom::FileTree
   # : (Context context) -> Hash[Node, Float]
   #
   # source://spoom//lib/spoom/file_tree.rb#57
+  # Return a map of typing scores for each node in the tree
   sig { params(context: ::Spoom::Context).returns(T::Hash[::Spoom::FileTree::Node, ::Float]) }
   def nodes_strictness_scores(context); end
 
@@ -3255,6 +3452,7 @@ class Spoom::FileTree
   # : -> Array[String]
   #
   # source://spoom//lib/spoom/file_tree.rb#51
+  # All the paths in this tree
   sig { returns(T::Array[::String]) }
   def paths; end
 
@@ -3262,6 +3460,7 @@ class Spoom::FileTree
   # : (Context context) -> Hash[String, Float]
   #
   # source://spoom//lib/spoom/file_tree.rb#65
+  # Return a map of typing scores for each path in the tree
   sig { params(context: ::Spoom::Context).returns(T::Hash[::String, ::Float]) }
   def paths_strictness_scores(context); end
 
@@ -3275,13 +3474,14 @@ class Spoom::FileTree
   # : -> Array[Node]
   #
   # source://spoom//lib/spoom/file_tree.rb#37
+  # All root nodes
   sig { returns(T::Array[::Spoom::FileTree::Node]) }
   def roots; end
 end
 
 # A visitor that collects all the nodes in a tree
 #
-# source://spoom//lib/spoom/file_tree.rb#119
+# source://spoom//lib/spoom/file_tree.rb#120
 class Spoom::FileTree::CollectNodes < ::Spoom::FileTree::Visitor
   # : -> void
   #
@@ -3306,7 +3506,7 @@ end
 
 # A visitor that collects the typing score of each node in a tree
 #
-# source://spoom//lib/spoom/file_tree.rb#160
+# source://spoom//lib/spoom/file_tree.rb#161
 class Spoom::FileTree::CollectScores < ::Spoom::FileTree::CollectStrictnesses
   # : (Context context) -> void
   #
@@ -3345,7 +3545,7 @@ end
 
 # A visitor that collects the strictness of each node in a tree
 #
-# source://spoom//lib/spoom/file_tree.rb#138
+# source://spoom//lib/spoom/file_tree.rb#139
 class Spoom::FileTree::CollectStrictnesses < ::Spoom::FileTree::Visitor
   # : (Context context) -> void
   #
@@ -3370,7 +3570,7 @@ end
 
 # A node representing either a file or a directory inside a FileTree
 #
-# source://spoom//lib/spoom/file_tree.rb#76
+# source://spoom//lib/spoom/file_tree.rb#77
 class Spoom::FileTree::Node < ::T::Struct
   const :parent, T.nilable(::Spoom::FileTree::Node)
   const :name, ::String
@@ -3380,6 +3580,7 @@ class Spoom::FileTree::Node < ::T::Struct
   # : -> String
   #
   # source://spoom//lib/spoom/file_tree.rb#88
+  # Full path to this node from root
   sig { returns(::String) }
   def path; end
 
@@ -3393,7 +3594,8 @@ end
 #
 # See `FileTree#print`
 #
-# source://spoom//lib/spoom/file_tree.rb#204
+# source://spoom//lib/spoom/file_tree.rb#205
+# An internal class used to print a FileTree
 class Spoom::FileTree::Printer < ::Spoom::FileTree::Visitor
   # : (Hash[FileTree::Node, String?] strictnesses, ?out: (IO | StringIO), ?colors: bool) -> void
   #
@@ -3473,6 +3675,7 @@ class Spoom::Git::Commit < ::T::Struct
     # : (String string) -> Commit?
     #
     # source://spoom//lib/spoom/context/git.rb#10
+    # Parse a line formatted as `%h %at` into a `Commit`
     sig { params(string: ::String).returns(T.nilable(::Spoom::Git::Commit)) }
     def parse_line(string); end
   end
@@ -3526,6 +3729,7 @@ class Spoom::LSP::Client
   # @raise [Error::AlreadyOpen]
   #
   # source://spoom//lib/spoom/sorbet/lsp.rb#70
+  # LSP requests
   sig { params(workspace_path: ::String).void }
   def open(workspace_path); end
 
@@ -3673,7 +3877,7 @@ class Spoom::LSP::Error::AlreadyOpen < ::Spoom::LSP::Error; end
 # source://spoom//lib/spoom/sorbet/lsp/errors.rb#8
 class Spoom::LSP::Error::BadHeaders < ::Spoom::LSP::Error; end
 
-# source://spoom//lib/spoom/sorbet/lsp/errors.rb#10
+# source://spoom//lib/spoom/sorbet/lsp/errors.rb#11
 class Spoom::LSP::Error::Diagnostics < ::Spoom::LSP::Error
   # : (String uri, Array[Diagnostic] diagnostics) -> void
   #
@@ -3771,6 +3975,7 @@ end
 # The language server protocol always uses `"2.0"` as the `jsonrpc` version.
 #
 # source://spoom//lib/spoom/sorbet/lsp/base.rb#12
+# A general message as defined by JSON-RPC.
 class Spoom::LSP::Message
   # : -> void
   #
@@ -3797,7 +4002,8 @@ end
 #
 # A processed notification message must not send a response back. They work like events.
 #
-# source://spoom//lib/spoom/sorbet/lsp/base.rb#54
+# source://spoom//lib/spoom/sorbet/lsp/base.rb#55
+# A notification message.
 class Spoom::LSP::Notification < ::Spoom::LSP::Message
   # : (String method, Hash[untyped, untyped] params) -> void
   #
@@ -3899,7 +4105,8 @@ end
 #
 # Every processed request must send a response back to the sender of the request.
 #
-# source://spoom//lib/spoom/sorbet/lsp/base.rb#35
+# source://spoom//lib/spoom/sorbet/lsp/base.rb#36
+# A request message to describe a request between the client and the server.
 class Spoom::LSP::Request < ::Spoom::LSP::Message
   # : (Integer id, String method, Hash[untyped, untyped] params) -> void
   #
@@ -3922,7 +4129,7 @@ class Spoom::LSP::Request < ::Spoom::LSP::Message
   def params; end
 end
 
-# source://spoom//lib/spoom/sorbet/lsp/errors.rb#36
+# source://spoom//lib/spoom/sorbet/lsp/errors.rb#37
 class Spoom::LSP::ResponseError < ::Spoom::LSP::Error
   # : (Integer code, String message, Hash[untyped, untyped] data) -> void
   #
@@ -3985,13 +4192,13 @@ class Spoom::LSP::SignatureHelp < ::T::Struct
   end
 end
 
-# source://spoom//lib/spoom/sorbet/lsp/structures.rb#292
+# source://spoom//lib/spoom/sorbet/lsp/structures.rb#296
 class Spoom::LSP::SymbolPrinter < ::Spoom::Printer
   # : (?out: (IO | StringIO), ?colors: bool, ?indent_level: Integer, ?prefix: String?) -> void
   #
   # @return [SymbolPrinter] a new instance of SymbolPrinter
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#300
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#303
   sig do
     params(
       out: T.any(::IO, ::StringIO),
@@ -4004,42 +4211,43 @@ class Spoom::LSP::SymbolPrinter < ::Spoom::Printer
 
   # : (String uri) -> String
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#322
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#325
   sig { params(uri: ::String).returns(::String) }
   def clean_uri(uri); end
 
   # : String?
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#297
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#300
   sig { returns(T.nilable(::String)) }
   def prefix; end
 
   # : String?
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#297
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#300
+  # @return [String, nil]
   def prefix=(_arg0); end
 
   # : (Array[PrintableSymbol] objects) -> void
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#330
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#333
   sig { params(objects: T::Array[::Spoom::LSP::PrintableSymbol]).void }
   def print_list(objects); end
 
   # : (PrintableSymbol? object) -> void
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#310
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#313
   sig { params(object: T.nilable(::Spoom::LSP::PrintableSymbol)).void }
   def print_object(object); end
 
   # : (Array[PrintableSymbol] objects) -> void
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#317
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#320
   sig { params(objects: T::Array[::Spoom::LSP::PrintableSymbol]).void }
   def print_objects(objects); end
 
   # : Set[Integer]
   #
-  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#294
+  # source://spoom//lib/spoom/sorbet/lsp/structures.rb#297
   sig { returns(T::Set[::Integer]) }
   def seen; end
 end
@@ -4074,11 +4282,13 @@ class Spoom::Location
   # : Integer?
   #
   # source://spoom//lib/spoom/location.rb#58
+  # @return [Integer, nil]
   def end_column; end
 
   # : Integer?
   #
   # source://spoom//lib/spoom/location.rb#58
+  # @return [Integer, nil]
   def end_line; end
 
   # : String
@@ -4098,6 +4308,7 @@ class Spoom::Location
   # : Integer?
   #
   # source://spoom//lib/spoom/location.rb#58
+  # @return [Integer, nil]
   def start_column; end
 
   # : Integer?
@@ -4150,6 +4361,8 @@ class Spoom::Model
   # @raise [Error]
   #
   # source://spoom//lib/spoom/model/model.rb#244
+  # Get a symbol by it's full name
+  # Raises an error if the symbol is not found
   sig { params(full_name: ::String).returns(::Spoom::Model::Symbol) }
   def [](full_name); end
 
@@ -4165,6 +4378,8 @@ class Spoom::Model
   # : (String full_name) -> Symbol
   #
   # source://spoom//lib/spoom/model/model.rb#255
+  # Register a new symbol by it's full name
+  # If the symbol already exists, it will be returned.
   sig { params(full_name: ::String).returns(::Spoom::Model::Symbol) }
   def register_symbol(full_name); end
 
@@ -4190,6 +4405,7 @@ class Spoom::Model
   # : Hash[String, Symbol]
   #
   # source://spoom//lib/spoom/model/model.rb#229
+  # All the symbols registered in this model
   sig { returns(T::Hash[::String, ::Spoom::Model::Symbol]) }
   def symbols; end
 
@@ -4226,7 +4442,7 @@ class Spoom::Model::AttrWriter < ::Spoom::Model::Attr; end
 
 # Populate a Model by visiting the nodes from a Ruby file
 #
-# source://spoom//lib/spoom/model/builder.rb#7
+# source://spoom//lib/spoom/model/builder.rb#8
 class Spoom::Model::Builder < ::Spoom::Model::NamespaceVisitor
   # : (Model model, String file, ?comments: Array[Prism::Comment]) -> void
   #
@@ -4238,49 +4454,49 @@ class Spoom::Model::Builder < ::Spoom::Model::NamespaceVisitor
 
   # : (Prism::CallNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#162
+  # source://spoom//lib/spoom/model/builder.rb#165
   sig { override.params(node: ::Prism::CallNode).void }
   def visit_call_node(node); end
 
   # : (Prism::ClassNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#26
+  # source://spoom//lib/spoom/model/builder.rb#29
   sig { override.params(node: ::Prism::ClassNode).void }
   def visit_class_node(node); end
 
   # : (Prism::ConstantPathWriteNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#79
+  # source://spoom//lib/spoom/model/builder.rb#82
   sig { override.params(node: ::Prism::ConstantPathWriteNode).void }
   def visit_constant_path_write_node(node); end
 
   # : (Prism::ConstantWriteNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#102
+  # source://spoom//lib/spoom/model/builder.rb#105
   sig { override.params(node: ::Prism::ConstantWriteNode).void }
   def visit_constant_write_node(node); end
 
   # : (Prism::DefNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#141
+  # source://spoom//lib/spoom/model/builder.rb#144
   sig { override.params(node: ::Prism::DefNode).void }
   def visit_def_node(node); end
 
   # : (Prism::ModuleNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#61
+  # source://spoom//lib/spoom/model/builder.rb#64
   sig { override.params(node: ::Prism::ModuleNode).void }
   def visit_module_node(node); end
 
   # : (Prism::MultiWriteNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#118
+  # source://spoom//lib/spoom/model/builder.rb#121
   sig { override.params(node: ::Prism::MultiWriteNode).void }
   def visit_multi_write_node(node); end
 
   # : (Prism::SingletonClassNode node) -> void
   #
-  # source://spoom//lib/spoom/model/builder.rb#43
+  # source://spoom//lib/spoom/model/builder.rb#46
   sig { override.params(node: ::Prism::SingletonClassNode).void }
   def visit_singleton_class_node(node); end
 
@@ -4288,30 +4504,30 @@ class Spoom::Model::Builder < ::Spoom::Model::NamespaceVisitor
 
   # : -> Array[Sig]
   #
-  # source://spoom//lib/spoom/model/builder.rb#253
+  # source://spoom//lib/spoom/model/builder.rb#256
   sig { returns(T::Array[::Spoom::Model::Sig]) }
   def collect_sigs; end
 
   # : -> Visibility
   #
-  # source://spoom//lib/spoom/model/builder.rb#248
+  # source://spoom//lib/spoom/model/builder.rb#251
   sig { returns(::Spoom::Model::Visibility) }
   def current_visibility; end
 
   # : (Prism::Node node) -> Array[Comment]
   #
-  # source://spoom//lib/spoom/model/builder.rb#265
+  # source://spoom//lib/spoom/model/builder.rb#268
   sig { params(node: ::Prism::Node).returns(T::Array[::Spoom::Model::Comment]) }
   def node_comments(node); end
 
   # : (Prism::Node node) -> Location
   #
-  # source://spoom//lib/spoom/model/builder.rb#260
+  # source://spoom//lib/spoom/model/builder.rb#263
   sig { params(node: ::Prism::Node).returns(::Spoom::Location) }
   def node_location(node); end
 end
 
-# source://spoom//lib/spoom/model/model.rb#132
+# source://spoom//lib/spoom/model/model.rb#133
 class Spoom::Model::Class < ::Spoom::Model::Namespace
   # : (Symbol symbol, owner: Namespace?, location: Location, ?superclass_name: String?, ?comments: Array[Comment]) -> void
   #
@@ -4338,6 +4554,7 @@ class Spoom::Model::Class < ::Spoom::Model::Namespace
   # : String?
   #
   # source://spoom//lib/spoom/model/model.rb#134
+  # @return [String, nil]
   def superclass_name=(_arg0); end
 end
 
@@ -4364,7 +4581,7 @@ class Spoom::Model::Comment
   def string; end
 end
 
-# source://spoom//lib/spoom/model/model.rb#146
+# source://spoom//lib/spoom/model/model.rb#147
 class Spoom::Model::Constant < ::Spoom::Model::SymbolDef
   # : (Symbol symbol, owner: Namespace?, location: Location, value: String, ?comments: Array[Comment]) -> void
   #
@@ -4531,6 +4748,8 @@ end
 # Methods could be accessors, instance or class methods, aliases, etc.
 #
 # source://spoom//lib/spoom/model/reference.rb#10
+# A reference to something that looks like a constant or a method
+# Constants could be classes, modules, or actual constants.
 class Spoom::Model::Reference < ::T::Struct
   const :kind, ::Spoom::Model::Reference::Kind
   const :name, ::String
@@ -4580,7 +4799,7 @@ end
 
 # Visit a file to collect all the references to constants and methods
 #
-# source://spoom//lib/spoom/model/references_visitor.rb#7
+# source://spoom//lib/spoom/model/references_visitor.rb#8
 class Spoom::Model::ReferencesVisitor < ::Spoom::Visitor
   # : (String file) -> void
   #
@@ -4778,6 +4997,9 @@ class Spoom::Model::SingletonClass < ::Spoom::Model::Namespace; end
 # e.g. `foo` method can be defined both as a method and as an attribute accessor.
 #
 # source://spoom//lib/spoom/model/model.rb#27
+# A Symbol is a uniquely named entity in the Ruby codebase
+# A symbol can have multiple definitions, e.g. a class can be reopened.
+# Sometimes a symbol can have multiple definitions of different types,
 class Spoom::Model::Symbol
   # : (String full_name) -> void
   #
@@ -4791,6 +5013,7 @@ class Spoom::Model::Symbol
   # : Array[SymbolDef]
   #
   # source://spoom//lib/spoom/model/model.rb#34
+  # The definitions of this symbol (where it exists in the code)
   sig { returns(T::Array[::Spoom::Model::SymbolDef]) }
   def definitions; end
 
@@ -4798,6 +5021,7 @@ class Spoom::Model::Symbol
   # : String
   #
   # source://spoom//lib/spoom/model/model.rb#30
+  # The full, unique name of this symbol
   sig { returns(::String) }
   def full_name; end
 
@@ -4805,6 +5029,7 @@ class Spoom::Model::Symbol
   # : -> String
   #
   # source://spoom//lib/spoom/model/model.rb#44
+  # The short name of this symbol
   sig { returns(::String) }
   def name; end
 
@@ -4823,6 +5048,8 @@ end
 # @abstract It cannot be directly instantiated. Subclasses must implement the `abstract` methods below.
 #
 # source://spoom//lib/spoom/model/model.rb#66
+# A SymbolDef is a definition of a Symbol
+# It can be a class, module, constant, method, etc.
 class Spoom::Model::SymbolDef
   abstract!
 
@@ -4845,6 +5072,7 @@ class Spoom::Model::SymbolDef
   # : Array[Comment]
   #
   # source://spoom//lib/spoom/model/model.rb#85
+  # The comments associated with this definition
   sig { returns(T::Array[::Spoom::Model::Comment]) }
   def comments; end
 
@@ -4852,6 +5080,7 @@ class Spoom::Model::SymbolDef
   # : -> String
   #
   # source://spoom//lib/spoom/model/model.rb#100
+  # The full name of the symbol this definition belongs to
   sig { returns(::String) }
   def full_name; end
 
@@ -4859,6 +5088,7 @@ class Spoom::Model::SymbolDef
   # : Location
   #
   # source://spoom//lib/spoom/model/model.rb#81
+  # The actual code location of this definition
   sig { returns(::Spoom::Location) }
   def location; end
 
@@ -4866,6 +5096,7 @@ class Spoom::Model::SymbolDef
   # : -> String
   #
   # source://spoom//lib/spoom/model/model.rb#106
+  # The short name of the symbol this definition belongs to
   sig { returns(::String) }
   def name; end
 
@@ -4873,6 +5104,7 @@ class Spoom::Model::SymbolDef
   # : Namespace?
   #
   # source://spoom//lib/spoom/model/model.rb#77
+  # The enclosing namespace this definition belongs to
   sig { returns(T.nilable(::Spoom::Model::Namespace)) }
   def owner; end
 
@@ -4880,11 +5112,12 @@ class Spoom::Model::SymbolDef
   # : Symbol
   #
   # source://spoom//lib/spoom/model/model.rb#73
+  # The symbol this definition belongs to
   sig { returns(::Spoom::Model::Symbol) }
   def symbol; end
 end
 
-# source://spoom//lib/spoom/model/model.rb#54
+# source://spoom//lib/spoom/model/model.rb#56
 class Spoom::Model::UnresolvedSymbol < ::Spoom::Model::Symbol
   # : -> String
   #
@@ -4911,6 +5144,8 @@ class Spoom::ParseError < ::Spoom::Error; end
 # It can be used to represent a hierarchy of classes or modules, the dependencies between gems, etc.
 #
 # source://spoom//lib/spoom/poset.rb#9
+# A Poset is a set of elements with a partial order relation.
+# The partial order relation is a binary relation that is reflexive, antisymmetric, and transitive.
 class Spoom::Poset
   extend T::Generic
 
@@ -4932,6 +5167,8 @@ class Spoom::Poset
   # @raise [Error]
   #
   # source://spoom//lib/spoom/poset.rb#25
+  # Get the POSet element for a given value
+  # Raises if the element is not found
   sig { params(value: E).returns(Spoom::Poset::Element[E]) }
   def [](value); end
 
@@ -4943,6 +5180,10 @@ class Spoom::Poset
   # : (E from, E to) -> void
   #
   # source://spoom//lib/spoom/poset.rb#53
+  # Add a direct edge from one element to another
+  # Transitive edges (transitive closure) are automatically computed.
+  # Adds the elements if they don't exist.
+  # If the direct edge already exists, nothing is done.
   sig { params(from: E, to: E).void }
   def add_direct_edge(from, to); end
 
@@ -4950,6 +5191,7 @@ class Spoom::Poset
   # : (E value) -> Element[E]
   #
   # source://spoom//lib/spoom/poset.rb#34
+  # Add an element to the POSet
   sig { params(value: E).returns(Spoom::Poset::Element[E]) }
   def add_element(value); end
 
@@ -4959,6 +5201,7 @@ class Spoom::Poset
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/poset.rb#100
+  # Is there a direct edge from `from` to `to`?
   sig { params(from: E, to: E).returns(T::Boolean) }
   def direct_edge?(from, to); end
 
@@ -4968,6 +5211,7 @@ class Spoom::Poset
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/poset.rb#91
+  # Is there an edge (direct or indirect) from `from` to `to`?
   sig { params(from: E, to: E).returns(T::Boolean) }
   def edge?(from, to); end
 
@@ -4977,6 +5221,7 @@ class Spoom::Poset
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/poset.rb#43
+  # Is the given value a element in the POSet?
   sig { params(value: E).returns(T::Boolean) }
   def element?(value); end
 
@@ -4984,6 +5229,7 @@ class Spoom::Poset
   # : (?direct: bool, ?transitive: bool) -> void
   #
   # source://spoom//lib/spoom/poset.rb#106
+  # Show the POSet as a DOT graph using xdot (used for debugging)
   sig { params(direct: T::Boolean, transitive: T::Boolean).void }
   def show_dot(direct: T.unsafe(nil), transitive: T.unsafe(nil)); end
 
@@ -4991,6 +5237,7 @@ class Spoom::Poset
   # : (?direct: bool, ?transitive: bool) -> String
   #
   # source://spoom//lib/spoom/poset.rb#115
+  # Return the POSet as a DOT graph
   sig { params(direct: T::Boolean, transitive: T::Boolean).returns(::String) }
   def to_dot(direct: T.unsafe(nil), transitive: T.unsafe(nil)); end
 end
@@ -5022,6 +5269,7 @@ class Spoom::Poset::Element
   # : -> Array[E]
   #
   # source://spoom//lib/spoom/poset.rb#178
+  # Direct and indirect ancestors of this element
   sig { returns(T::Array[E]) }
   def ancestors; end
 
@@ -5029,6 +5277,7 @@ class Spoom::Poset::Element
   # : -> Array[E]
   #
   # source://spoom//lib/spoom/poset.rb#184
+  # Direct children of this element
   sig { returns(T::Array[E]) }
   def children; end
 
@@ -5036,6 +5285,7 @@ class Spoom::Poset::Element
   # : -> Array[E]
   #
   # source://spoom//lib/spoom/poset.rb#190
+  # Direct and indirect descendants of this element
   sig { returns(T::Array[E]) }
   def descendants; end
 
@@ -5043,12 +5293,15 @@ class Spoom::Poset::Element
   # : Set[Element[E]]
   #
   # source://spoom//lib/spoom/poset.rb#147
+  # Edges (direct and indirect) from this element to other elements in the same POSet
+  # @return [Set<Element[E]>]
   def dfroms; end
 
   # Edges (direct and indirect) from this element to other elements in the same POSet
   # : Set[Element[E]]
   #
   # source://spoom//lib/spoom/poset.rb#147
+  # Edges (direct and indirect) from this element to other elements in the same POSet
   sig { returns(T::Set[Spoom::Poset::Element[E]]) }
   def dtos; end
 
@@ -5056,12 +5309,15 @@ class Spoom::Poset::Element
   # : Set[Element[E]]
   #
   # source://spoom//lib/spoom/poset.rb#147
+  # Edges (direct and indirect) from this element to other elements in the same POSet
+  # @return [Set<Element[E]>]
   def froms; end
 
   # Direct parents of this element
   # : -> Array[E]
   #
   # source://spoom//lib/spoom/poset.rb#172
+  # Direct parents of this element
   sig { returns(T::Array[E]) }
   def parents; end
 
@@ -5069,12 +5325,15 @@ class Spoom::Poset::Element
   # : Set[Element[E]]
   #
   # source://spoom//lib/spoom/poset.rb#147
+  # Edges (direct and indirect) from this element to other elements in the same POSet
+  # @return [Set<Element[E]>]
   def tos; end
 
   # The value held by this element
   # : E
   #
   # source://spoom//lib/spoom/poset.rb#143
+  # The value held by this element
   sig { returns(E) }
   def value; end
 end
@@ -5098,6 +5357,7 @@ class Spoom::Printer
   # : (String string, *Spoom::Color color) -> String
   #
   # source://spoom//lib/spoom/printer.rb#75
+  # Colorize `string` with color if `@colors`
   sig { params(string: ::String, color: ::Spoom::Color).returns(::String) }
   def colorize(string, *color); end
 
@@ -5105,6 +5365,7 @@ class Spoom::Printer
   # : -> void
   #
   # source://spoom//lib/spoom/printer.rb#28
+  # Decrease indent level
   sig { void }
   def dedent; end
 
@@ -5112,6 +5373,7 @@ class Spoom::Printer
   # : -> void
   #
   # source://spoom//lib/spoom/printer.rb#22
+  # Increase indent level
   sig { void }
   def indent; end
 
@@ -5124,12 +5386,14 @@ class Spoom::Printer
   # : (IO | StringIO)
   #
   # source://spoom//lib/spoom/printer.rb#11
+  # @return [IO, StringIO]
   def out=(_arg0); end
 
   # Print `string` into `out`
   # : (String? string) -> void
   #
   # source://spoom//lib/spoom/printer.rb#34
+  # Print `string` into `out`
   sig { params(string: T.nilable(::String)).void }
   def print(string); end
 
@@ -5139,6 +5403,8 @@ class Spoom::Printer
   # : (String? string, *Color color) -> void
   #
   # source://spoom//lib/spoom/printer.rb#44
+  # Print `string` colored with `color` into `out`
+  # Does not use colors unless `@colors`.
   sig { params(string: T.nilable(::String), color: ::Spoom::Color).void }
   def print_colored(string, *color); end
 
@@ -5146,6 +5412,7 @@ class Spoom::Printer
   # : (String? string) -> void
   #
   # source://spoom//lib/spoom/printer.rb#59
+  # Print `string` with indent and newline
   sig { params(string: T.nilable(::String)).void }
   def printl(string); end
 
@@ -5153,6 +5420,7 @@ class Spoom::Printer
   # : -> void
   #
   # source://spoom//lib/spoom/printer.rb#53
+  # Print a new line into `out`
   sig { void }
   def printn; end
 
@@ -5160,12 +5428,11 @@ class Spoom::Printer
   # : -> void
   #
   # source://spoom//lib/spoom/printer.rb#69
+  # Print an indent space into `out`
   sig { void }
   def printt; end
 end
 
-# : String
-#
 # source://spoom//lib/spoom.rb#8
 Spoom::SPOOM_PATH = T.let(T.unsafe(nil), String)
 
@@ -5237,6 +5504,7 @@ class Spoom::Sorbet::Assertions::AssignNode
   # : Prism::Node
   #
   # source://spoom//lib/spoom/sorbet/assertions.rb#130
+  # @return [Prism::Node]
   def type; end
 
   # : Prism::Node
@@ -5279,6 +5547,7 @@ class Spoom::Sorbet::Assertions::Locator < ::Spoom::Visitor
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/sorbet/assertions.rb#223
+  # Is this node a `T` or `::T` constant?
   sig { params(node: T.nilable(::Prism::Node)).returns(T::Boolean) }
   def t?(node); end
 
@@ -5288,6 +5557,7 @@ class Spoom::Sorbet::Assertions::Locator < ::Spoom::Visitor
   # @return [Boolean]
   #
   # source://spoom//lib/spoom/sorbet/assertions.rb#236
+  # Is this node a `T.let` or `T.cast`?
   sig { params(node: ::Prism::CallNode).returns(T::Boolean) }
   def t_annotation?(node); end
 
@@ -5427,12 +5697,10 @@ class Spoom::Sorbet::Assertions::Locator < ::Spoom::Visitor
   def visit_multi_write_node(node); end
 end
 
-# : Array[Symbol]
-#
 # source://spoom//lib/spoom/sorbet/assertions.rb#147
 Spoom::Sorbet::Assertions::Locator::ANNOTATION_METHODS = T.let(T.unsafe(nil), Array)
 
-# source://spoom//lib/spoom/sorbet/assertions.rb#251
+# source://spoom//lib/spoom/sorbet/assertions.rb#252
 class Spoom::Sorbet::Assertions::Locator::HeredocVisitor < ::Spoom::Visitor
   # : -> void
   #
@@ -5455,8 +5723,6 @@ class Spoom::Sorbet::Assertions::Locator::HeredocVisitor < ::Spoom::Visitor
   def visit(node); end
 end
 
-# : String
-#
 # source://spoom//lib/spoom/sorbet.rb#33
 Spoom::Sorbet::BIN_PATH = T.let(T.unsafe(nil), String)
 
@@ -5485,6 +5751,19 @@ Spoom::Sorbet::CONFIG_PATH = T.let(T.unsafe(nil), String)
 # ```
 #
 # source://spoom//lib/spoom/sorbet/config.rb#26
+# Parse Sorbet config files
+# Parses a Sorbet config file:
+# ```ruby
+# config = Spoom::Sorbet::Config.parse_file("sorbet/config")
+# puts config.paths   # "."
+# Parses a Sorbet config string:
+# config = Spoom::Sorbet::Config.parse_string(<<~CONFIG)
+#   a
+#   --file=b
+#   --ignore=c
+# CONFIG
+# puts config.paths   # "a", "b"
+# puts config.ignore  # "c"
 class Spoom::Sorbet::Config
   # : -> void
   #
@@ -5497,11 +5776,13 @@ class Spoom::Sorbet::Config
   # : Array[String]
   #
   # source://spoom//lib/spoom/sorbet/config.rb#30
+  # @return [Array<String>]
   def allowed_extensions; end
 
   # : Array[String]
   #
   # source://spoom//lib/spoom/sorbet/config.rb#30
+  # @return [Array<String>]
   def allowed_extensions=(_arg0); end
 
   # : -> Config
@@ -5513,11 +5794,13 @@ class Spoom::Sorbet::Config
   # : Array[String]
   #
   # source://spoom//lib/spoom/sorbet/config.rb#30
+  # @return [Array<String>]
   def ignore; end
 
   # : Array[String]
   #
   # source://spoom//lib/spoom/sorbet/config.rb#30
+  # @return [Array<String>]
   def ignore=(_arg0); end
 
   # : bool
@@ -5529,6 +5812,7 @@ class Spoom::Sorbet::Config
   # : bool
   #
   # source://spoom//lib/spoom/sorbet/config.rb#33
+  # @return [Boolean]
   def no_stdlib=(_arg0); end
 
   # Returns self as a string of options that can be passed to Sorbet
@@ -5546,6 +5830,16 @@ class Spoom::Sorbet::Config
   # : -> String
   #
   # source://spoom//lib/spoom/sorbet/config.rb#66
+  # Returns self as a string of options that can be passed to Sorbet
+  # Example:
+  # ~~~rb
+  # config = Sorbet::Config.new
+  # config.paths << "/foo"
+  # config.paths << "/bar"
+  # config.ignore << "/baz"
+  # config.allowed_extensions << ".rb"
+  # puts config.options_string # "/foo /bar --ignore /baz --allowed-extension .rb"
+  # ~~~
   sig { returns(::String) }
   def options_string; end
 
@@ -5558,6 +5852,7 @@ class Spoom::Sorbet::Config
   # : Array[String]
   #
   # source://spoom//lib/spoom/sorbet/config.rb#30
+  # @return [Array<String>]
   def paths=(_arg0); end
 
   class << self
@@ -5583,8 +5878,6 @@ class Spoom::Sorbet::Config
   end
 end
 
-# : Array[String]
-#
 # source://spoom//lib/spoom/sorbet/config.rb#27
 Spoom::Sorbet::Config::DEFAULT_ALLOWED_EXTENSIONS = T.let(T.unsafe(nil), Array)
 
@@ -5611,27 +5904,21 @@ class Spoom::Sorbet::Error::Killed < ::Spoom::Sorbet::Error; end
 # source://spoom//lib/spoom/sorbet.rb#17
 class Spoom::Sorbet::Error::Segfault < ::Spoom::Sorbet::Error; end
 
-# source://spoom//lib/spoom/sorbet/errors.rb#8
+# source://spoom//lib/spoom/sorbet/errors.rb#6
 module Spoom::Sorbet::Errors
   class << self
     # : (Array[Error] errors) -> Array[Error]
     #
-    # source://spoom//lib/spoom/sorbet/errors.rb#13
+    # source://spoom//lib/spoom/sorbet/errors.rb#11
     sig { params(errors: T::Array[::Spoom::Sorbet::Errors::Error]).returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
     def sort_errors_by_code(errors); end
-
-    # : (Array[Error]) -> REXML::Document
-    #
-    # source://spoom//lib/spoom/sorbet/errors.rb#18
-    sig { params(errors: T::Array[::Spoom::Sorbet::Errors::Error]).returns(::REXML::Document) }
-    def to_junit_xml(errors); end
   end
 end
 
-# source://spoom//lib/spoom/sorbet/errors.rb#9
+# source://spoom//lib/spoom/sorbet/errors.rb#7
 Spoom::Sorbet::Errors::DEFAULT_ERROR_URL_BASE = T.let(T.unsafe(nil), String)
 
-# source://spoom//lib/spoom/sorbet/errors.rb#149
+# source://spoom//lib/spoom/sorbet/errors.rb#121
 class Spoom::Sorbet::Errors::Error
   include ::Comparable
 
@@ -5639,7 +5926,7 @@ class Spoom::Sorbet::Errors::Error
   #
   # @return [Error] a new instance of Error
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#166
+  # source://spoom//lib/spoom/sorbet/errors.rb#138
   sig do
     params(
       file: T.nilable(::String),
@@ -5654,73 +5941,71 @@ class Spoom::Sorbet::Errors::Error
   # By default errors are sorted by location
   # : (untyped other) -> Integer
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#177
+  # source://spoom//lib/spoom/sorbet/errors.rb#149
+  # By default errors are sorted by location
   sig { params(other: T.untyped).returns(::Integer) }
   def <=>(other); end
 
   # : Integer?
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#156
+  # source://spoom//lib/spoom/sorbet/errors.rb#128
+  # @return [Integer, nil]
   def code; end
 
   # : String?
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#153
+  # source://spoom//lib/spoom/sorbet/errors.rb#125
   sig { returns(T.nilable(::String)) }
   def file; end
 
   # Other files associated with the error
   # : Set[String]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#163
+  # source://spoom//lib/spoom/sorbet/errors.rb#135
+  # Other files associated with the error
   sig { returns(T::Set[::String]) }
   def files_from_error_sections; end
 
   # : Integer?
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#156
+  # source://spoom//lib/spoom/sorbet/errors.rb#128
   sig { returns(T.nilable(::Integer)) }
   def line; end
 
   # : String?
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#153
+  # source://spoom//lib/spoom/sorbet/errors.rb#125
+  # @return [String, nil]
   def message; end
 
   # : Array[String]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#159
+  # source://spoom//lib/spoom/sorbet/errors.rb#131
   sig { returns(T::Array[::String]) }
   def more; end
 
-  # : -> REXML::Element
-  #
-  # source://spoom//lib/spoom/sorbet/errors.rb#189
-  sig { returns(::REXML::Element) }
-  def to_junit_xml_element; end
-
   # : -> String
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#184
+  # source://spoom//lib/spoom/sorbet/errors.rb#156
   sig { returns(::String) }
   def to_s; end
 end
 
 # Parse errors from Sorbet output
 #
-# source://spoom//lib/spoom/sorbet/errors.rb#47
+# source://spoom//lib/spoom/sorbet/errors.rb#16
 class Spoom::Sorbet::Errors::Parser
   # : (?error_url_base: String) -> void
   #
   # @return [Parser] a new instance of Parser
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#67
+  # source://spoom//lib/spoom/sorbet/errors.rb#39
   sig { params(error_url_base: ::String).void }
   def initialize(error_url_base: T.unsafe(nil)); end
 
   # : (String output) -> Array[Error]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#74
+  # source://spoom//lib/spoom/sorbet/errors.rb#46
   sig { params(output: ::String).returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
   def parse(output); end
 
@@ -5730,7 +6015,7 @@ class Spoom::Sorbet::Errors::Parser
   #
   # @raise [ParseError]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#138
+  # source://spoom//lib/spoom/sorbet/errors.rb#110
   sig { params(line: ::String).void }
   def append_error(line); end
 
@@ -5738,19 +6023,19 @@ class Spoom::Sorbet::Errors::Parser
   #
   # @raise [ParseError]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#130
+  # source://spoom//lib/spoom/sorbet/errors.rb#102
   sig { void }
   def close_error; end
 
   # : (String error_url_base) -> Regexp
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#97
+  # source://spoom//lib/spoom/sorbet/errors.rb#69
   sig { params(error_url_base: ::String).returns(::Regexp) }
   def error_line_match_regexp(error_url_base); end
 
   # : (String line) -> Error?
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#114
+  # source://spoom//lib/spoom/sorbet/errors.rb#86
   sig { params(line: ::String).returns(T.nilable(::Spoom::Sorbet::Errors::Error)) }
   def match_error_line(line); end
 
@@ -5758,32 +6043,28 @@ class Spoom::Sorbet::Errors::Parser
   #
   # @raise [ParseError]
   #
-  # source://spoom//lib/spoom/sorbet/errors.rb#123
+  # source://spoom//lib/spoom/sorbet/errors.rb#95
   sig { params(error: ::Spoom::Sorbet::Errors::Error).void }
   def open_error(error); end
 
   class << self
     # : (String output, ?error_url_base: String) -> Array[Error]
     #
-    # source://spoom//lib/spoom/sorbet/errors.rb#60
+    # source://spoom//lib/spoom/sorbet/errors.rb#32
     sig { params(output: ::String, error_url_base: ::String).returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
     def parse_string(output, error_url_base: T.unsafe(nil)); end
   end
 end
 
-# source://spoom//lib/spoom/sorbet/errors.rb#50
+# source://spoom//lib/spoom/sorbet/errors.rb#19
 Spoom::Sorbet::Errors::Parser::HEADER = T.let(T.unsafe(nil), Array)
 
-# source://spoom//lib/spoom/sorbet/errors.rb#48
+# source://spoom//lib/spoom/sorbet/errors.rb#17
 class Spoom::Sorbet::Errors::Parser::ParseError < ::Spoom::Error; end
 
-# : String
-#
 # source://spoom//lib/spoom/sorbet.rb#31
 Spoom::Sorbet::GEM_PATH = T.let(T.unsafe(nil), String)
 
-# : String
-#
 # source://spoom//lib/spoom/sorbet.rb#32
 Spoom::Sorbet::GEM_VERSION = T.let(T.unsafe(nil), String)
 
@@ -5825,14 +6106,16 @@ module Spoom::Sorbet::Sigils
     # changes the sigil in the file at the passed path to the specified new strictness
     # : ((String | Pathname) path, String new_strictness) -> bool
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#65
+    # source://spoom//lib/spoom/sorbet/sigils.rb#68
+    # changes the sigil in the file at the passed path to the specified new strictness
     sig { params(path: T.any(::Pathname, ::String), new_strictness: ::String).returns(T::Boolean) }
     def change_sigil_in_file(path, new_strictness); end
 
     # changes the sigil to have a new strictness in a list of files
     # : (Array[String] path_list, String new_strictness) -> Array[String]
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#76
+    # source://spoom//lib/spoom/sorbet/sigils.rb#79
+    # changes the sigil to have a new strictness in a list of files
     sig { params(path_list: T::Array[::String], new_strictness: ::String).returns(T::Array[::String]) }
     def change_sigil_in_files(path_list, new_strictness); end
 
@@ -5840,28 +6123,33 @@ module Spoom::Sorbet::Sigils
     # * returns nil if no sigil
     # : ((String | Pathname) path) -> String?
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#56
+    # source://spoom//lib/spoom/sorbet/sigils.rb#59
+    # returns a string containing the strictness of a sigil in a file at the passed path
+    # * returns nil if no sigil
     sig { params(path: T.any(::Pathname, ::String)).returns(T.nilable(::String)) }
     def file_strictness(path); end
 
     # returns the full sigil comment string for the passed strictness
     # : (String strictness) -> String
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#31
+    # source://spoom//lib/spoom/sorbet/sigils.rb#34
+    # returns the full sigil comment string for the passed strictness
     sig { params(strictness: ::String).returns(::String) }
     def sigil_string(strictness); end
 
     # returns the strictness of a sigil in the passed file content string (nil if no sigil)
     # : (String content) -> String?
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#43
+    # source://spoom//lib/spoom/sorbet/sigils.rb#46
+    # returns the strictness of a sigil in the passed file content string (nil if no sigil)
     sig { params(content: ::String).returns(T.nilable(::String)) }
     def strictness_in_content(content); end
 
     # returns a string which is the passed content but with the sigil updated to a new strictness
     # : (String content, String new_strictness) -> String
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#49
+    # source://spoom//lib/spoom/sorbet/sigils.rb#52
+    # returns a string which is the passed content but with the sigil updated to a new strictness
     sig { params(content: ::String, new_strictness: ::String).returns(::String) }
     def update_sigil(content, new_strictness); end
 
@@ -5870,15 +6158,14 @@ module Spoom::Sorbet::Sigils
     #
     # @return [Boolean]
     #
-    # source://spoom//lib/spoom/sorbet/sigils.rb#37
+    # source://spoom//lib/spoom/sorbet/sigils.rb#40
+    # returns true if the passed string is a valid strictness (else false)
     sig { params(strictness: ::String).returns(T::Boolean) }
     def valid_strictness?(strictness); end
   end
 end
 
-# : Array[String]
-#
-# source://spoom//lib/spoom/sorbet/sigils.rb#26
+# source://spoom//lib/spoom/sorbet/sigils.rb#29
 Spoom::Sorbet::Sigils::SIGIL_REGEXP = T.let(T.unsafe(nil), Regexp)
 
 # source://spoom//lib/spoom/sorbet/sigils.rb#11
@@ -5961,7 +6248,7 @@ class Spoom::Sorbet::Sigs::RBIToRBSTranslator
 
     # : (RBI::Sig sig, RBI::Attr node, positional_names: bool) -> String
     #
-    # source://spoom//lib/spoom/sorbet/sigs.rb#178
+    # source://spoom//lib/spoom/sorbet/sigs.rb#173
     sig { params(sig: ::RBI::Sig, node: ::RBI::Attr, positional_names: T::Boolean).returns(::String) }
     def translate_attr_sig(sig, node, positional_names: T.unsafe(nil)); end
 
@@ -5973,12 +6260,12 @@ class Spoom::Sorbet::Sigs::RBIToRBSTranslator
   end
 end
 
-# source://spoom//lib/spoom/sorbet/sigs.rb#187
+# source://spoom//lib/spoom/sorbet/sigs.rb#182
 class Spoom::Sorbet::Sigs::RBSToRBITranslator
   class << self
     # : (RBI::RBSComment comment, (RBI::Method | RBI::Attr) node) -> String?
     #
-    # source://spoom//lib/spoom/sorbet/sigs.rb#192
+    # source://spoom//lib/spoom/sorbet/sigs.rb#187
     sig { params(comment: ::RBI::RBSComment, node: T.any(::RBI::Attr, ::RBI::Method)).returns(T.nilable(::String)) }
     def translate(comment, node); end
 
@@ -5986,13 +6273,13 @@ class Spoom::Sorbet::Sigs::RBSToRBITranslator
 
     # : (RBI::RBSComment comment, RBI::Attr node) -> String
     #
-    # source://spoom//lib/spoom/sorbet/sigs.rb#235
+    # source://spoom//lib/spoom/sorbet/sigs.rb#228
     sig { params(comment: ::RBI::RBSComment, node: ::RBI::Attr).returns(::String) }
     def translate_attr_sig(comment, node); end
 
     # : (RBI::RBSComment rbs_comment, RBI::Method node) -> String
     #
-    # source://spoom//lib/spoom/sorbet/sigs.rb#206
+    # source://spoom//lib/spoom/sorbet/sigs.rb#201
     sig { params(rbs_comment: ::RBI::RBSComment, node: ::RBI::Method).returns(::String) }
     def translate_method_sig(rbs_comment, node); end
   end
@@ -6000,30 +6287,29 @@ end
 
 # From https://github.com/Shopify/ruby-lsp/blob/9154bfc6ef/lib/ruby_lsp/document.rb#L127
 #
-# source://spoom//lib/spoom/sorbet/sigs.rb#255
+# source://spoom//lib/spoom/sorbet/sigs.rb#248
 class Spoom::Sorbet::Sigs::Scanner
   # : (String source) -> void
   #
   # @return [Scanner] a new instance of Scanner
   #
-  # source://spoom//lib/spoom/sorbet/sigs.rb#259
+  # source://spoom//lib/spoom/sorbet/sigs.rb#252
   sig { params(source: ::String).void }
   def initialize(source); end
 
   # Finds the character index inside the source string for a given line and column
   # : (Integer line, Integer character) -> Integer
   #
-  # source://spoom//lib/spoom/sorbet/sigs.rb#267
+  # source://spoom//lib/spoom/sorbet/sigs.rb#260
+  # Finds the character index inside the source string for a given line and column
   sig { params(line: ::Integer, character: ::Integer).returns(::Integer) }
   def find_char_position(line, character); end
 end
 
-# : Integer
-#
-# source://spoom//lib/spoom/sorbet/sigs.rb#256
+# source://spoom//lib/spoom/sorbet/sigs.rb#249
 Spoom::Sorbet::Sigs::Scanner::LINE_BREAK = T.let(T.unsafe(nil), Integer)
 
-# source://spoom//lib/spoom/sorbet/sigs.rb#88
+# source://spoom//lib/spoom/sorbet/sigs.rb#89
 class Spoom::Sorbet::Sigs::SigsLocator < ::RBI::Visitor
   # : -> void
   #
@@ -6066,6 +6352,7 @@ class Spoom::Timeline
   # : (Array[Time] dates) -> Array[Git::Commit]
   #
   # source://spoom//lib/spoom/timeline.rb#34
+  # Return one commit for each date in `dates`
   sig { params(dates: T::Array[::Time]).returns(T::Array[::Spoom::Git::Commit]) }
   def commits_for_dates(dates); end
 
@@ -6073,6 +6360,7 @@ class Spoom::Timeline
   # : -> Array[Time]
   #
   # source://spoom//lib/spoom/timeline.rb#21
+  # Return all months between `from` and `to`
   sig { returns(T::Array[::Time]) }
   def months; end
 
@@ -6080,6 +6368,7 @@ class Spoom::Timeline
   # : -> Array[Git::Commit]
   #
   # source://spoom//lib/spoom/timeline.rb#15
+  # Return one commit for each month between `from` and `to`
   sig { returns(T::Array[::Spoom::Git::Commit]) }
   def ticks; end
 end
@@ -6087,7 +6376,7 @@ end
 # source://spoom//lib/spoom/version.rb#5
 Spoom::VERSION = T.let(T.unsafe(nil), String)
 
-# source://spoom//lib/spoom/visitor.rb#7
+# source://spoom//lib/spoom/visitor.rb#9
 class Spoom::Visitor < ::Prism::Visitor
   # : (Prism::AliasGlobalVariableNode node) -> void
   #
